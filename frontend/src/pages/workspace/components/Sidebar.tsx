@@ -55,7 +55,7 @@ const navigationGroups: NavigationItem[][] = [
 
 export function Sidebar({ activePath, onNavigate }: SidebarProps) {
   return (
-    <aside className="hidden min-h-0 w-56 shrink-0 flex-col rounded-xl border border-line bg-canvas p-2 md:flex">
+    <aside className="hidden min-h-0 w-56 shrink-0 flex-col border-r border-line bg-canvas p-2 md:flex">
       <nav className="min-h-0 overflow-y-auto" aria-label="Workspace navigation">
         {navigationGroups.map((group, groupIndex) => (
           <div

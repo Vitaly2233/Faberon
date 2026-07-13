@@ -9,7 +9,7 @@ export function WorkspaceLayout() {
   return (
     <div className="flex min-h-screen flex-col bg-surface">
       <TopBar onSearchChange={() => undefined} onProfileClick={() => undefined} />
-      <div className="flex min-h-0 flex-1 gap-3 bg-surface p-2">
+      <div className="flex min-h-0 flex-1 bg-surface">
         <Sidebar activePath={location.pathname} onNavigate={navigate} />
         <main className="min-w-0 flex-1 overflow-auto bg-surface">
           <Outlet />
