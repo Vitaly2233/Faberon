@@ -7,6 +7,8 @@ alwaysApply: true
 
 Read `CONSTITUTION.md` from the repository root before modifying the frontend.
 
+- Enter `frontend` before running application, pnpm, Node, lint, test, or build commands. Never run package-manager commands from the repository root.
+- Keep pnpm's store outside the repository. Use `/tmp/faberon-pnpm-store` if a sandbox cannot access the normal user-level store.
 - Treat pages as containers: only page containers may read Zustand, use router hooks, or coordinate state transitions.
 - Keep every Zustand store in `frontend/src/store`; never place stores inside a page or container folder.
 - Keep child components presentational. Pass typed values and callbacks; children render props and emit actions only.

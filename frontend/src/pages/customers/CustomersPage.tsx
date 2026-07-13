@@ -1,4 +1,5 @@
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CustomersTable } from './components/CustomersTable'
 import { CustomersToolbar } from './components/CustomersToolbar'
@@ -11,6 +12,10 @@ export function CustomersPage() {
   const currentPage = useCustomersStore((state) => state.currentPage)
   const setSearchQuery = useCustomersStore((state) => state.setSearchQuery)
   const setCurrentPage = useCustomersStore((state) => state.setCurrentPage)
+
+  useEffect(() => {
+    console.log('Hello world')
+  }, [])
 
   return (
     <div className="p-3 sm:p-5">
