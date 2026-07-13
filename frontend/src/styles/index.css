@@ -1,0 +1,44 @@
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/inter/latin-700.css';
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+
+  --color-canvas: #f6f8fa;
+  --color-surface: #ffffff;
+  --color-ink: #182033;
+  --color-copy: #687286;
+  --color-line: #dfe4ea;
+  --color-brand: #18b7a7;
+  --color-brand-strong: #0fa595;
+  --color-brand-soft: #e9fbf8;
+  --color-operational: #13ad81;
+  --color-hero: #26353b;
+  --color-hero-deep: #0d161a;
+  --color-hero-glow: #42c8bd;
+  --color-hero-copy: #d6e2e4;
+
+  --shadow-field: 0 1px 2px rgb(24 32 51 / 4%);
+  --shadow-button: 0 8px 20px rgb(24 183 167 / 20%);
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    background: var(--color-canvas);
+  }
+
+  body {
+    min-width: 20rem;
+    min-height: 100vh;
+    margin: 0;
+  }
+
+  button,
+  input {
+    font: inherit;
+  }
+}

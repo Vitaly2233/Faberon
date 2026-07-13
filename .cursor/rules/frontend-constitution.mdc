@@ -1,0 +1,19 @@
+---
+description: Core architecture, design-system, and verification rules for Faberon frontend work
+alwaysApply: true
+---
+
+# Faberon frontend constitution
+
+Read `CONSTITUTION.md` from the repository root before modifying the frontend.
+
+- Treat pages as containers: only page containers may read Zustand, use router hooks, or coordinate state transitions.
+- Keep every Zustand store in `frontend/src/store`; never place stores inside a page or container folder.
+- Keep child components presentational. Pass typed values and callbacks; children render props and emit actions only.
+- Keep components small and split them by visual responsibility.
+- Define product colors, fonts, shadows, and exceptional visual values in `frontend/src/styles/index.css`.
+- Use semantic Tailwind tokens and Tailwind's standard spacing, radius, and font-size utilities in JSX.
+- Use MUI selectively for accessible primitives or icons; do not create a competing MUI visual theme.
+- Do not add authentication, persistence, API calls, or speculative business logic to visual prototypes.
+- Preserve semantic HTML, labels, keyboard access, focus visibility, contrast, and responsive behavior.
+- Use Node 26 and pnpm. Run `pnpm lint` and `pnpm build` from `frontend` before handoff.
