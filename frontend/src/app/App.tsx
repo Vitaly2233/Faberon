@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { CustomerDetailsPage } from '../pages/customers/CustomerDetailsPage'
 import { CustomersPage } from '../pages/customers/CustomersPage'
+import { NewCustomerPage } from '../pages/customers/NewCustomerPage'
 import { LoginPage } from '../pages/login/LoginPage'
 import { PlaceholderPage } from '../pages/workspace/PlaceholderPage'
 import { WorkspaceLayout } from '../pages/workspace/WorkspaceLayout'
@@ -29,6 +30,7 @@ export function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route element={<WorkspaceLayout />}>
         <Route path="/customers" element={<CustomersPage />} />
+        <Route path="/customers/new" element={<NewCustomerPage />} />
         <Route path="/customers/:customerId" element={<CustomerDetailsPage />} />
         {placeholderRoutes.map(({ path, title }) => (
           <Route key={path} path={path} element={<PlaceholderPage title={title} />} />

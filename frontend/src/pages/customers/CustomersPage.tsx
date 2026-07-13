@@ -26,6 +26,7 @@ export function CustomersPage() {
         </div>
         <button
           type="button"
+          onClick={() => navigate('/customers/new')}
           className="flex h-10 cursor-pointer items-center gap-1 rounded-lg bg-brand px-4 text-xs font-semibold text-surface shadow-button transition hover:bg-brand-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
         >
           <AddRoundedIcon fontSize="small" aria-hidden="true" />
