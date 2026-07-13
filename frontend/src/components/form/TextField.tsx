@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-type TextFieldProps = {
+export interface TextFieldProps {
   id: string
   label: string
   type: 'email' | 'password' | 'text'

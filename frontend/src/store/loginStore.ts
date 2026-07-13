@@ -1,7 +1,10 @@
 import { create } from 'zustand'
-import type { LoginFormValues } from '../types/login'
 
-type LoginStore = LoginFormValues & {
+type LoginStore = {
+  email: string
+  password: string
+  rememberMe: boolean
+  isPasswordVisible: boolean
   setEmail: (email: string) => void
   setPassword: (password: string) => void
   setRememberMe: (rememberMe: boolean) => void

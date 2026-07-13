@@ -1,4 +1,4 @@
-type RememberMeProps = {
+interface RememberMeProps {
   checked: boolean
   onChange: (checked: boolean) => void
 }

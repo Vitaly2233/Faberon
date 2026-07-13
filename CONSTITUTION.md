@@ -1,35 +1,35 @@
-# Faberon Frontend Constitution
+# Faberon engineering constitution
 
-## I. Work inside an application directory
+These are durable architectural and product-engineering principles. Repository operation belongs in `AGENTS.md`; task procedures belong in project skills.
 
-The repository root is for coordination files and shared agent guidance. Before running an application, package manager, install, scaffold, lint, test, or build command, change the working directory to the target application: `frontend` or `backend`. Never run package-manager commands from the repository root.
+## I. Ownership is explicit
 
-Keep package-manager caches outside the repository. In particular, do not configure a repository-local pnpm store. Use pnpm's normal user-level store, or a temporary store outside the repository when a sandbox cannot access the user-level store.
+Routes live in `frontend/src/app`. Route-level pages are containers and own page-specific components, data, and UI types under `frontend/src/pages/<feature>`. Common components live in `frontend/src/components` only after they have a stable, feature-neutral API and reuse across unrelated features.
 
-## II. Containers own state
+Dependencies point from pages toward common code, never from common code toward pages. One feature must not import another feature's internals.
 
-Route-level pages are containers. They select Zustand state, bind actions, and make interaction or navigation decisions. Every Zustand store lives in `frontend/src/store`; containers may own component folders but never store folders. Presentational components receive typed props, render UI, and emit callbacks only. They must not import stores, router hooks, API clients, or other side-effect services.
+## II. Containers coordinate behavior
 
-## III. Components stay focused
+Page containers select Zustand state, bind actions, use router hooks, and make navigation or interaction decisions. Presentational components receive typed props, render UI, and emit callbacks. They do not import stores, router hooks, API clients, or other side-effect services.
 
-Split pages by visual responsibility and keep leaf components small. Prefer composition over configurable components with many flags. Keep feature-specific code near its page and share a primitive only after it has a stable, repeated use.
+Every Zustand store lives in `frontend/src/store`. A store is infrastructure, never a common component or page-owned module. Store-specific state and action types stay with the store and must not depend on page UI types.
 
-## IV. Design tokens are the source of truth
+## III. Abstractions follow proven reuse
 
-Define product colors, fonts, shadows, and any exceptional visual values in the global Tailwind theme. Use semantic token utilities in JSX and Tailwind's standard spacing, radius, and font-size scales. Do not scatter color literals, arbitrary font sizes, or competing MUI theme values through components.
+Keep feature code local by default. Prefer small components with one visual responsibility and composition over broad components controlled by many flags. Extract common code only when reuse and a feature-neutral contract are clear.
 
-## V. Accessibility is required
+## IV. The design system is centralized
 
-Use semantic HTML, associated form labels, descriptive accessible names, visible focus states, keyboard-operable controls, readable contrast, and responsive layouts. Decorative visuals must not add noise for assistive technology.
+Tailwind semantic tokens are the source of truth for product colors, typography, shadows, and exceptional visual values. Components use those tokens and Tailwind's standard scales instead of local literals or competing theme systems. Use MUI selectively for an accessible primitive or icon; Tailwind owns visual styling.
 
-## VI. Dependencies are intentional
+## V. Accessibility and resilience are product requirements
 
-Use modern React, strict TypeScript, Vite, React Router, Zustand, and Tailwind. Use MUI selectively when its accessible primitive or icon set provides real value; Tailwind remains the styling source of truth. Use Node 26 and pnpm for all project commands.
+Use semantic HTML, associated labels, descriptive accessible names, visible focus states, keyboard-operable controls, readable contrast, and responsive layouts. Decorative content must remain silent to assistive technology.
 
-## VII. Scope remains explicit
+## VI. Scope and dependencies stay intentional
 
-Implement only requested behavior. A visual prototype must not acquire authentication, persistence, API calls, or speculative business logic. Routes and local UI interactions are allowed when needed to demonstrate the page.
+Implement the requested behavior without speculative authentication, persistence, API integration, or business logic. Add a dependency only when the existing stack cannot meet a concrete need and the maintenance cost is justified.
 
-## VIII. Changes are verified
+## VII. Changes remain verifiable
 
-Before handing off frontend changes, run `pnpm lint` and `pnpm build` from `frontend` under Node 26. Resolve introduced diagnostics and keep the production build warning-free where practical.
+Keep strict TypeScript and automated checks healthy. Validate changes in proportion to their risk, resolve introduced diagnostics, and leave production builds warning-free where practical.

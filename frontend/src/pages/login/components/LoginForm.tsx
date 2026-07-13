@@ -2,11 +2,11 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined'
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
+import { TextField } from '../../../components/form/TextField'
+import type { LoginFormValues } from '../types'
 import { RememberMe } from './RememberMe'
-import { TextField } from './TextField'
-import type { LoginFormValues } from '../../types/login'
 
-type LoginFormProps = LoginFormValues & {
+interface LoginFormProps extends LoginFormValues {
   onEmailChange: (email: string) => void
   onPasswordChange: (password: string) => void
   onRememberMeChange: (rememberMe: boolean) => void

@@ -1,29 +1,25 @@
 ---
 name: minimize-color-palette
-description: Keeps the Faberon UI palette deliberately small and reusable. Use when creating or reviewing components, design tokens, themes, colors, states, or visual styling in this repository.
+description: Keeps Faberon's UI palette small, semantic, and reusable. Use when creating or reviewing colors, design tokens, themes, states, or visual styling.
 ---
 
 # Minimize Color Palette
 
-Keep the app palette as small and reusable as possible so global color changes remain straightforward.
+Inspect `frontend/src/styles/index.css` and every affected component before changing color behavior.
 
-Enter `frontend` before running application or package commands. Never run package-manager commands from the repository root. Keep package-manager caches outside the repository.
+## Workflow
 
-## Instructions
+1. Map each requested color to a semantic role such as brand, surface, text, border, success, or hero treatment.
+2. Reuse an existing token when it represents that role.
+3. Prefer opacity variants of one token over near-duplicate shades.
+4. Add a token only for a distinct, reusable semantic role; define it in the global Tailwind theme.
+5. Use the same token for the same role throughout the application and keep MUI aligned with Tailwind.
 
-1. Inspect `src/styles/index.css` before introducing or changing a color.
-2. Reuse an existing semantic Tailwind color token whenever it can express the intended role.
-3. Do not add color literals, arbitrary Tailwind colors, or component-local palette values in JSX, TSX, or CSS.
-4. Add a token only when no existing token can represent a distinct semantic role such as brand, surface, text, border, success, or hero treatment.
-5. Prefer one token with opacity variants over several nearly identical shades.
-6. Before adding a token, check whether an existing token can be renamed or reused without changing its meaning.
-7. Use the same semantic token for the same purpose across every page and component.
-8. Keep MUI styling aligned with the Tailwind tokens; do not create a separate MUI palette.
-9. When reviewing changes, flag duplicate, near-duplicate, hardcoded, or one-off colors and recommend the existing replacement token.
+Do not add color literals, arbitrary Tailwind colors, component-local palette values, or a separate MUI palette. When reviewing, report duplicate, near-duplicate, hardcoded, and one-off colors with the existing semantic replacement when available.
 
-## Acceptance check
+## Acceptance criteria
 
-- Every product color is defined centrally in the global Tailwind theme.
+- Product colors are defined centrally.
 - Components contain semantic color utilities rather than color literals.
-- Each token has a clear role and is reused wherever that role appears.
-- Changing one token updates that color consistently across the application.
+- Each token has one clear role and meaningful reuse.
+- Changing a token updates that role consistently across the application.

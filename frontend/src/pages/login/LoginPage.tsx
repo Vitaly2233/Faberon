@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import { Brand } from '../../components/Brand'
-import { HeroPanel } from '../../components/HeroPanel'
-import { PageFooter } from '../../components/PageFooter'
-import { LoginForm } from '../../components/form/LoginForm'
-import { SocialLoginOptions } from '../../components/form/SocialLoginOptions'
 import { useLoginStore } from '../../store/loginStore'
+import { HeroPanel } from './components/HeroPanel'
+import { LoginForm } from './components/LoginForm'
+import { PageFooter } from './components/PageFooter'
+import { SocialLoginOptions } from './components/SocialLoginOptions'
 
 export function LoginPage() {
   const navigate = useNavigate()

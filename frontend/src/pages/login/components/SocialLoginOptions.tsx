@@ -1,6 +1,6 @@
-export type SocialProvider = 'google' | 'microsoft' | 'apple'
+import type { SocialProvider } from '../types'
 
-type SocialLoginOptionsProps = {
+interface SocialLoginOptionsProps {
   onProviderSelect: (provider: SocialProvider) => void
 }
 
@@ -26,7 +26,9 @@ export function SocialLoginOptions({ onProviderSelect }: SocialLoginOptionsProps
             onClick={() => onProviderSelect(id)}
             className="flex h-9 cursor-pointer items-center justify-center gap-1 rounded-lg border border-line bg-surface px-2 text-xs font-medium text-ink transition hover:border-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
           >
-            <span className="font-bold text-brand" aria-hidden="true">{mark}</span>
+            <span className="font-bold text-brand" aria-hidden="true">
+              {mark}
+            </span>
             <span>{label}</span>
           </button>
         ))}
