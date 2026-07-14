@@ -1,31 +1,31 @@
 # Faberon
 
-## Run the frontend
+Faberon is a full-stack application with a React frontend and a NestJS backend.
+The repository keeps both applications independent, with their own dependencies,
+commands, and documentation.
 
-Requirements:
+## Structure
 
-- Node.js 26
-- pnpm 10.13.1
-
-From the repository root, enter the frontend directory:
-
-```sh
-cd frontend
+```text
+Faberon/
+├── frontend/          React, Vite, Tailwind CSS, MUI, and Zustand
+│   └── src/
+│       ├── app/       Routes and application setup
+│       ├── pages/     Feature pages and page-owned components
+│       ├── components/ Shared UI components
+│       └── store/     Zustand stores
+├── backend/           NestJS, Drizzle ORM, PostgreSQL, and RabbitMQ
+│   └── src/
+│       ├── customer/  Customer controller, service, domain, and repository
+│       ├── database/  Database client, schemas, and relations
+│       └── rabbitmq/  RabbitMQ initialization
+└── skills/            Project-specific agent workflows
 ```
 
-Select the project's Node.js version, install dependencies, and start the development server:
+## Development
 
-```sh
-nvm use
-pnpm install
-pnpm dev
-```
+- [Frontend setup](frontend/README.md)
+- [Backend setup](backend/README.md)
 
-Open the local URL printed by Vite in your browser. The default is usually `http://localhost:5173`.
-
-To verify a frontend change:
-
-```sh
-pnpm lint
-pnpm build
-```
+Run package-manager, development, test, lint, and build commands from the
+relevant application directory.

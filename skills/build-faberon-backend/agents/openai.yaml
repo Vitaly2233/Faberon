@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Faberon Backend"
+  short_description: "Build robust NestJS backend features"
+  default_prompt: "Use $build-faberon-backend to implement a production-ready backend feature."

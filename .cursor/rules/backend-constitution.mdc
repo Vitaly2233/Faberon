@@ -1,0 +1,19 @@
+---
+description: Core architecture, API-contract, persistence, messaging, and verification rules for Faberon backend work
+alwaysApply: true
+---
+
+# Faberon backend constitution
+
+Read `CONSTITUTION.md` and `skills/build-faberon-backend/SKILL.md` from the repository root before modifying the backend.
+
+- Enter `backend` before running application, pnpm, Node, lint, test, migration, or build commands.
+- Use Node 26 and pnpm; keep pnpm's store outside the repository.
+- Organize bounded contexts into domain, application, infrastructure, and presentation layers.
+- Keep the domain free of NestJS, TypeORM, HTTP, RabbitMQ, and environment concerns.
+- Depend on application ports and implement them in infrastructure adapters.
+- Use explicit PostgreSQL migrations and keep TypeORM schema synchronization disabled.
+- Use a transactional outbox for RabbitMQ messages coupled to state changes; design consumers for at-least-once delivery.
+- Use dedicated HTTP request and response DTOs and document all success and expected error schemas in Swagger.
+- Validate configuration and request inputs, use structured logs, and support graceful shutdown and health checks.
+- Run `pnpm lint`, `pnpm test`, and `pnpm build` from `backend` before handoff.

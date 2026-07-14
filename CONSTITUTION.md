@@ -33,3 +33,13 @@ Implement the requested behavior without speculative authentication, persistence
 ## VII. Changes remain verifiable
 
 Keep strict TypeScript and automated checks healthy. Validate changes in proportion to their risk, resolve introduced diagnostics, and leave production builds warning-free where practical.
+
+## VIII. The backend protects the domain
+
+Backend code is organized by bounded context with domain, application, infrastructure, and presentation boundaries. Domain behavior remains independent of NestJS, transports, databases, and brokers. Dependencies point inward through explicit ports; adapters implement those ports at the edge.
+
+Business state and emitted integration events remain consistent. Use PostgreSQL migrations for schema evolution and a transactional outbox for RabbitMQ messages coupled to database writes. Consumers assume at-least-once delivery and are idempotent.
+
+## IX. API contracts are explicit
+
+Validate inputs at the boundary and expose dedicated request and response models. Every HTTP endpoint documents its success and expected error schemas in OpenAPI. Do not expose persistence models, internal exceptions, secrets, or infrastructure details through public contracts.

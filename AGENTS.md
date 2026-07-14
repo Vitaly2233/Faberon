@@ -17,12 +17,15 @@ Before changing the repository:
 | Implement or modify frontend code | `skills/build-faberon-frontend` |
 | Review frontend code | `skills/review-faberon-frontend` |
 | Change or review UI colors or design tokens | `skills/minimize-color-palette` |
+| Implement or modify backend code | `skills/build-faberon-backend` |
 
 Use all matching skills. Skills under `skills` are canonical and shared by every AI tool; tool-specific entries may only point to them.
 
 ## Commands
 
 - Run application, package-manager, build, lint, test, and scaffold commands from the affected application directory (`frontend` or `backend`), never from the repository root.
-- Use Node 26 and pnpm for frontend commands.
-- Keep package-manager stores and caches outside the repository. If the normal pnpm store is unavailable, use `/tmp/faberon-pnpm-store`.
+- Use Node 26 and pnpm for frontend and backend commands.
 - After changing frontend code, run `nvm use 26`, `pnpm lint`, and `pnpm build` from `frontend` before handoff.
+- After changing backend code, run `nvm use 26`, `pnpm lint`, `pnpm test`, and `pnpm build` from `backend` before handoff.
+- Keep secrets out of the repository. Add documented examples to `.env.example` and validate runtime configuration at startup.
+- Do not create, generate, or run database migrations unless the user explicitly requests it; never enable automatic schema synchronization outside disposable tests.
