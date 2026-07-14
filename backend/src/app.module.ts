@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import Joi from 'joi';
-import { CustomerModule } from './customer/customer.module';
-import { DatabaseModule } from './database/database.module';
-import { RabbitMqModule } from './rabbitmq/rabbitmq.module';
+import { DatabaseModule } from './common/database/database.module';
+import { RabbitMqModule } from './common/rabbitmq/rabbitmq.module';
+import { CustomerModule } from './modules/customer/customer.module';
 
 @Module({
   imports: [

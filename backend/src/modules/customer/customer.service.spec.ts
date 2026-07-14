@@ -19,9 +19,11 @@ describe('CustomerService', () => {
     await expect(service.create(customer.name, customer.email)).resolves.toBe(
       customer,
     );
-    expect(repository.create).toHaveBeenCalledWith(
-      customer.name,
-      customer.email,
-    );
+    expect(repository.create).toHaveBeenCalledWith({
+      id: expect.any(String),
+      name: customer.name,
+      email: customer.email,
+      createdAt: expect.any(Date),
+    });
   });
 });

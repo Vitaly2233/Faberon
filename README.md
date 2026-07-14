@@ -16,9 +16,8 @@ Faberon/
 │       └── store/     Zustand stores
 ├── backend/           NestJS, Drizzle ORM, PostgreSQL, and RabbitMQ
 │   └── src/
-│       ├── customer/  Customer controller, service, domain, and repository
-│       ├── database/  Database client, schemas, and relations
-│       └── rabbitmq/  RabbitMQ initialization
+│       ├── modules/   Business modules and their repositories
+│       └── common/    Database, schemas, relations, and RabbitMQ setup
 └── skills/            Project-specific agent workflows
 ```
 
