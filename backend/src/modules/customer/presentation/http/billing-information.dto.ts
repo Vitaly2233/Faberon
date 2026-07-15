@@ -27,7 +27,12 @@ export class CreateBillingInformationRequest {
   @MaxLength(120)
   city!: string;
 
-  @ApiPropertyOptional({ example: 'Oslo', maxLength: 120, nullable: true })
+  @ApiPropertyOptional({
+    type: String,
+    example: 'Oslo',
+    maxLength: 120,
+    nullable: true,
+  })
   @NormalizeText({ emptyToNull: true })
   @IsOptional()
   @IsString()

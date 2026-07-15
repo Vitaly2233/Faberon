@@ -105,6 +105,38 @@ export interface components {
             /** @example Not Found */
             error: string;
         };
+        CreateContactRequest: {
+            /** @example Ada Lovelace */
+            name: string;
+            /** @example ada@example.com */
+            email?: string | null;
+            /** @example +4798765432 */
+            phone?: string | null;
+            /** @example Primary contact */
+            description?: string | null;
+        };
+        CreateBillingInformationRequest: {
+            /** @example Karl Johans gate 1 */
+            address: string;
+            /** @example Oslo */
+            city: string;
+            /** @example Oslo */
+            region?: string | null;
+            /** @example 0154 */
+            postalCode: string;
+            /**
+             * @example no
+             * @enum {string}
+             */
+            country: "pl" | "no";
+            /** @example 14 */
+            dueWithinDays: number;
+            /**
+             * @example nok
+             * @enum {string}
+             */
+            currency: "usd" | "pln" | "eur" | "nok";
+        };
         CreateCustomerRequest: {
             /** @example Acme AS */
             name: string;
@@ -114,34 +146,26 @@ export interface components {
              */
             type: "individual" | "company" | "government";
             /** @example Acme AS */
-            legalName?: Record<string, never> | null;
+            legalName?: string | null;
             /** @example NO999888777 */
-            taxNumber?: Record<string, never> | null;
+            taxNumber?: string | null;
             /** @example Karl Johans gate 1 */
-            address?: Record<string, never> | null;
+            address?: string | null;
             /** @example Oslo */
-            city?: Record<string, never> | null;
+            city?: string | null;
             /** @example Oslo */
-            region?: Record<string, never> | null;
+            region?: string | null;
             /** @example 0154 */
-            postalCode?: Record<string, never> | null;
+            postalCode?: string | null;
             /**
              * @example no
              * @enum {string|null}
              */
             country?: "pl" | "no" | null;
             /** @example Preferred customer */
-            notes?: Record<string, never> | null;
-        };
-        CreateContactRequest: {
-            /** @example Ada Lovelace */
-            name: string;
-            /** @example ada@example.com */
-            email?: Record<string, never> | null;
-            /** @example +4798765432 */
-            phone?: Record<string, never> | null;
-            /** @example Primary contact */
-            description?: Record<string, never> | null;
+            notes?: string | null;
+            contact?: components["schemas"]["CreateContactRequest"];
+            billingInformation?: components["schemas"]["CreateBillingInformationRequest"];
         };
         ContactResponse: {
             /**
@@ -158,28 +182,6 @@ export interface components {
             email: string | null;
             phone: string | null;
             description: string | null;
-        };
-        CreateBillingInformationRequest: {
-            /** @example Karl Johans gate 1 */
-            address: string;
-            /** @example Oslo */
-            city: string;
-            /** @example Oslo */
-            region?: Record<string, never> | null;
-            /** @example 0154 */
-            postalCode: string;
-            /**
-             * @example no
-             * @enum {string}
-             */
-            country: "pl" | "no";
-            /** @example 14 */
-            dueWithinDays: number;
-            /**
-             * @example nok
-             * @enum {string}
-             */
-            currency: "usd" | "pln" | "eur" | "nok";
         };
         BillingInformationResponse: {
             /**

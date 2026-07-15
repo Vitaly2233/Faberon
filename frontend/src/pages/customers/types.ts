@@ -1,4 +1,8 @@
 export type CustomerStatus = 'active' | 'inactive'
+export type CustomerTypeOption = 'Company' | 'Individual' | 'Government'
+export type BillingCountryOption = 'Poland' | 'Norway'
+export type PaymentTermsOption = 'Due on receipt' | 'Net 15' | 'Net 30' | 'Net 45'
+export type CurrencyOption = 'USD ($)' | 'EUR (€)' | 'PLN (zł)' | 'NOK (kr)'
 
 export type Customer = {
   id: string
@@ -26,7 +30,7 @@ export type CustomerDetail = Customer & {
 }
 
 export type NewCustomerFormValues = {
-  customerType: string
+  customerType: CustomerTypeOption
   customerName: string
   legalCompanyName: string
   taxNumber: string
@@ -38,20 +42,9 @@ export type NewCustomerFormValues = {
   billingCity: string
   billingRegion: string
   billingPostalCode: string
-  billingCountry: string
-  paymentTerms: string
-  currency: string
-  locationName: string
-  locationAddress: string
-  locationCity: string
-  locationRegion: string
-  locationPostalCode: string
-  locationCountry: string
-  locationContactName: string
-  locationPhone: string
-  locationEmail: string
-  portalEnabled: boolean
-  sendInvitation: boolean
+  billingCountry: BillingCountryOption
+  paymentTerms: PaymentTermsOption
+  currency: CurrencyOption
   internalNotes: string
 }
 

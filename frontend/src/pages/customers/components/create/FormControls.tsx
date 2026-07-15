@@ -53,22 +53,28 @@ export function TextField({
   )
 }
 
-type SelectFieldProps = {
+type SelectFieldProps<Value extends string> = {
   id: string
   label: string
-  value: string
-  options: string[]
-  onChange: (value: string) => void
+  value: Value
+  options: readonly Value[]
+  onChange: (value: Value) => void
 }
 
-export function SelectField({ id, label, value, options, onChange }: SelectFieldProps) {
+export function SelectField<Value extends string>({
+  id,
+  label,
+  value,
+  options,
+  onChange,
+}: SelectFieldProps<Value>) {
   return (
     <label htmlFor={id} className="block text-xs font-semibold uppercase tracking-wide text-copy">
       {label}
       <select
         id={id}
         value={value}
-        onChange={(event) => onChange(event.target.value)}
+        onChange={(event) => onChange(event.target.value as Value)}
         className={`${controlClassName} cursor-pointer`}
       >
         {options.map((option) => (

@@ -1,9 +1,8 @@
 import { FormSection, SelectField, TextField } from './FormControls'
 import type { CustomerFormFieldsProps } from './formTypes'
 
-const twoColumnGrid = 'grid gap-4 md:grid-cols-2'
 const threeColumnGrid = 'grid gap-4 md:grid-cols-3'
-const countries = ['United States', 'Canada', 'United Kingdom', 'Poland']
+const countries = ['Poland', 'Norway'] as const
 
 export function BillingDetailsSection({ values, onFieldChange }: CustomerFormFieldsProps) {
   return (
@@ -51,93 +50,15 @@ export function BillingDetailsSection({ values, onFieldChange }: CustomerFormFie
             id="payment-terms"
             label="Payment terms"
             value={values.paymentTerms}
-            options={['Net 30', 'Net 15', 'Net 45', 'Due on receipt']}
+            options={['Net 30', 'Net 15', 'Net 45', 'Due on receipt'] as const}
             onChange={(value) => onFieldChange('paymentTerms', value)}
           />
           <SelectField
             id="currency"
             label="Currency"
             value={values.currency}
-            options={['USD ($)', 'EUR (€)', 'GBP (£)', 'PLN (zł)']}
+            options={['USD ($)', 'EUR (€)', 'PLN (zł)', 'NOK (kr)'] as const}
             onChange={(value) => onFieldChange('currency', value)}
-          />
-        </div>
-      </div>
-    </FormSection>
-  )
-}
-
-export function PrimaryLocationSection({ values, onFieldChange }: CustomerFormFieldsProps) {
-  return (
-    <FormSection title="Primary Location">
-      <div className="space-y-3">
-        <TextField
-          id="location-name"
-          label="Location name"
-          value={values.locationName}
-          placeholder="Main Branch"
-          onChange={(value) => onFieldChange('locationName', value)}
-        />
-        <TextField
-          id="location-address"
-          label="Address"
-          value={values.locationAddress}
-          placeholder="123 Luxury Ave, San Francisco, CA"
-          onChange={(value) => onFieldChange('locationAddress', value)}
-        />
-        <div className={threeColumnGrid}>
-          <TextField
-            id="location-city"
-            label="City"
-            value={values.locationCity}
-            placeholder="San Francisco"
-            onChange={(value) => onFieldChange('locationCity', value)}
-          />
-          <TextField
-            id="location-region"
-            label="State"
-            value={values.locationRegion}
-            placeholder="CA"
-            onChange={(value) => onFieldChange('locationRegion', value)}
-          />
-          <TextField
-            id="location-postal-code"
-            label="Postal code"
-            value={values.locationPostalCode}
-            placeholder="94103"
-            onChange={(value) => onFieldChange('locationPostalCode', value)}
-          />
-        </div>
-        <div className={twoColumnGrid}>
-          <SelectField
-            id="location-country"
-            label="Country"
-            value={values.locationCountry}
-            options={countries}
-            onChange={(value) => onFieldChange('locationCountry', value)}
-          />
-          <TextField
-            id="location-contact-name"
-            label="Location contact name"
-            value={values.locationContactName}
-            placeholder="Sarah Smith"
-            onChange={(value) => onFieldChange('locationContactName', value)}
-          />
-          <TextField
-            id="location-phone"
-            label="Location phone"
-            value={values.locationPhone}
-            placeholder="+1 (555) 111-2222"
-            type="tel"
-            onChange={(value) => onFieldChange('locationPhone', value)}
-          />
-          <TextField
-            id="location-email"
-            label="Location email"
-            value={values.locationEmail}
-            placeholder="s.smith@grandhotel.com"
-            type="email"
-            onChange={(value) => onFieldChange('locationEmail', value)}
           />
         </div>
       </div>

@@ -7,8 +7,8 @@ type CustomerFormStepperProps = {
 
 const steps = [
   { title: 'Customer details', description: 'Company and contact' },
-  { title: 'Billing and location', description: 'Billing and service address' },
-  { title: 'Access and review', description: 'Portal settings and summary' },
+  { title: 'Billing', description: 'Billing address and terms' },
+  { title: 'Notes and review', description: 'Notes and final summary' },
 ] as const
 
 export function CustomerFormStepper({ currentStep }: CustomerFormStepperProps) {

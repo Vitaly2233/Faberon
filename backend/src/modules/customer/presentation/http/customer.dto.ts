@@ -25,42 +25,72 @@ export class CreateCustomerRequest {
   @IsEnum(CustomerType)
   type!: CustomerType;
 
-  @ApiPropertyOptional({ example: 'Acme AS', maxLength: 200, nullable: true })
+  @ApiPropertyOptional({
+    type: String,
+    example: 'Acme AS',
+    maxLength: 200,
+    nullable: true,
+  })
   @NormalizeText({ emptyToNull: true })
   @IsOptional()
   @IsString()
   @MaxLength(200)
   legalName?: string | null;
 
-  @ApiPropertyOptional({ example: 'NO999888777', maxLength: 64, nullable: true })
+  @ApiPropertyOptional({
+    type: String,
+    example: 'NO999888777',
+    maxLength: 64,
+    nullable: true,
+  })
   @NormalizeText({ emptyToNull: true })
   @IsOptional()
   @IsString()
   @MaxLength(64)
   taxNumber?: string | null;
 
-  @ApiPropertyOptional({ example: 'Karl Johans gate 1', maxLength: 240, nullable: true })
+  @ApiPropertyOptional({
+    type: String,
+    example: 'Karl Johans gate 1',
+    maxLength: 240,
+    nullable: true,
+  })
   @NormalizeText({ emptyToNull: true })
   @IsOptional()
   @IsString()
   @MaxLength(240)
   address?: string | null;
 
-  @ApiPropertyOptional({ example: 'Oslo', maxLength: 120, nullable: true })
+  @ApiPropertyOptional({
+    type: String,
+    example: 'Oslo',
+    maxLength: 120,
+    nullable: true,
+  })
   @NormalizeText({ emptyToNull: true })
   @IsOptional()
   @IsString()
   @MaxLength(120)
   city?: string | null;
 
-  @ApiPropertyOptional({ example: 'Oslo', maxLength: 120, nullable: true })
+  @ApiPropertyOptional({
+    type: String,
+    example: 'Oslo',
+    maxLength: 120,
+    nullable: true,
+  })
   @NormalizeText({ emptyToNull: true })
   @IsOptional()
   @IsString()
   @MaxLength(120)
   region?: string | null;
 
-  @ApiPropertyOptional({ example: '0154', maxLength: 32, nullable: true })
+  @ApiPropertyOptional({
+    type: String,
+    example: '0154',
+    maxLength: 32,
+    nullable: true,
+  })
   @NormalizeText({ emptyToNull: true })
   @IsOptional()
   @IsString()
@@ -72,7 +102,11 @@ export class CreateCustomerRequest {
   @IsEnum(CountryCode)
   country?: CountryCode | null;
 
-  @ApiPropertyOptional({ example: 'Preferred customer', nullable: true })
+  @ApiPropertyOptional({
+    type: String,
+    example: 'Preferred customer',
+    nullable: true,
+  })
   @NormalizeText({ emptyToNull: true })
   @IsOptional()
   @IsString()

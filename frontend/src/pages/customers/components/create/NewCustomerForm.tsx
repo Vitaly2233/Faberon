@@ -1,11 +1,7 @@
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded'
 import type { NewCustomerField, NewCustomerFormStep, NewCustomerFormValues } from '../../types'
-import {
-  InternalNotesSection,
-  InvitationSettingsSection,
-  PortalAccessSection,
-} from './CustomerAccessSections'
-import { BillingDetailsSection, PrimaryLocationSection } from './CustomerAddressSections'
+import { InternalNotesSection } from './CustomerAccessSections'
+import { BillingDetailsSection } from './CustomerAddressSections'
 import { CustomerFormStepper } from './CustomerFormStepper'
 import { GeneralInformationSection, MainContactSection } from './CustomerInformationSections'
 import { CustomerReview } from './CustomerReview'
@@ -20,7 +16,9 @@ type NewCustomerFormProps = {
   onExit: () => void
   onBack: () => void
   onContinue: () => void
-  onCreate: () => void
+  onCreate: () => Promise<void>
+  isCreating: boolean
+  createError: string | null
 }
 
 const stepContent = [
@@ -29,12 +27,12 @@ const stepContent = [
     description: 'Tell us about the customer and their main point of contact.',
   },
   {
-    title: 'Billing and location',
-    description: 'Set billing preferences and the customer’s primary service location.',
+    title: 'Billing',
+    description: 'Set the customer’s billing address and payment preferences.',
   },
   {
-    title: 'Access and review',
-    description: 'Configure portal access and confirm the information before creation.',
+    title: 'Notes and review',
+    description: 'Add internal notes and confirm the information before creation.',
   },
 ] as const
 
@@ -46,6 +44,8 @@ export function NewCustomerForm({
   onBack,
   onContinue,
   onCreate,
+  isCreating,
+  createError,
 }: NewCustomerFormProps) {
   const fields = { values, onFieldChange }
   const isFinalStep = currentStep === 2
@@ -55,7 +55,7 @@ export function NewCustomerForm({
       onSubmit={(event) => {
         event.preventDefault()
         if (isFinalStep) {
-          onCreate()
+          void onCreate()
         } else {
           onContinue()
         }
@@ -94,21 +94,20 @@ export function NewCustomerForm({
               <MainContactSection {...fields} />
             </>
           )}
-          {currentStep === 1 && (
-            <>
-              <BillingDetailsSection {...fields} />
-              <PrimaryLocationSection {...fields} />
-            </>
-          )}
+          {currentStep === 1 && <BillingDetailsSection {...fields} />}
           {currentStep === 2 && (
             <>
-              <PortalAccessSection {...fields} />
-              <InvitationSettingsSection {...fields} />
               <InternalNotesSection {...fields} />
               <CustomerReview values={values} />
             </>
           )}
         </div>
+
+        {createError && (
+          <p role="alert" className="mt-5 text-sm font-medium text-brand-strong">
+            {createError}
+          </p>
+        )}
 
         <footer className="mt-6 flex items-center justify-between gap-3 border-t border-line pt-5">
           <button
@@ -122,9 +121,10 @@ export function NewCustomerForm({
             <span className="hidden text-xs text-copy sm:inline">Step {currentStep + 1} of 3</span>
             <button
               type="submit"
-              className="h-10 min-w-28 cursor-pointer rounded-lg bg-ink px-5 text-xs font-semibold text-surface shadow-field transition hover:bg-hero-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              disabled={isCreating}
+              className="h-10 min-w-28 cursor-pointer rounded-lg bg-ink px-5 text-xs font-semibold text-surface shadow-field transition hover:bg-hero-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {isFinalStep ? 'Create Customer' : 'Continue'}
+              {isFinalStep ? (isCreating ? 'Creating…' : 'Create Customer') : 'Continue'}
             </button>
           </div>
         </footer>

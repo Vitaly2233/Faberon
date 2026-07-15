@@ -48,7 +48,7 @@ export function CustomerReview({ values }: CustomerReviewProps) {
           <SummaryItem label="Main contact" value={values.contactName} />
           <SummaryItem label="Contact email" value={values.contactEmail} />
         </SummaryGroup>
-        <SummaryGroup title="Billing and location">
+        <SummaryGroup title="Billing">
           <SummaryItem
             label="Billing address"
             value={formatAddress(
@@ -60,26 +60,8 @@ export function CustomerReview({ values }: CustomerReviewProps) {
             )}
           />
           <SummaryItem label="Payment" value={`${values.paymentTerms} · ${values.currency}`} />
-          <SummaryItem label="Primary location" value={values.locationName} />
-          <SummaryItem
-            label="Location address"
-            value={formatAddress(
-              values.locationAddress,
-              values.locationCity,
-              values.locationRegion,
-              values.locationPostalCode,
-              values.locationCountry,
-            )}
-          />
-          <SummaryItem label="Location contact" value={values.locationContactName} />
-          <SummaryItem label="Location email" value={values.locationEmail} />
         </SummaryGroup>
-        <SummaryGroup title="Access">
-          <SummaryItem label="Customer portal" value={values.portalEnabled ? 'Enabled' : 'Disabled'} />
-          <SummaryItem
-            label="Invitation email"
-            value={values.sendInvitation ? 'Send immediately' : 'Do not send yet'}
-          />
+        <SummaryGroup title="Notes">
           <div className="sm:col-span-2">
             <SummaryItem label="Internal notes" value={values.internalNotes} />
           </div>

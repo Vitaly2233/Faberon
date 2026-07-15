@@ -11,7 +11,7 @@ export function GeneralInformationSection({ values, onFieldChange }: CustomerFor
           id="customer-type"
           label="Customer type"
           value={values.customerType}
-          options={['Company', 'Individual', 'Government', 'Nonprofit']}
+          options={['Company', 'Individual', 'Government'] as const}
           onChange={(value) => onFieldChange('customerType', value)}
         />
         <TextField

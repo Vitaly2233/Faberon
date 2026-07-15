@@ -1,43 +1,17 @@
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { createCustomer } from './api/customerApi'
 import { NewCustomerForm } from './components/create/NewCustomerForm'
+import { initialNewCustomerValues } from './data/newCustomerForm'
 import type { NewCustomerField, NewCustomerFormStep, NewCustomerFormValues } from './types'
-
-const initialValues: NewCustomerFormValues = {
-  customerType: 'Company',
-  customerName: '',
-  legalCompanyName: '',
-  taxNumber: '',
-  contactName: '',
-  contactEmail: '',
-  contactPhone: '',
-  jobTitle: '',
-  billingAddress: '',
-  billingCity: '',
-  billingRegion: '',
-  billingPostalCode: '',
-  billingCountry: 'United States',
-  paymentTerms: 'Net 30',
-  currency: 'USD ($)',
-  locationName: '',
-  locationAddress: '',
-  locationCity: '',
-  locationRegion: '',
-  locationPostalCode: '',
-  locationCountry: 'United States',
-  locationContactName: '',
-  locationPhone: '',
-  locationEmail: '',
-  portalEnabled: true,
-  sendInvitation: true,
-  internalNotes: '',
-}
 
 export function NewCustomerPage() {
   const navigate = useNavigate()
   const pageTopRef = useRef<HTMLDivElement>(null)
-  const [values, setValues] = useState(initialValues)
+  const [values, setValues] = useState(initialNewCustomerValues)
   const [currentStep, setCurrentStep] = useState<NewCustomerFormStep>(0)
+  const [isCreating, setIsCreating] = useState(false)
+  const [createError, setCreateError] = useState<string | null>(null)
 
   const handleFieldChange = <Field extends NewCustomerField>(
     field: Field,
@@ -68,6 +42,20 @@ export function NewCustomerPage() {
     }
   }
 
+  const handleCreate = async () => {
+    setIsCreating(true)
+    setCreateError(null)
+
+    try {
+      await createCustomer(values)
+      returnToCustomers()
+    } catch {
+      setCreateError('Could not create the customer. Check the information and try again.')
+    } finally {
+      setIsCreating(false)
+    }
+  }
+
   return (
     <div ref={pageTopRef} className="min-h-full bg-canvas p-3 sm:p-5">
       <NewCustomerForm
@@ -77,7 +65,9 @@ export function NewCustomerPage() {
         onExit={returnToCustomers}
         onBack={handleBack}
         onContinue={handleContinue}
-        onCreate={returnToCustomers}
+        onCreate={handleCreate}
+        isCreating={isCreating}
+        createError={createError}
       />
     </div>
   )

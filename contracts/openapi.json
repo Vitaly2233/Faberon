@@ -345,19 +345,19 @@
             "maxLength": 120
           },
           "email": {
-            "type": "object",
+            "type": "string",
             "example": "ada@example.com",
             "maxLength": 320,
             "nullable": true
           },
           "phone": {
-            "type": "object",
+            "type": "string",
             "example": "+4798765432",
             "maxLength": 32,
             "nullable": true
           },
           "description": {
-            "type": "object",
+            "type": "string",
             "example": "Primary contact",
             "nullable": true
           }
@@ -382,7 +382,7 @@
             "maxLength": 120
           },
           "region": {
-            "type": "object",
+            "type": "string",
             "example": "Oslo",
             "maxLength": 120,
             "nullable": true
@@ -446,37 +446,37 @@
             "example": "company"
           },
           "legalName": {
-            "type": "object",
+            "type": "string",
             "example": "Acme AS",
             "maxLength": 200,
             "nullable": true
           },
           "taxNumber": {
-            "type": "object",
+            "type": "string",
             "example": "NO999888777",
             "maxLength": 64,
             "nullable": true
           },
           "address": {
-            "type": "object",
+            "type": "string",
             "example": "Karl Johans gate 1",
             "maxLength": 240,
             "nullable": true
           },
           "city": {
-            "type": "object",
+            "type": "string",
             "example": "Oslo",
             "maxLength": 120,
             "nullable": true
           },
           "region": {
-            "type": "object",
+            "type": "string",
             "example": "Oslo",
             "maxLength": 120,
             "nullable": true
           },
           "postalCode": {
-            "type": "object",
+            "type": "string",
             "example": "0154",
             "maxLength": 32,
             "nullable": true
@@ -491,7 +491,7 @@
             "nullable": true
           },
           "notes": {
-            "type": "object",
+            "type": "string",
             "example": "Preferred customer",
             "nullable": true
           },

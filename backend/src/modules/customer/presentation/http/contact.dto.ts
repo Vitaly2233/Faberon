@@ -17,21 +17,35 @@ export class CreateContactRequest {
   @MaxLength(120)
   name!: string;
 
-  @ApiPropertyOptional({ example: 'ada@example.com', maxLength: 320, nullable: true })
+  @ApiPropertyOptional({
+    type: String,
+    example: 'ada@example.com',
+    maxLength: 320,
+    nullable: true,
+  })
   @NormalizeText({ emptyToNull: true, lowercase: true })
   @IsOptional()
   @IsEmail()
   @MaxLength(320)
   email?: string | null;
 
-  @ApiPropertyOptional({ example: '+4798765432', maxLength: 32, nullable: true })
+  @ApiPropertyOptional({
+    type: String,
+    example: '+4798765432',
+    maxLength: 32,
+    nullable: true,
+  })
   @NormalizeText({ emptyToNull: true })
   @IsOptional()
   @IsPhoneNumber()
   @MaxLength(32)
   phone?: string | null;
 
-  @ApiPropertyOptional({ example: 'Primary contact', nullable: true })
+  @ApiPropertyOptional({
+    type: String,
+    example: 'Primary contact',
+    nullable: true,
+  })
   @NormalizeText({ emptyToNull: true })
   @IsOptional()
   @IsString()
