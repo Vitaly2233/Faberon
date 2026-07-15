@@ -1,0 +1,604 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/v1/customers": {
+      "get": {
+        "operationId": "CustomerController_findAll_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomerResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List customers",
+        "tags": [
+          "customers"
+        ]
+      },
+      "post": {
+        "operationId": "CustomerController_create_v1",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request body is invalid."
+          }
+        },
+        "summary": "Create a customer",
+        "tags": [
+          "customers"
+        ]
+      }
+    },
+    "/api/v1/customers/{customerId}": {
+      "get": {
+        "operationId": "CustomerController_findById_v1",
+        "parameters": [
+          {
+            "name": "customerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The customer ID is not a UUIDv7."
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get a customer",
+        "tags": [
+          "customers"
+        ]
+      }
+    },
+    "/api/v1/customers/{customerId}/contact": {
+      "post": {
+        "operationId": "CustomerController_createContact_v1",
+        "parameters": [
+          {
+            "name": "customerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateContactRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request or customer ID is invalid."
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create the customer contact",
+        "tags": [
+          "customers"
+        ]
+      }
+    },
+    "/api/v1/customers/{customerId}/billing-information": {
+      "post": {
+        "operationId": "CustomerController_createBillingInformation_v1",
+        "parameters": [
+          {
+            "name": "customerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBillingInformationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BillingInformationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request or customer ID is invalid."
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create the customer billing information",
+        "tags": [
+          "customers"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Faberon API",
+    "description": "",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CustomerResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "019535d9-3df7-79fb-b466-fa907fa17f9e"
+          },
+          "name": {
+            "type": "string",
+            "example": "Acme AS"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "individual",
+              "company",
+              "government"
+            ]
+          },
+          "legalName": {
+            "type": "string",
+            "nullable": true
+          },
+          "taxNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "nullable": true
+          },
+          "region": {
+            "type": "string",
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "enum": [
+              "pl",
+              "no"
+            ],
+            "nullable": true
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "type",
+          "legalName",
+          "taxNumber",
+          "address",
+          "city",
+          "region",
+          "postalCode",
+          "country",
+          "notes"
+        ]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "number",
+            "example": 404
+          },
+          "message": {
+            "type": "string",
+            "example": "Resource was not found."
+          },
+          "error": {
+            "type": "string",
+            "example": "Not Found"
+          }
+        },
+        "required": [
+          "statusCode",
+          "message",
+          "error"
+        ]
+      },
+      "CreateCustomerRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Acme AS",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "individual",
+              "company",
+              "government"
+            ],
+            "example": "company"
+          },
+          "legalName": {
+            "type": "object",
+            "example": "Acme AS",
+            "maxLength": 200,
+            "nullable": true
+          },
+          "taxNumber": {
+            "type": "object",
+            "example": "NO999888777",
+            "maxLength": 64,
+            "nullable": true
+          },
+          "address": {
+            "type": "object",
+            "example": "Karl Johans gate 1",
+            "maxLength": 240,
+            "nullable": true
+          },
+          "city": {
+            "type": "object",
+            "example": "Oslo",
+            "maxLength": 120,
+            "nullable": true
+          },
+          "region": {
+            "type": "object",
+            "example": "Oslo",
+            "maxLength": 120,
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "object",
+            "example": "0154",
+            "maxLength": 32,
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "enum": [
+              "pl",
+              "no"
+            ],
+            "example": "no",
+            "nullable": true
+          },
+          "notes": {
+            "type": "object",
+            "example": "Preferred customer",
+            "nullable": true
+          }
+        },
+        "required": [
+          "name",
+          "type"
+        ]
+      },
+      "CreateContactRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Ada Lovelace",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "email": {
+            "type": "object",
+            "example": "ada@example.com",
+            "maxLength": 320,
+            "nullable": true
+          },
+          "phone": {
+            "type": "object",
+            "example": "+4798765432",
+            "maxLength": 32,
+            "nullable": true
+          },
+          "description": {
+            "type": "object",
+            "example": "Primary contact",
+            "nullable": true
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "ContactResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "019535d9-3df8-7abc-8def-fa907fa17f9f"
+          },
+          "customerId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "019535d9-3df7-79fb-b466-fa907fa17f9e"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "customerId",
+          "name",
+          "email",
+          "phone",
+          "description"
+        ]
+      },
+      "CreateBillingInformationRequest": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "example": "Karl Johans gate 1",
+            "minLength": 1,
+            "maxLength": 240
+          },
+          "city": {
+            "type": "string",
+            "example": "Oslo",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "region": {
+            "type": "object",
+            "example": "Oslo",
+            "maxLength": 120,
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "string",
+            "example": "0154",
+            "minLength": 1,
+            "maxLength": 32
+          },
+          "country": {
+            "type": "string",
+            "enum": [
+              "pl",
+              "no"
+            ],
+            "example": "no"
+          },
+          "dueWithinDays": {
+            "type": "number",
+            "example": 14,
+            "minimum": 0,
+            "maximum": 365
+          },
+          "currency": {
+            "type": "string",
+            "enum": [
+              "usd",
+              "pln",
+              "eur",
+              "nok"
+            ],
+            "example": "nok"
+          }
+        },
+        "required": [
+          "address",
+          "city",
+          "postalCode",
+          "country",
+          "dueWithinDays",
+          "currency"
+        ]
+      },
+      "BillingInformationResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "019535d9-3df8-7abc-8def-fa907fa17f9f"
+          },
+          "customerId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "019535d9-3df7-79fb-b466-fa907fa17f9e"
+          },
+          "address": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string",
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string",
+            "enum": [
+              "pl",
+              "no"
+            ]
+          },
+          "dueWithinDays": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 365
+          },
+          "currency": {
+            "type": "string",
+            "enum": [
+              "usd",
+              "pln",
+              "eur",
+              "nok"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "customerId",
+          "address",
+          "city",
+          "region",
+          "postalCode",
+          "country",
+          "dueWithinDays",
+          "currency"
+        ]
+      }
+    }
+  }
+}
