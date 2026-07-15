@@ -1,4 +1,5 @@
 import { describe, expect, it, jest } from '@jest/globals';
+import type { TransactionManager } from '../../../common/application/transaction-manager';
 import {
   CountryCode,
   CurrencyCode,
@@ -39,13 +40,48 @@ const customer: Customer = {
 };
 
 describe('CustomerService', () => {
-  it('creates a customer through the repository', async () => {
-    const repository = {
+  it('creates a customer with optional contact and billing information', async () => {
+    const customerRepository = {
       create: jest
         .fn<CustomerRepository['create']>()
         .mockResolvedValue(customer),
     } as unknown as CustomerRepository;
-    const service = new CustomerService(repository);
+    const contactService = {
+      create: jest.fn<ContactService['create']>().mockResolvedValue({
+        id: detailId,
+        customerId,
+        name: 'Ada Lovelace',
+        email: 'ada@example.com',
+        phone: null,
+        description: null,
+      }),
+    } as unknown as ContactService;
+    const billingInformationService = {
+      create: jest
+        .fn<BillingInformationService['create']>()
+        .mockResolvedValue({
+          id: detailId,
+          customerId,
+          address: 'Karl Johans gate 1',
+          city: 'Oslo',
+          region: null,
+          postalCode: '0154',
+          country: CountryCode.Norway,
+          dueWithinDays: 14,
+          currency: CurrencyCode.NorwegianKrone,
+        }),
+    } as unknown as BillingInformationService;
+    const transactionManager = {
+      runInTransaction: jest.fn((operation: () => Promise<Customer>) =>
+        operation(),
+      ),
+    } as unknown as TransactionManager;
+    const service = new CustomerService(
+      customerRepository,
+      contactService,
+      billingInformationService,
+      transactionManager,
+    );
     const input: CreateCustomerRequest = {
       name: customer.name,
       type: customer.type,
@@ -57,15 +93,52 @@ describe('CustomerService', () => {
       postalCode: customer.postalCode,
       country: customer.country,
       notes: customer.notes,
+      contact: {
+        name: 'Ada Lovelace',
+        email: 'ada@example.com',
+        phone: null,
+        description: null,
+      },
+      billingInformation: {
+        address: 'Karl Johans gate 1',
+        city: 'Oslo',
+        region: null,
+        postalCode: '0154',
+        country: CountryCode.Norway,
+        dueWithinDays: 14,
+        currency: CurrencyCode.NorwegianKrone,
+      },
     };
 
     await expect(service.create(input)).resolves.toEqual(customer);
-    expect(repository.create).toHaveBeenCalledWith(input);
+    expect(transactionManager.runInTransaction).toHaveBeenCalledTimes(1);
+    expect(customerRepository.create).toHaveBeenCalledWith({
+      name: customer.name,
+      type: customer.type,
+      legalName: customer.legalName,
+      taxNumber: customer.taxNumber,
+      address: customer.address,
+      city: customer.city,
+      region: customer.region,
+      postalCode: customer.postalCode,
+      country: customer.country,
+      notes: customer.notes,
+    });
+    expect(contactService.create).toHaveBeenCalledWith(
+      customerId,
+      input.contact!,
+      { customer },
+    );
+    expect(billingInformationService.create).toHaveBeenCalledWith(
+      customerId,
+      input.billingInformation!,
+      { customer },
+    );
   });
 });
 
 describe('ContactService', () => {
-  it('creates the singleton contact for an existing customer', async () => {
+  it('uses the customer context without querying for the customer again', async () => {
     const contact: Contact = {
       id: detailId,
       customerId,
@@ -98,7 +171,10 @@ describe('ContactService', () => {
       description: contact.description,
     };
 
-    await expect(service.create(customerId, input)).resolves.toEqual(contact);
+    await expect(
+      service.create(customerId, input, { customer }),
+    ).resolves.toEqual(contact);
+    expect(customerRepository.findById).not.toHaveBeenCalled();
     expect(contactRepository.create).toHaveBeenCalledWith({
       customerId,
       ...input,
@@ -128,7 +204,7 @@ describe('ContactService', () => {
 });
 
 describe('BillingInformationService', () => {
-  it('rejects duplicate billing information', async () => {
+  it('uses the customer context when checking for duplicate billing information', async () => {
     const billingInformation: BillingInformation = {
       id: detailId,
       customerId,
@@ -165,8 +241,9 @@ describe('BillingInformationService', () => {
       currency: billingInformation.currency,
     };
 
-    await expect(service.create(customerId, input)).rejects.toBeInstanceOf(
-      CustomerDetailsAlreadyExistError,
-    );
+    await expect(
+      service.create(customerId, input, { customer }),
+    ).rejects.toBeInstanceOf(CustomerDetailsAlreadyExistError);
+    expect(customerRepository.findById).not.toHaveBeenCalled();
   });
 });

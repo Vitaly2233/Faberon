@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsEnum,
@@ -5,9 +6,12 @@ import {
   IsString,
   MaxLength,
   MinLength,
+  ValidateNested,
 } from 'class-validator';
 import { NormalizeText } from '../../../../common/validation/normalize-text.decorator';
 import { CountryCode, CustomerType } from '../../domain/customer';
+import { CreateBillingInformationRequest } from './billing-information.dto';
+import { CreateContactRequest } from './contact.dto';
 
 export class CreateCustomerRequest {
   @ApiProperty({ example: 'Acme AS', minLength: 1, maxLength: 120 })
@@ -74,6 +78,18 @@ export class CreateCustomerRequest {
   @IsString()
   @MaxLength(4000)
   notes?: string | null;
+
+  @ApiPropertyOptional({ type: () => CreateContactRequest })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => CreateContactRequest)
+  contact?: CreateContactRequest;
+
+  @ApiPropertyOptional({ type: () => CreateBillingInformationRequest })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => CreateBillingInformationRequest)
+  billingInformation?: CreateBillingInformationRequest;
 }
 
 export class CustomerResponse {

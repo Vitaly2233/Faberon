@@ -335,6 +335,98 @@
           "error"
         ]
       },
+      "CreateContactRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Ada Lovelace",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "email": {
+            "type": "object",
+            "example": "ada@example.com",
+            "maxLength": 320,
+            "nullable": true
+          },
+          "phone": {
+            "type": "object",
+            "example": "+4798765432",
+            "maxLength": 32,
+            "nullable": true
+          },
+          "description": {
+            "type": "object",
+            "example": "Primary contact",
+            "nullable": true
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "CreateBillingInformationRequest": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "example": "Karl Johans gate 1",
+            "minLength": 1,
+            "maxLength": 240
+          },
+          "city": {
+            "type": "string",
+            "example": "Oslo",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "region": {
+            "type": "object",
+            "example": "Oslo",
+            "maxLength": 120,
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "string",
+            "example": "0154",
+            "minLength": 1,
+            "maxLength": 32
+          },
+          "country": {
+            "type": "string",
+            "enum": [
+              "pl",
+              "no"
+            ],
+            "example": "no"
+          },
+          "dueWithinDays": {
+            "type": "number",
+            "example": 14,
+            "minimum": 0,
+            "maximum": 365
+          },
+          "currency": {
+            "type": "string",
+            "enum": [
+              "usd",
+              "pln",
+              "eur",
+              "nok"
+            ],
+            "example": "nok"
+          }
+        },
+        "required": [
+          "address",
+          "city",
+          "postalCode",
+          "country",
+          "dueWithinDays",
+          "currency"
+        ]
+      },
       "CreateCustomerRequest": {
         "type": "object",
         "properties": {
@@ -402,42 +494,17 @@
             "type": "object",
             "example": "Preferred customer",
             "nullable": true
+          },
+          "contact": {
+            "$ref": "#/components/schemas/CreateContactRequest"
+          },
+          "billingInformation": {
+            "$ref": "#/components/schemas/CreateBillingInformationRequest"
           }
         },
         "required": [
           "name",
           "type"
-        ]
-      },
-      "CreateContactRequest": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "Ada Lovelace",
-            "minLength": 1,
-            "maxLength": 120
-          },
-          "email": {
-            "type": "object",
-            "example": "ada@example.com",
-            "maxLength": 320,
-            "nullable": true
-          },
-          "phone": {
-            "type": "object",
-            "example": "+4798765432",
-            "maxLength": 32,
-            "nullable": true
-          },
-          "description": {
-            "type": "object",
-            "example": "Primary contact",
-            "nullable": true
-          }
-        },
-        "required": [
-          "name"
         ]
       },
       "ContactResponse": {
@@ -476,67 +543,6 @@
           "email",
           "phone",
           "description"
-        ]
-      },
-      "CreateBillingInformationRequest": {
-        "type": "object",
-        "properties": {
-          "address": {
-            "type": "string",
-            "example": "Karl Johans gate 1",
-            "minLength": 1,
-            "maxLength": 240
-          },
-          "city": {
-            "type": "string",
-            "example": "Oslo",
-            "minLength": 1,
-            "maxLength": 120
-          },
-          "region": {
-            "type": "object",
-            "example": "Oslo",
-            "maxLength": 120,
-            "nullable": true
-          },
-          "postalCode": {
-            "type": "string",
-            "example": "0154",
-            "minLength": 1,
-            "maxLength": 32
-          },
-          "country": {
-            "type": "string",
-            "enum": [
-              "pl",
-              "no"
-            ],
-            "example": "no"
-          },
-          "dueWithinDays": {
-            "type": "number",
-            "example": 14,
-            "minimum": 0,
-            "maximum": 365
-          },
-          "currency": {
-            "type": "string",
-            "enum": [
-              "usd",
-              "pln",
-              "eur",
-              "nok"
-            ],
-            "example": "nok"
-          }
-        },
-        "required": [
-          "address",
-          "city",
-          "postalCode",
-          "country",
-          "dueWithinDays",
-          "currency"
         ]
       },
       "BillingInformationResponse": {
