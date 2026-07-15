@@ -34,6 +34,8 @@ Implement the requested behavior without speculative authentication, persistence
 
 Keep strict TypeScript and automated checks healthy. Validate changes in proportion to their risk, resolve introduced diagnostics, and leave production builds warning-free where practical.
 
+Do not add new automated tests until this temporary constraint is explicitly lifted. Continue running and maintaining the existing checks.
+
 ## VIII. The backend protects the domain
 
 Backend code is organized by bounded context with domain, application, infrastructure, and presentation boundaries. Domain behavior remains independent of NestJS, transports, databases, and brokers. Dependencies point inward through explicit ports; adapters implement those ports at the edge.

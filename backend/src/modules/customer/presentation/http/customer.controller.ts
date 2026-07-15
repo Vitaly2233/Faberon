@@ -8,12 +8,14 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiConflictResponse,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { ErrorResponse } from '../../../../common/errors/error-response.dto';
 import { BillingInformationService } from '../../application/billing-information.service';
@@ -31,6 +33,8 @@ import {
 } from './customer.dto';
 
 @ApiTags('customers')
+@ApiBearerAuth('access-token')
+@ApiUnauthorizedResponse({ type: ErrorResponse })
 @Controller('customers')
 export class CustomerController {
   constructor(

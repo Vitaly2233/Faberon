@@ -2,6 +2,15 @@ import { defineRelations } from 'drizzle-orm';
 import * as schema from './index';
 
 export const relations = defineRelations(schema, (relation) => ({
+  companies: {
+    users: relation.many.users(),
+  },
+  users: {
+    company: relation.one.companies({
+      from: relation.users.companyId,
+      to: relation.companies.id,
+    }),
+  },
   customers: {
     contact: relation.one.contacts(),
     billingInformation: relation.one.billingInformation(),

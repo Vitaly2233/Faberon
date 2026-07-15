@@ -6,6 +6,7 @@ import { DatabaseModule } from './common/database/database.module';
 import { GlobalExceptionFilter } from './common/errors/global-exception.filter';
 import { RabbitMqModule } from './common/rabbitmq/rabbitmq.module';
 import { CustomerModule } from './modules/customer/customer.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -18,9 +19,11 @@ import { CustomerModule } from './modules/customer/customer.module';
         PORT: Joi.number().port().default(3000),
         DATABASE_URL: Joi.string().uri().required(),
         RABBITMQ_URL: Joi.string().uri().required(),
+        JWT_SECRET: Joi.string().min(32).required(),
       }),
     }),
     DatabaseModule,
+    UsersModule,
     CustomerModule,
     RabbitMqModule,
   ],
