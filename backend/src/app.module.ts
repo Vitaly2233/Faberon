@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { APP_FILTER } from '@nestjs/core';
 import Joi from 'joi';
 import { DatabaseModule } from './common/database/database.module';
+import { GlobalExceptionFilter } from './common/errors/global-exception.filter';
 import { RabbitMqModule } from './common/rabbitmq/rabbitmq.module';
 import { CustomerModule } from './modules/customer/customer.module';
 
@@ -22,5 +24,6 @@ import { CustomerModule } from './modules/customer/customer.module';
     CustomerModule,
     RabbitMqModule,
   ],
+  providers: [{ provide: APP_FILTER, useClass: GlobalExceptionFilter }],
 })
 export class AppModule {}

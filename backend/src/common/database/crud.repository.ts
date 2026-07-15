@@ -8,7 +8,7 @@ import {
 import type { AnyPgColumn, AnyPgTable } from 'drizzle-orm/pg-core';
 import type { DatabaseService } from './database.service';
 
-export abstract class BaseRepository<
+export abstract class CrudRepository<
   TTable extends AnyPgTable,
   TIdColumn extends AnyPgColumn,
   TDomain,
@@ -48,7 +48,7 @@ export abstract class BaseRepository<
     if (row === undefined) {
       throw new Error('Created row was not returned by the database.');
     }
-    return this.toDomain(row as InferSelectModel<TTable>);
+    return this.toDomain(row);
   }
 
   async createMany(inputs: InferInsertModel<TTable>[]): Promise<TDomain[]> {

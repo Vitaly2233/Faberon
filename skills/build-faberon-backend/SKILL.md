@@ -5,7 +5,7 @@ description: Build or modify Faberon's NestJS backend, including HTTP APIs, doma
 
 # Build Faberon Backend
 
-Apply domain-driven design without turning simple behavior into unnecessary framework code. Keep business rules independent of NestJS, TypeORM, transport DTOs, and messaging clients.
+Apply domain-driven design without turning simple behavior into unnecessary framework code. Keep business rules independent of NestJS, Drizzle, transport DTOs, and messaging clients.
 
 ## Workflow
 
@@ -22,10 +22,10 @@ Apply domain-driven design without turning simple behavior into unnecessary fram
 ## Architecture
 
 - Organize code by bounded context, then by `domain`, `application`, `infrastructure`, and `presentation`.
-- Keep domain entities, value objects, domain services, events, and repository interfaces free of NestJS and TypeORM imports.
+- Keep domain entities, value objects, domain services, events, and repository interfaces free of NestJS and Drizzle imports.
 - Put orchestration and transaction boundaries in application use cases. Depend on ports represented by explicit injection tokens.
 - Keep controllers thin: validate and map DTOs, dispatch the use case, and map the result to a documented response.
-- Keep TypeORM entities and mappers in infrastructure. Do not expose persistence models from HTTP endpoints.
+- Keep Drizzle schemas, repositories, and mappers in infrastructure. Do not expose persistence models from HTTP endpoints.
 - Publish integration events through a transactional outbox when state changes and messages must remain consistent.
 - Make consumers idempotent. Treat message delivery as at least once and define retry/dead-letter behavior deliberately.
 - Use configuration validation, structured logging, graceful shutdown, and health/readiness indicators.
