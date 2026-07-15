@@ -8,7 +8,7 @@ import { CrudRepository } from '../../../../common/database/crud.repository';
 import { DatabaseService } from '../../../../common/database/database.service';
 import { billingInformation } from '../../../../common/database/schemas/billing-information.schema';
 import { isUniqueViolation } from '../../../../common/utils/database-error.util';
-import type { BillingInformation } from '../../domain/customer';
+import { BillingInformation } from '../../domain/customer';
 import { CustomerDetailsAlreadyExistError } from '../../domain/customer.errors';
 
 @Injectable()
@@ -48,6 +48,16 @@ export class BillingInformationRepository extends CrudRepository<
   protected toDomain(
     row: InferSelectModel<typeof billingInformation>,
   ): BillingInformation {
-    return row;
+    return new BillingInformation(
+      row.id,
+      row.customerId,
+      row.address,
+      row.city,
+      row.region,
+      row.postalCode,
+      row.country,
+      row.dueWithinDays,
+      row.currency,
+    );
   }
 }

@@ -8,7 +8,7 @@ import { CrudRepository } from '../../../../common/database/crud.repository';
 import { DatabaseService } from '../../../../common/database/database.service';
 import { contacts } from '../../../../common/database/schemas/contact.schema';
 import { isUniqueViolation } from '../../../../common/utils/database-error.util';
-import type { Contact } from '../../domain/customer';
+import { Contact } from '../../domain/customer';
 import { CustomerDetailsAlreadyExistError } from '../../domain/customer.errors';
 
 @Injectable()
@@ -44,6 +44,13 @@ export class ContactRepository extends CrudRepository<
   }
 
   protected toDomain(row: InferSelectModel<typeof contacts>): Contact {
-    return row;
+    return new Contact(
+      row.id,
+      row.customerId,
+      row.name,
+      row.email,
+      row.phone,
+      row.description,
+    );
   }
 }

@@ -19,37 +19,43 @@ export const CurrencyCode = {
 } as const;
 export type CurrencyCode = (typeof CurrencyCode)[keyof typeof CurrencyCode];
 
-export interface Customer {
-  id: string;
-  name: string;
-  type: CustomerType;
-  legalName: string | null;
-  taxNumber: string | null;
-  address: string | null;
-  city: string | null;
-  region: string | null;
-  postalCode: string | null;
-  country: CountryCode | null;
-  notes: string | null;
+export class Customer {
+  constructor(
+    public readonly id: string,
+    public readonly name: string,
+    public readonly type: CustomerType,
+    public readonly legalName: string | null,
+    public readonly taxNumber: string | null,
+    public readonly address: string | null,
+    public readonly city: string | null,
+    public readonly region: string | null,
+    public readonly postalCode: string | null,
+    public readonly country: CountryCode | null,
+    public readonly notes: string | null,
+  ) {}
 }
 
-export interface Contact {
-  id: string;
-  customerId: string;
-  name: string;
-  email: string | null;
-  phone: string | null;
-  description: string | null;
+export class Contact {
+  constructor(
+    public readonly id: string,
+    public readonly customerId: string,
+    public readonly name: string,
+    public readonly email: string | null,
+    public readonly phone: string | null,
+    public readonly description: string | null,
+  ) {}
 }
 
-export interface BillingInformation {
-  id: string;
-  customerId: string;
-  address: string;
-  city: string;
-  region: string | null;
-  postalCode: string;
-  country: CountryCode;
-  dueWithinDays: number;
-  currency: CurrencyCode;
+export class BillingInformation {
+  constructor(
+    public readonly id: string,
+    public readonly customerId: string,
+    public readonly address: string,
+    public readonly city: string,
+    public readonly region: string | null,
+    public readonly postalCode: string,
+    public readonly country: CountryCode,
+    public readonly dueWithinDays: number,
+    public readonly currency: CurrencyCode,
+  ) {}
 }
