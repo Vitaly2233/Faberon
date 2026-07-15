@@ -5,6 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { AppModule } from './app.module';
+import { createHttpLoggerMiddleware } from './common/logging/http-logger.middleware';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
@@ -12,7 +13,13 @@ async function bootstrap(): Promise<void> {
 
   app.setGlobalPrefix('api');
   app.enableVersioning({ type: VersioningType.URI, defaultVersion: '1' });
+  app.enableCors();
   app.enableShutdownHooks();
+  app.use(
+    createHttpLoggerMiddleware(
+      config.getOrThrow<string>('NODE_ENV') !== 'production',
+    ),
+  );
   app.useGlobalPipes(
     new ValidationPipe({
       forbidNonWhitelisted: true,
