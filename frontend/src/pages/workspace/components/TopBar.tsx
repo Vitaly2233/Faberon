@@ -3,48 +3,14 @@ import NotificationsNoneRoundedIcon from '@mui/icons-material/NotificationsNoneR
 import { useState } from 'react'
 import { Brand } from '../../../components/Brand'
 
-type WorkspaceRole = 'owner' | 'technician'
-
 export function TopBar() {
   const [notificationsOpen, setNotificationsOpen] = useState(false)
-  const [role, setRole] = useState<WorkspaceRole>('owner')
 
   return (
     <header className="flex h-header shrink-0 items-center gap-4 border-b border-header-line bg-header px-4 text-header-ink sm:px-6">
       <Brand tone="inverse" className="min-w-0" />
 
       <div className="ml-auto flex items-center gap-3">
-        <div
-          className="flex rounded-full border border-header-line bg-header-field p-0.5"
-          role="group"
-          aria-label="Workspace role"
-        >
-          <button
-            type="button"
-            onClick={() => setRole('owner')}
-            className={`h-7 cursor-pointer rounded-full px-3 text-xs font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
-              role === 'owner'
-                ? 'bg-header-ink text-header'
-                : 'text-header-copy hover:text-header-ink'
-            }`}
-            aria-pressed={role === 'owner'}
-          >
-            Owner
-          </button>
-          <button
-            type="button"
-            onClick={() => setRole('technician')}
-            className={`h-7 cursor-pointer rounded-full px-3 text-xs font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
-              role === 'technician'
-                ? 'bg-header-ink text-header'
-                : 'text-header-copy hover:text-header-ink'
-            }`}
-            aria-pressed={role === 'technician'}
-          >
-            Technician
-          </button>
-        </div>
-
         <div className="relative">
           <button
             type="button"

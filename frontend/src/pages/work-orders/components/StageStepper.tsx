@@ -1,5 +1,5 @@
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded'
-import { WORK_ORDER_STAGES, type WorkOrderStage } from '../../../store/workOrderTypes'
+import { WORK_ORDER_STAGES, type WorkOrderStage } from '../../../store/types/work-order'
 
 type StageStepperProps = {
   stage: WorkOrderStage

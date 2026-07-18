@@ -12,25 +12,14 @@ type ModalsStore = {
   isOpen: (name: ModalName) => boolean
 }
 
-const modalEntryCreators = {
-  NewCustomer(options?: ModalDefinitions['NewCustomer']) {
-    return { name: 'NewCustomer', ...options }
-  },
-  NewWorkOrder(options?: ModalDefinitions['NewWorkOrder']) {
-    return { name: 'NewWorkOrder', ...options }
-  },
-} satisfies {
-  [Name in ModalName]: (options?: ModalDefinitions[Name]) => Extract<ModalEntry, { name: Name }>
-}
-
 export const useModalsStore = create<ModalsStore>((set, get) => ({
   stack: [],
 
-  open: (name, options) => {
+  open: <Name extends ModalName>(name: Name, options?: ModalDefinitions[Name]) => {
     set((state) => ({
       stack: [
         ...state.stack.filter((entry) => entry.name !== name),
-        modalEntryCreators[name](options),
+        { name, ...(options ?? {}) } as ModalEntry,
       ],
     }))
 

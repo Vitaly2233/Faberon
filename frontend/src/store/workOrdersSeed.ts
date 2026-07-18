@@ -1,4 +1,4 @@
-import { createId, type WorkOrderRecord } from './workOrderTypes'
+import { createId, type WorkOrderRecord } from './types/work-order'
 
 export const seedWorkOrders: WorkOrderRecord[] = [
   {

@@ -2,13 +2,14 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import { useNavigate } from 'react-router-dom'
 import { useCustomersStore } from '../../store/customersStore'
 import { useModalsStore } from '../../store/modals'
+import { usePrintersStore } from '../../store/printersStore'
 import { useWorkOrdersStore } from '../../store/workOrdersStore'
 import { CustomersTable } from './components/CustomersTable'
 
 export function CustomersPage() {
   const navigate = useNavigate()
   const customers = useCustomersStore((state) => state.customers)
-  const printers = useWorkOrdersStore((state) => state.printers)
+  const printers = usePrintersStore((state) => state.printers)
   const workOrders = useWorkOrdersStore((state) => state.workOrders)
   const openModal = useModalsStore((state) => state.open)
 

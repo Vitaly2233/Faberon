@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
-import type { WorkOrderStage } from '../../../store/workOrderTypes'
-import { stageTone } from '../../../store/workOrderTypes'
+import type { WorkOrderStage } from '../../../store/types/work-order'
+import { stageTone } from '../../../store/types/work-order'
 
 type Tone = 'success' | 'info' | 'warning' | 'inactive' | 'danger'
 

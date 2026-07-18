@@ -3,8 +3,9 @@ import { Modal } from '../components/Modal'
 import { useCompanyStore } from '../store/companyStore'
 import { useCustomersStore } from '../store/customersStore'
 import { useModalsStore, type ModalOptions } from '../store/modals'
+import { usePrintersStore } from '../store/printersStore'
 import { useWorkOrdersStore } from '../store/workOrdersStore'
-import type { WorkOrderType } from '../store/workOrderTypes'
+import type { WorkOrderType } from '../store/types/work-order'
 
 type NewWorkOrderModalProps = {
   options: ModalOptions<'NewWorkOrder'>
@@ -13,7 +14,7 @@ type NewWorkOrderModalProps = {
 export function NewWorkOrderModal({ options }: NewWorkOrderModalProps) {
   const close = useModalsStore((state) => state.close)
   const customers = useCustomersStore((state) => state.customers)
-  const printers = useWorkOrdersStore((state) => state.printers)
+  const printers = usePrintersStore((state) => state.printers)
   const createWorkOrder = useWorkOrdersStore((state) => state.createWorkOrder)
   const company = useCompanyStore((state) => state.company)
 

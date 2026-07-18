@@ -15,6 +15,14 @@ export type ModalDefinitions = {
     onCreated?: (payload: { workOrderId: number }) => void
     onError?: (error: unknown) => void
   }
+  NewPrinter: {
+    data?: {
+      customerId?: string
+    }
+    onClosed?: () => void
+    onSaved?: (payload: { printerId: string }) => void
+    onError?: (error: unknown) => void
+  }
 }
 
 export type ModalName = keyof ModalDefinitions

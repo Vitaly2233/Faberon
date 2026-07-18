@@ -1,48 +1,63 @@
-export type PrinterRecord = {
-  id: string
-  manufacturer: string
-  model: string
-  serial: string
-  customerId: string
-  ownership: 'owned' | 'rented'
-  addedAt: string
-}
+import type { PrinterRecord } from './types/printer'
 
 export const seedPrinters: PrinterRecord[] = [
   {
     id: 'p1',
+    type: 'Laser',
     manufacturer: 'HP',
     model: 'LaserJet M607',
     serial: 'SN-HP-88213',
     customerId: 'grand-hotel',
     ownership: 'owned',
+    address: null,
+    contact: 'Front desk',
     addedAt: '2024-03-12',
+    warranty: '2026-03-12',
+    pages: [
+      { id: 'r1', date: '2024-06-01', bw: 12400, color: 0 },
+      { id: 'r2', date: '2024-09-01', bw: 18100, color: 2100 },
+    ],
   },
   {
     id: 'p2',
+    type: 'Inkjet',
     manufacturer: 'Canon',
     model: 'PIXMA G7020',
     serial: 'SN-CN-40551',
     customerId: 'grand-hotel',
     ownership: 'rented',
+    address: '88 Beachline Dr, Miami, FL 33139',
+    contact: 'Housekeeping',
     addedAt: '2024-05-20',
+    warranty: null,
+    pages: [{ id: 'r3', date: '2024-08-01', bw: 900, color: 3200 }],
   },
   {
     id: 'p3',
+    type: 'Laser',
     manufacturer: 'Brother',
     model: 'HL-L8360',
     serial: 'SN-BR-11002',
     customerId: 'city-library',
     ownership: 'owned',
+    address: null,
+    contact: 'Reference desk',
     addedAt: '2023-11-02',
+    warranty: '2025-11-02',
+    pages: [{ id: 'r4', date: '2024-07-01', bw: 44200, color: 0 }],
   },
   {
     id: 'p4',
+    type: 'Plotter',
     manufacturer: 'Epson',
     model: 'SureColor T5170',
     serial: 'SN-EP-77410',
     customerId: 'river-tech',
     ownership: 'owned',
+    address: null,
+    contact: 'Design team',
     addedAt: '2024-01-15',
+    warranty: '2027-01-15',
+    pages: [],
   },
 ]

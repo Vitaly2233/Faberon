@@ -2,7 +2,7 @@ import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined'
 import { useCompanyStore } from '../../../store/companyStore'
 import { useCustomersStore } from '../../../store/customersStore'
 import type { WorkOrderRecord } from '../../../store/workOrdersStore'
-import { formatMoney } from '../../../store/workOrderTypes'
+import { formatMoney } from '../../../store/types/work-order'
 import { Modal } from '../../../components/Modal'
 
 type InvoiceModalProps = {

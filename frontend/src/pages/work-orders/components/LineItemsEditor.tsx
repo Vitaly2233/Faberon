@@ -1,7 +1,7 @@
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded'
-import type { LineItem } from '../../../store/workOrderTypes'
-import { formatMoney } from '../../../store/workOrderTypes'
+import type { LineItem } from '../../../store/types/work-order'
+import { formatMoney } from '../../../store/types/work-order'
 
 type LineItemsEditorProps = {
   items: LineItem[]

@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useCustomersStore } from '../../store/customersStore'
 import { useModalsStore } from '../../store/modals'
+import { usePrintersStore } from '../../store/printersStore'
 import { useWorkOrdersStore } from '../../store/workOrdersStore'
 import { WorkOrderDetail } from './components/WorkOrderDetail'
 import { WorkOrdersFilters, WorkOrdersTable } from './components/WorkOrdersTable'
@@ -13,7 +14,7 @@ export function WorkOrdersPage() {
   const selectedId = workOrderId ? Number(workOrderId) : null
 
   const workOrders = useWorkOrdersStore((state) => state.workOrders)
-  const printers = useWorkOrdersStore((state) => state.printers)
+  const printers = usePrintersStore((state) => state.printers)
   const customers = useCustomersStore((state) => state.customers)
 
   const openModal = useModalsStore((state) => state.open)

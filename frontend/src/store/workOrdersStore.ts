@@ -1,13 +1,11 @@
 import { create } from 'zustand'
-import { seedPrinters, type PrinterRecord } from './printersSeed'
 import {
   createId,
   todayIso,
   type LineItem,
   type WorkOrderRecord,
-  type WorkOrderStage,
   type WorkOrderType,
-} from './workOrderTypes'
+} from './types/work-order'
 import { seedWorkOrders } from './workOrdersSeed'
 
 export type CreateWorkOrderInput = {
@@ -22,7 +20,6 @@ export type CreateWorkOrderInput = {
 
 type WorkOrdersStore = {
   workOrders: WorkOrderRecord[]
-  printers: PrinterRecord[]
   currentUser: string
   createWorkOrder: (input: CreateWorkOrderInput) => number
   updateWorkOrder: (id: number, patch: Partial<WorkOrderRecord>, note?: string) => void
@@ -31,7 +28,6 @@ type WorkOrdersStore = {
 
 export const useWorkOrdersStore = create<WorkOrdersStore>((set, get) => ({
   workOrders: seedWorkOrders,
-  printers: seedPrinters,
   currentUser: 'Mike Andrew',
   createWorkOrder: (input) => {
     const id = Math.max(1041, ...get().workOrders.map((order) => order.id)) + 1
@@ -85,4 +81,4 @@ export function openWorkOrderCount(workOrders: WorkOrderRecord[]) {
   return workOrders.filter((order) => order.stage !== 'Confirmed by client').length
 }
 
-export type { WorkOrderStage, WorkOrderRecord, LineItem, PrinterRecord }
+export type { WorkOrderStage, WorkOrderRecord, LineItem } from './types/work-order'

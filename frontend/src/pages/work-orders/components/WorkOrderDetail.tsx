@@ -4,12 +4,13 @@ import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useState } from 'react'
 import { useCustomersStore } from '../../../store/customersStore'
+import { usePrintersStore } from '../../../store/printersStore'
 import { useWorkOrdersStore } from '../../../store/workOrdersStore'
 import {
   WORK_ORDER_STAGES,
   formatDate,
   type WorkOrderStage,
-} from '../../../store/workOrderTypes'
+} from '../../../store/types/work-order'
 import { fieldClassName } from './fieldStyles'
 import { InvoiceModal } from './InvoiceModal'
 import { LineItemsEditor } from './LineItemsEditor'
@@ -27,7 +28,7 @@ export function WorkOrderDetail({ workOrderId, onBack }: WorkOrderDetailProps) {
   const workOrder = useWorkOrdersStore((state) =>
     state.workOrders.find((entry) => entry.id === workOrderId),
   )
-  const printers = useWorkOrdersStore((state) => state.printers)
+  const printers = usePrintersStore((state) => state.printers)
   const updateWorkOrder = useWorkOrdersStore((state) => state.updateWorkOrder)
   const setLineItems = useWorkOrdersStore((state) => state.setLineItems)
   const customer = useCustomersStore((state) =>

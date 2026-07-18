@@ -1,7 +1,7 @@
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded'
 import { useState } from 'react'
-import type { HistoryEntry } from '../../../store/workOrderTypes'
-import { formatDate } from '../../../store/workOrderTypes'
+import type { HistoryEntry } from '../../../store/types/work-order'
+import { formatDate } from '../../../store/types/work-order'
 import { fieldClassName } from './fieldStyles'
 
 type WorkOrderHistoryProps = {
