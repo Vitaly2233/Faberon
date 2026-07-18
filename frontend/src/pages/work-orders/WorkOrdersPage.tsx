@@ -2,8 +2,8 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import { useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useCustomersStore } from '../../store/customersStore'
+import { useModalsStore } from '../../store/modals'
 import { useWorkOrdersStore } from '../../store/workOrdersStore'
-import { CreateWorkOrderModal } from './components/CreateWorkOrderModal'
 import { WorkOrderDetail } from './components/WorkOrderDetail'
 import { WorkOrdersFilters, WorkOrdersTable } from './components/WorkOrdersTable'
 
@@ -16,7 +16,7 @@ export function WorkOrdersPage() {
   const printers = useWorkOrdersStore((state) => state.printers)
   const customers = useCustomersStore((state) => state.customers)
 
-  const [creating, setCreating] = useState(false)
+  const openModal = useModalsStore((state) => state.open)
   const [filter, setFilter] = useState('All')
 
   const visible = useMemo(
@@ -46,7 +46,7 @@ export function WorkOrdersPage() {
         </div>
         <button
           type="button"
-          onClick={() => setCreating(true)}
+          onClick={() => openModal('NewWorkOrder')}
           className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-full bg-brand px-4 text-sm font-bold text-canvas transition hover:bg-brand-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
         >
           <AddRoundedIcon fontSize="small" aria-hidden="true" />
@@ -68,7 +68,6 @@ export function WorkOrdersPage() {
         onOpen={(id) => navigate(`/work-orders/${id}`)}
       />
 
-      {creating && <CreateWorkOrderModal onClose={() => setCreating(false)} />}
     </div>
   )
 }

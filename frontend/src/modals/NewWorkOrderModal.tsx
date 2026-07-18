@@ -1,17 +1,17 @@
 import { useState } from 'react'
-import { useCompanyStore } from '../../../store/companyStore'
-import { useCustomersStore } from '../../../store/customersStore'
-import { useWorkOrdersStore } from '../../../store/workOrdersStore'
-import type { WorkOrderType } from '../../../store/workOrderTypes'
-import { Field } from './FormField'
-import { fieldClassName } from './fieldStyles'
-import { Modal } from '../../../components/Modal'
+import { Modal } from '../components/Modal'
+import { useCompanyStore } from '../store/companyStore'
+import { useCustomersStore } from '../store/customersStore'
+import { useModalsStore, type ModalOptions } from '../store/modals'
+import { useWorkOrdersStore } from '../store/workOrdersStore'
+import type { WorkOrderType } from '../store/workOrderTypes'
 
-type CreateWorkOrderModalProps = {
-  onClose: () => void
+type NewWorkOrderModalProps = {
+  options: ModalOptions<'NewWorkOrder'>
 }
 
-export function CreateWorkOrderModal({ onClose }: CreateWorkOrderModalProps) {
+export function NewWorkOrderModal({ options }: NewWorkOrderModalProps) {
+  const close = useModalsStore((state) => state.close)
   const customers = useCustomersStore((state) => state.customers)
   const printers = useWorkOrdersStore((state) => state.printers)
   const createWorkOrder = useWorkOrdersStore((state) => state.createWorkOrder)
@@ -19,7 +19,7 @@ export function CreateWorkOrderModal({ onClose }: CreateWorkOrderModalProps) {
 
   const [form, setForm] = useState({
     type: 'company' as WorkOrderType,
-    customerId: customers[0]?.id ?? '',
+    customerId: options.data?.customerId ?? customers[0]?.id ?? '',
     printerId: '',
     address: '',
     contact: '',
@@ -34,50 +34,66 @@ export function CreateWorkOrderModal({ onClose }: CreateWorkOrderModalProps) {
     setForm((current) => ({ ...current, [key]: value }))
   }
 
+  const handleClose = () => {
+    close()
+  }
+
+  const handleCreate = () => {
+    if (!ready) return
+
+    try {
+      const workOrderId = createWorkOrder({
+        type: form.type,
+        customerId: form.customerId,
+        printerId: form.printerId || null,
+        address: form.address || customer?.billingAddress || company.address,
+        contact:
+          form.contact ||
+          `${customer?.contactName ?? ''} · ${customer?.phone ?? ''}`.replace(/^ · | · $/g, ''),
+        problem: form.problem.trim(),
+        invoiceFinalOnly: false,
+      })
+      options.onCreated?.({ workOrderId })
+      close()
+    } catch (error) {
+      options.onError?.(error)
+    }
+  }
+
   return (
     <Modal
       title="Create work order"
       subtitle="A number is assigned automatically. Address and contact fall back to defaults if left blank."
-      onClose={onClose}
+      onClose={handleClose}
       wide
     >
       <form
         onSubmit={(event) => {
           event.preventDefault()
-          if (!ready) return
-          createWorkOrder({
-            type: form.type,
-            customerId: form.customerId,
-            printerId: form.printerId || null,
-            address: form.address || customer?.billingAddress || company.address,
-            contact:
-              form.contact ||
-              `${customer?.contactName ?? ''} · ${customer?.phone ?? ''}`.replace(/^ · | · $/g, ''),
-            problem: form.problem.trim(),
-            invoiceFinalOnly: false,
-          })
-          onClose()
+          handleCreate()
         }}
         className="grid gap-4 sm:grid-cols-2"
       >
-        <Field label="Type">
+        <label className="block">
+          <span className="mb-1.5 block text-xs font-semibold text-ink">Type</span>
           <select
             value={form.type}
             onChange={(event) => updateField('type', event.target.value as WorkOrderType)}
-            className={fieldClassName}
+            className="field-control"
           >
             <option value="company">Company (internal)</option>
             <option value="client-requested">Client requested</option>
           </select>
-        </Field>
-        <Field label="Customer">
+        </label>
+        <label className="block">
+          <span className="mb-1.5 block text-xs font-semibold text-ink">Customer</span>
           <select
             value={form.customerId}
             onChange={(event) => {
               updateField('customerId', event.target.value)
               updateField('printerId', '')
             }}
-            className={fieldClassName}
+            className="field-control"
           >
             {customers.map((entry) => (
               <option key={entry.id} value={entry.id}>
@@ -85,12 +101,13 @@ export function CreateWorkOrderModal({ onClose }: CreateWorkOrderModalProps) {
               </option>
             ))}
           </select>
-        </Field>
-        <Field label="Printer (optional)">
+        </label>
+        <label className="block">
+          <span className="mb-1.5 block text-xs font-semibold text-ink">Printer (optional)</span>
           <select
             value={form.printerId}
             onChange={(event) => updateField('printerId', event.target.value)}
-            className={fieldClassName}
+            className="field-control"
           >
             <option value="">No printer</option>
             {customerPrinters.map((printer) => (
@@ -99,24 +116,25 @@ export function CreateWorkOrderModal({ onClose }: CreateWorkOrderModalProps) {
               </option>
             ))}
           </select>
-        </Field>
-        <Field label="Contact (optional)">
+        </label>
+        <label className="block">
+          <span className="mb-1.5 block text-xs font-semibold text-ink">Contact (optional)</span>
           <input
             value={form.contact}
             onChange={(event) => updateField('contact', event.target.value)}
             placeholder={
               customer ? `${customer.contactName} · ${customer.phone}` : 'Default contact'
             }
-            className={fieldClassName}
+            className="field-control"
           />
-        </Field>
+        </label>
         <label className="block sm:col-span-2">
           <span className="mb-1.5 block text-xs font-semibold text-ink">Address (optional)</span>
           <input
             value={form.address}
             onChange={(event) => updateField('address', event.target.value)}
             placeholder={customer?.billingAddress || company.address}
-            className={fieldClassName}
+            className="field-control"
           />
         </label>
         <label className="block sm:col-span-2">
@@ -126,21 +144,21 @@ export function CreateWorkOrderModal({ onClose }: CreateWorkOrderModalProps) {
             onChange={(event) => updateField('problem', event.target.value)}
             rows={3}
             placeholder="Describe the issue reported..."
-            className={`${fieldClassName} h-auto py-2.5`}
+            className="field-control h-auto py-2.5"
           />
         </label>
         <div className="flex justify-end gap-2 sm:col-span-2">
           <button
             type="button"
-            onClick={onClose}
-            className="h-9 cursor-pointer rounded-lg px-3.5 text-sm font-bold text-copy transition hover:bg-canvas hover:text-ink"
+            onClick={handleClose}
+            className="h-9 cursor-pointer rounded-lg px-3.5 text-sm font-bold text-copy transition hover:bg-canvas hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={!ready}
-            className="h-9 cursor-pointer rounded-lg bg-brand px-3.5 text-sm font-bold text-surface transition hover:bg-brand-strong disabled:cursor-not-allowed disabled:bg-line disabled:text-copy"
+            className="h-9 cursor-pointer rounded-lg bg-brand px-3.5 text-sm font-bold text-surface transition hover:bg-brand-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:cursor-not-allowed disabled:bg-line disabled:text-copy"
           >
             Create work order
           </button>
