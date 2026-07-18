@@ -4,25 +4,83 @@
 @import '@fontsource/inter/latin-700.css';
 @import 'tailwindcss';
 
+/*
+  Design tokens live here only.
+  Components use semantic utilities (bg-canvas, text-page, w-sidebar, …).
+  Theme scopes (.auth-theme) override the same variables — never redefine colors in JSX.
+*/
+
 @theme {
   --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
 
-  --color-canvas: #f6f8fa;
-  --color-surface: #ffffff;
-  --color-ink: #182033;
-  --color-copy: #687286;
-  --color-line: #dfe4ea;
-  --color-brand: #18b7a7;
-  --color-brand-strong: #0fa595;
-  --color-brand-soft: #e9fbf8;
-  --color-operational: #13ad81;
-  --color-hero: #26353b;
-  --color-hero-deep: #0d161a;
-  --color-hero-glow: #42c8bd;
-  --color-hero-copy: #d6e2e4;
+  /* ——— Color roles ——— */
+  --color-canvas: #0c0c0c;
+  --color-surface: #151515;
+  --color-ink: #ffffff;
+  --color-copy: #a0a0a0;
+  --color-line: #2a2a2a;
+  --color-line-soft: #222222;
+  --color-brand: #ffffff;
+  --color-brand-strong: #f5f5f5;
+  --color-brand-soft: #262626;
+  --color-operational: #16794a;
+  --color-hero: #1c1c1c;
+  --color-hero-deep: #191919;
+  --color-hero-copy: #b5b5b5;
 
-  --shadow-field: 0 1px 2px rgb(24 32 51 / 4%);
-  --shadow-button: 0 8px 20px rgb(24 183 167 / 20%);
+  --color-sidebar: #121212;
+  --color-sidebar-ink: var(--color-ink);
+  --color-sidebar-copy: var(--color-copy);
+  --color-sidebar-muted: #737373;
+  --color-sidebar-line: var(--color-line);
+  --color-sidebar-active: var(--color-brand-soft);
+
+  --color-header: var(--color-canvas);
+  --color-header-ink: var(--color-ink);
+  --color-header-copy: var(--color-copy);
+  --color-header-line: var(--color-line);
+  --color-header-field: #1f1f1f;
+
+  --color-success: #3dd68c;
+  --color-success-soft: #0f2a1c;
+  --color-info: #60a5fa;
+  --color-info-soft: #1a2333;
+  --color-warning: #eab308;
+  --color-warning-soft: #261e0c;
+  --color-danger: #f07167;
+  --color-danger-soft: #2a1210;
+  --color-inactive: #a3a3a3;
+  --color-inactive-soft: var(--color-brand-soft);
+  --color-overlay: rgb(0 0 0 / 70%);
+
+  /* ——— Exceptional type scale (standard sm/base/lg stay on Tailwind defaults) ——— */
+  --text-micro: 0.5rem;
+  --text-micro--line-height: 0.75rem;
+  --text-2xs: 0.5625rem;
+  --text-2xs--line-height: 0.875rem;
+  --text-caption: 0.625rem;
+  --text-caption--line-height: 1rem;
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1rem;
+  --text-page: 1.75rem;
+  --text-page--line-height: 2.25rem;
+
+  /* ——— Layout sizes used across shell / pages ——— */
+  --spacing-sidebar: 13.25rem;
+  --spacing-header: 4rem;
+  --spacing-modal: 33.75rem;
+  --spacing-modal-wide: 53.75rem;
+  --spacing-content: 45rem;
+  --spacing-search: 17.5rem;
+  --spacing-table-md: 32rem;
+  --spacing-table-lg: 35rem;
+  --spacing-table-xl: 56rem;
+  --spacing-table-2xl: 72rem;
+
+  --shadow-field: 0 1px 2px rgb(0 0 0 / 20%);
+  --shadow-button: 0 8px 24px rgb(0 0 0 / 30%);
+  --shadow-card: 0 1px 3px rgb(0 0 0 / 24%), 0 2px 12px rgb(0 0 0 / 18%);
+  --shadow-toolbar: 0 2px 4px rgb(0 0 0 / 20%);
 }
 
 @layer base {
@@ -37,10 +95,52 @@
     margin: 0;
   }
 
+  ::selection {
+    background: var(--color-brand);
+    color: var(--color-canvas);
+  }
+
   button,
   input,
   select,
   textarea {
     font: inherit;
+  }
+}
+
+@layer components {
+  /* Light auth surface — overrides the dark defaults above */
+  .auth-theme {
+    --color-canvas: #f7f7f7;
+    --color-surface: #ffffff;
+    --color-ink: #191919;
+    --color-copy: #616161;
+    --color-line: #d4d4d4;
+    --color-line-soft: #e7e7e7;
+    --color-brand: #2b2b2b;
+    --color-brand-strong: #191919;
+    --color-brand-soft: #e7e7e7;
+    --color-success: #16794a;
+    --color-success-soft: #e1f7e8;
+    --color-info: #245fae;
+    --color-info-soft: #e6f0ff;
+    --color-warning: #8a5a00;
+    --color-warning-soft: #fff4d6;
+    --color-danger: #a82c24;
+    --color-danger-soft: #fde8e7;
+    --color-inactive: #616161;
+    --color-inactive-soft: #e7e7e7;
+    --shadow-field: 0 1px 2px rgb(0 0 0 / 6%);
+    --shadow-button: 0 8px 24px rgb(0 0 0 / 12%);
+    --shadow-card: 0 1px 3px rgb(0 0 0 / 4%), 0 2px 12px rgb(0 0 0 / 3%);
+    --shadow-toolbar: 0 2px 4px rgb(0 0 0 / 3%);
+  }
+
+  .field-control {
+    @apply h-10 w-full rounded-lg border border-line bg-surface px-3.5 text-sm text-ink transition placeholder:text-copy focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20;
+  }
+
+  .modal-backdrop {
+    @apply fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-overlay p-6 backdrop-blur-sm;
   }
 }

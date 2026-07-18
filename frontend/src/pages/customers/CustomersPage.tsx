@@ -1,52 +1,59 @@
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
-import { useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CustomersTable } from './components/CustomersTable'
-import { CustomersToolbar } from './components/CustomersToolbar'
-import { customers } from './data/customers'
 import { useCustomersStore } from '../../store/customersStore'
+import { useWorkOrdersStore } from '../../store/workOrdersStore'
+import { AddCustomerModal } from './components/AddCustomerModal'
+import { CustomersTable } from './components/CustomersTable'
 
 export function CustomersPage() {
   const navigate = useNavigate()
-  const searchQuery = useCustomersStore((state) => state.searchQuery)
-  const currentPage = useCustomersStore((state) => state.currentPage)
-  const setSearchQuery = useCustomersStore((state) => state.setSearchQuery)
-  const setCurrentPage = useCustomersStore((state) => state.setCurrentPage)
-
-  useEffect(() => {
-    console.log('Hello world')
-  }, [])
+  const customers = useCustomersStore((state) => state.customers)
+  const addCustomer = useCustomersStore((state) => state.addCustomer)
+  const printers = useWorkOrdersStore((state) => state.printers)
+  const workOrders = useWorkOrdersStore((state) => state.workOrders)
+  const [isCreating, setIsCreating] = useState(false)
 
   return (
-    <div className="p-3 sm:p-5">
-      <header className="mb-4 flex items-end justify-between gap-4">
+    <div className="p-6 sm:p-8">
+      <header className="mb-5 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="text-xs font-medium text-copy">Customers</p>
-          <h1 className="mt-1 text-2xl font-bold tracking-tight text-ink">Customers</h1>
+          <p className="text-sm font-medium text-copy">Directory</p>
+          <h1 className="mt-1 text-page font-extrabold tracking-tight text-ink">Customers</h1>
         </div>
         <button
           type="button"
-          onClick={() => navigate('/customers/new')}
-          className="flex h-10 cursor-pointer items-center gap-1 rounded-lg bg-brand px-4 text-xs font-semibold text-surface shadow-button transition hover:bg-brand-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          onClick={() => setIsCreating(true)}
+          className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-full bg-brand px-4 text-sm font-bold text-canvas transition hover:bg-brand-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
         >
           <AddRoundedIcon fontSize="small" aria-hidden="true" />
           Add customer
         </button>
       </header>
-      <div className="space-y-3">
-        <CustomersToolbar
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          onFilterClick={() => undefined}
+
+      <CustomersTable
+        customers={customers}
+        printerCount={(customerId) =>
+          printers.filter((printer) => printer.customerId === customerId).length
+        }
+        openWorkOrderCount={(customerId) =>
+          workOrders.filter(
+            (order) =>
+              order.customerId === customerId && order.stage !== 'Confirmed by client',
+          ).length
+        }
+        onCustomerOpen={(customerId) => navigate(`/customers/${customerId}`)}
+      />
+
+      {isCreating && (
+        <AddCustomerModal
+          onClose={() => setIsCreating(false)}
+          onSave={(customer) => {
+            addCustomer(customer)
+            setIsCreating(false)
+          }}
         />
-        <CustomersTable
-          customers={customers}
-          totalCustomers={128}
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
-          onCustomerOpen={(customerId) => navigate(`/customers/${customerId}`)}
-        />
-      </div>
+      )}
     </div>
   )
 }

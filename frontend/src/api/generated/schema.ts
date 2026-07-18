@@ -4,6 +4,40 @@
  */
 
 export interface paths {
+    "/api/v1/auth/register": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Register a company and its first user */
+        post: operations["AuthController_register_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Log in to a company */
+        post: operations["AuthController_login_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/customers": {
         parameters: {
             query?: never;
@@ -77,6 +111,57 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        RegisterRequest: {
+            /** @example Acme AS */
+            companyName: string;
+            /** @example ada@example.com */
+            email: string;
+            /** Format: password */
+            password: string;
+        };
+        RegisterResponse: {
+            /**
+             * Format: uuid
+             * @example 019535d9-3df6-71ec-8f08-fa907fa17f9d
+             */
+            companyId: string;
+            /**
+             * Format: uuid
+             * @example 019535d9-3df7-79fb-b466-fa907fa17f9e
+             */
+            userId: string;
+            accessToken: string;
+            /** @example Bearer */
+            tokenType: string;
+            /** @example 86400 */
+            expiresIn: number;
+        };
+        LoginRequest: {
+            /**
+             * Format: uuid
+             * @example 019535d9-3df6-71ec-8f08-fa907fa17f9d
+             */
+            companyId: string;
+            /** @example ada@example.com */
+            email: string;
+            /** Format: password */
+            password: string;
+        };
+        LoginResponse: {
+            accessToken: string;
+            /** @example Bearer */
+            tokenType: string;
+            /** @example 86400 */
+            expiresIn: number;
+        };
+        ErrorResponse: {
+            /** @example 404 */
+            statusCode: number;
+            /** @example Resource was not found. */
+            message: string;
+            /** @example Not Found */
+            error: string;
+        };
         CustomerResponse: {
             /**
              * Format: uuid
@@ -96,14 +181,6 @@ export interface components {
             /** @enum {string|null} */
             country: "pl" | "no" | null;
             notes: string | null;
-        };
-        ErrorResponse: {
-            /** @example 404 */
-            statusCode: number;
-            /** @example Resource was not found. */
-            message: string;
-            /** @example Not Found */
-            error: string;
         };
         CreateContactRequest: {
             /** @example Ada Lovelace */
@@ -213,6 +290,74 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    AuthController_register_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RegisterRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RegisterResponse"];
+                };
+            };
+            /** @description The registration request is invalid. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AuthController_login_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoginRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoginResponse"];
+                };
+            };
+            /** @description The login request is invalid. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
     CustomerController_findAll_v1: {
         parameters: {
             query?: never;
@@ -228,6 +373,14 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CustomerResponse"][];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
         };
@@ -260,6 +413,14 @@ export interface operations {
                 };
                 content?: never;
             };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
         };
     };
     CustomerController_findById_v1: {
@@ -287,6 +448,14 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
             };
             404: {
                 headers: {
@@ -327,6 +496,14 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
             };
             404: {
                 headers: {
@@ -375,6 +552,14 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
             };
             404: {
                 headers: {

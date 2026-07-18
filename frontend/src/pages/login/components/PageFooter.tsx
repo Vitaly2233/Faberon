@@ -8,9 +8,6 @@ export function PageFooter() {
       <a href="#terms" className="whitespace-nowrap transition hover:text-ink">
         Terms of Service
       </a>
-      <a href="mailto:contact@faberon.io" className="whitespace-nowrap transition hover:text-ink">
-        contact@faberon.io
-      </a>
     </footer>
   )
 }

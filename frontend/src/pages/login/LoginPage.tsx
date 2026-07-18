@@ -4,7 +4,6 @@ import { useLoginStore } from '../../store/loginStore'
 import { HeroPanel } from './components/HeroPanel'
 import { LoginForm } from './components/LoginForm'
 import { PageFooter } from './components/PageFooter'
-import { SocialLoginOptions } from './components/SocialLoginOptions'
 
 export function LoginPage() {
   const navigate = useNavigate()
@@ -18,14 +17,14 @@ export function LoginPage() {
   const togglePasswordVisibility = useLoginStore((state) => state.togglePasswordVisibility)
 
   return (
-    <main className="grid min-h-screen bg-canvas lg:grid-cols-[26%_1fr]">
-      <section className="flex min-h-screen flex-col px-6 py-7 sm:px-12 lg:px-7 xl:px-10">
+    <main className="auth-theme grid min-h-screen bg-canvas lg:grid-cols-[30rem_1fr]">
+      <section className="flex min-h-screen flex-col bg-surface px-6 py-8 sm:px-12 lg:px-10">
         <Brand />
         <div className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center py-10">
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-ink">Sign In</h1>
-            <p className="mt-2 text-sm leading-snug text-copy">
-              Enter your credentials to access your organization&apos;s hub.
+            <p className="mt-2 text-xs leading-relaxed text-copy">
+              Owner and technician access. Clients use the mobile app.
             </p>
           </div>
           <div className="mt-6">
@@ -42,7 +41,6 @@ export function LoginPage() {
               onSubmit={() => navigate('/customers')}
             />
           </div>
-          <SocialLoginOptions onProviderSelect={() => undefined} />
         </div>
         <PageFooter />
       </section>

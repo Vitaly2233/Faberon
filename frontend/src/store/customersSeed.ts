@@ -1,12 +1,34 @@
-import type { CustomerDetail } from '../types'
+export type CustomerStatus = 'active' | 'inactive'
 
-export const customers: CustomerDetail[] = [
+export type CustomerRecord = {
+  id: string
+  name: string
+  category: string
+  contactName: string
+  contactEmail: string
+  locations: number
+  products: number
+  attention: number
+  openOrders: number
+  contracts: number
+  unpaid: number
+  status: CustomerStatus
+  legalName: string
+  taxId: string
+  billingAddress: string
+  phone: string
+  website: string
+  accountId: string
+  accountManager: string
+}
+
+export const seedCustomers: CustomerRecord[] = [
   {
     id: 'grand-hotel',
     name: 'Grand Hotel',
     category: 'Hospitality',
     contactName: 'John Doe',
-    contactEmail: 'john@grandhotel.com',
+    contactEmail: 'j.doe@grandhotel.com',
     locations: 3,
     products: 12,
     attention: 2,
@@ -15,11 +37,11 @@ export const customers: CustomerDetail[] = [
     unpaid: 1,
     status: 'active',
     legalName: 'Grand Hotel & Spa Resorts Ltd.',
-    taxId: 'TX-8842-90',
-    billingAddress: '102 Ocean Blvd, Miami, FL 33139',
-    phone: '+1 (305) 234-0678',
+    taxId: 'TX-8842-10',
+    billingAddress: '102 Ocean Blvd, Miami, FL 33101',
+    phone: '+1 (555) 234-9876',
     website: 'www.grandhotel.com',
-    accountId: 'ACC-4821',
+    accountId: 'ACC-9421',
     accountManager: 'John Doe',
   },
   {
@@ -27,7 +49,7 @@ export const customers: CustomerDetail[] = [
     name: 'City Library',
     category: 'Government',
     contactName: 'Sarah Lane',
-    contactEmail: 'sarah@city.gov',
+    contactEmail: 's.lane@city.gov',
     locations: 1,
     products: 8,
     attention: 0,
@@ -37,8 +59,8 @@ export const customers: CustomerDetail[] = [
     status: 'active',
     legalName: 'City Library Services',
     taxId: 'TX-1740-22',
-    billingAddress: '18 Civic Square, Portland, OR 97204',
-    phone: '+1 (503) 555-0118',
+    billingAddress: '12 Civic Center, Miami, FL 33128',
+    phone: '+1 (555) 118-2200',
     website: 'www.citylibrary.gov',
     accountId: 'ACC-1740',
     accountManager: 'Sarah Lane',
@@ -69,7 +91,7 @@ export const customers: CustomerDetail[] = [
     name: 'Southside Gym',
     category: 'Fitness',
     contactName: 'Anna Flex',
-    contactEmail: 'anna@southsidegym.com',
+    contactEmail: 'anna@southgym.com',
     locations: 1,
     products: 15,
     attention: 0,
@@ -90,7 +112,7 @@ export const customers: CustomerDetail[] = [
     name: 'River Tech',
     category: 'Office',
     contactName: 'Tom River',
-    contactEmail: 'tom@rivertech.io',
+    contactEmail: 't.river@rivertech.io',
     locations: 4,
     products: 42,
     attention: 5,
@@ -100,8 +122,8 @@ export const customers: CustomerDetail[] = [
     status: 'active',
     legalName: 'River Technologies Inc.',
     taxId: 'TX-4509-12',
-    billingAddress: '80 Water Street, Seattle, WA 98101',
-    phone: '+1 (206) 555-0136',
+    billingAddress: '500 Innovation Way, Miami, FL 33131',
+    phone: '+1 (555) 900-4412',
     website: 'www.rivertech.io',
     accountId: 'ACC-4509',
     accountManager: 'Tom River',
@@ -111,7 +133,7 @@ export const customers: CustomerDetail[] = [
     name: 'County Hospital',
     category: 'Healthcare',
     contactName: 'Dr. Smith',
-    contactEmail: 'smith@hospital.org',
+    contactEmail: 'admin@hospital.org',
     locations: 1,
     products: 120,
     attention: 3,
@@ -132,7 +154,7 @@ export const customers: CustomerDetail[] = [
     name: 'Saint Jude School',
     category: 'Education',
     contactName: 'Principal Green',
-    contactEmail: 'green@saintjude.edu',
+    contactEmail: 'green@stjude.edu',
     locations: 2,
     products: 24,
     attention: 0,
@@ -153,7 +175,7 @@ export const customers: CustomerDetail[] = [
     name: 'East Side Factory',
     category: 'Industrial',
     contactName: 'Bill Gears',
-    contactEmail: 'bill@eastfactory.com',
+    contactEmail: 'bill@esfactory.com',
     locations: 1,
     products: 56,
     attention: 2,
@@ -170,7 +192,3 @@ export const customers: CustomerDetail[] = [
     accountManager: 'Bill Gears',
   },
 ]
-
-export function getCustomerById(customerId: string) {
-  return customers.find((customer) => customer.id === customerId)
-}
