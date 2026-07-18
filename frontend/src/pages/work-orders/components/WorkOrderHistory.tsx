@@ -18,7 +18,7 @@ export function WorkOrderHistory({ history, onPost }: WorkOrderHistoryProps) {
       <div className="mb-4 space-y-3 border-l border-line pl-4">
         {history.map((entry) => (
           <div key={entry.id} className="relative">
-            <span className="absolute -left-[1.375rem] top-1 size-2 rounded-full bg-line ring-2 ring-surface" />
+            <span className="absolute -left-5.5 top-1 size-2 rounded-full bg-line ring-2 ring-surface" />
             <div className="flex items-center gap-2">
               <b className="text-xs text-ink">{entry.author}</b>
               <span className="text-2xs text-copy">{formatDate(entry.date)}</span>
