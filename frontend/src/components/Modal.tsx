@@ -11,11 +11,7 @@ type ModalProps = {
 
 export function Modal({ title, subtitle, onClose, children, wide }: ModalProps) {
   return (
-    <div
-      className="modal-backdrop"
-      onClick={onClose}
-      role="presentation"
-    >
+    <div className="modal-backdrop" onClick={onClose} role="presentation">
       <div
         role="dialog"
         aria-modal="true"

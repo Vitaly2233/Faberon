@@ -3,7 +3,7 @@ import { useCompanyStore } from '../../../store/companyStore'
 import { useCustomersStore } from '../../../store/customersStore'
 import type { WorkOrderRecord } from '../../../store/workOrdersStore'
 import { formatMoney } from '../../../store/workOrderTypes'
-import { Modal } from './Modal'
+import { Modal } from '../../../components/Modal'
 
 type InvoiceModalProps = {
   workOrder: WorkOrderRecord

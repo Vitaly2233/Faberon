@@ -8,11 +8,12 @@ alwaysApply: true
 Read `CONSTITUTION.md` from the repository root before modifying the frontend.
 
 - Enter `frontend` before running application, pnpm, Node, lint, test, or build commands. Never run package-manager commands from the repository root.
-- Treat pages as containers: only page containers may read Zustand, use router hooks, or coordinate state transitions.
-- Keep every Zustand store in `frontend/src/store`; never place stores inside a page or container folder.
+- Treat pages and named modals as containers: they may read Zustand, use router hooks, and coordinate state transitions.
+- Keep every Zustand store in `frontend/src/store` (domain folders such as `store/modals/` are allowed); never place stores inside a page or modal folder.
 - Keep child components presentational. Pass typed values and callbacks; children render props and emit actions only.
 - Keep components small and split them by visual responsibility.
-- Define product colors, fonts, shadows, and exceptional visual values in `frontend/src/styles/index.css`.
+- Put global dialogs in `frontend/src/modals`. Register names in `store/modals/types.ts`, open them through the modals store (LIFO), and render them from `ModalsHost` only.
+- Define product colors, fonts, shadows, layout sizes, and exceptional visual values in `frontend/src/styles/index.css`.
 - Use semantic Tailwind tokens and Tailwind's standard spacing, radius, and font-size utilities in JSX.
 - Use MUI selectively for accessible primitives or icons; do not create a competing MUI visual theme.
 - Do not add authentication, persistence, API calls, or speculative business logic to visual prototypes.

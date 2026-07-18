@@ -1,6 +1,6 @@
 ---
 name: build-faberon-frontend
-description: Cursor entry point for the shared Faberon frontend implementation skill. Use for pages, routes, components, form UI, design tokens, responsive layouts, or frontend state in this repository.
+description: Cursor entry point for the shared Faberon frontend implementation skill. Use for pages, routes, components, form UI, modals, design tokens, responsive layouts, or frontend state in this repository.
 ---
 
 # Build Faberon Frontend

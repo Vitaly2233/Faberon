@@ -1,6 +1,6 @@
 ---
 name: review-faberon-frontend
-description: Cursor entry point for the shared Faberon frontend review skill. Use when reviewing a frontend feature, page, route, component, store, or pull request in this repository.
+description: Cursor entry point for the shared Faberon frontend review skill. Use when reviewing a frontend feature, page, route, component, modal, store, or pull request in this repository.
 ---
 
 # Review Faberon Frontend

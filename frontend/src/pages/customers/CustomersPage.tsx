@@ -1,18 +1,16 @@
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCustomersStore } from '../../store/customersStore'
+import { useModalsStore } from '../../store/modals'
 import { useWorkOrdersStore } from '../../store/workOrdersStore'
-import { AddCustomerModal } from './components/AddCustomerModal'
 import { CustomersTable } from './components/CustomersTable'
 
 export function CustomersPage() {
   const navigate = useNavigate()
   const customers = useCustomersStore((state) => state.customers)
-  const addCustomer = useCustomersStore((state) => state.addCustomer)
   const printers = useWorkOrdersStore((state) => state.printers)
   const workOrders = useWorkOrdersStore((state) => state.workOrders)
-  const [isCreating, setIsCreating] = useState(false)
+  const openModal = useModalsStore((state) => state.open)
 
   return (
     <div className="p-6 sm:p-8">
@@ -23,7 +21,9 @@ export function CustomersPage() {
         </div>
         <button
           type="button"
-          onClick={() => setIsCreating(true)}
+          onClick={() => {
+            openModal('NewCustomer')
+          }}
           className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-full bg-brand px-4 text-sm font-bold text-canvas transition hover:bg-brand-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
         >
           <AddRoundedIcon fontSize="small" aria-hidden="true" />
@@ -44,16 +44,6 @@ export function CustomersPage() {
         }
         onCustomerOpen={(customerId) => navigate(`/customers/${customerId}`)}
       />
-
-      {isCreating && (
-        <AddCustomerModal
-          onClose={() => setIsCreating(false)}
-          onSave={(customer) => {
-            addCustomer(customer)
-            setIsCreating(false)
-          }}
-        />
-      )}
     </div>
   )
 }

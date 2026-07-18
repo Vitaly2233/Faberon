@@ -14,9 +14,9 @@ Before changing the repository:
 
 | Task | Required skill |
 | --- | --- |
-| Implement or modify frontend code | `skills/build-faberon-frontend` |
+| Implement or modify frontend code (including modals) | `skills/build-faberon-frontend` |
 | Review frontend code | `skills/review-faberon-frontend` |
-| Change or review UI colors or design tokens | `skills/minimize-color-palette` |
+| Change or review UI colors, tokens, or exceptional sizes | `skills/minimize-color-palette` |
 | Implement or modify backend code | `skills/build-faberon-backend` |
 
 Use all matching skills. Skills under `skills` are canonical and shared by every AI tool; tool-specific entries may only point to them.

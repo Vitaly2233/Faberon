@@ -5,7 +5,7 @@ import { useState } from 'react'
 import type { WorkOrderStage } from '../../../store/workOrderTypes'
 import { Field } from './FormField'
 import { fieldClassName } from './fieldStyles'
-import { Modal } from './Modal'
+import { Modal } from '../../../components/Modal'
 import { StageBadge } from './StatusBadge'
 
 type StageChangeModalProps = {

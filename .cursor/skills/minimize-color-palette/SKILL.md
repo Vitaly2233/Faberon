@@ -1,6 +1,6 @@
 ---
 name: minimize-color-palette
-description: Cursor entry point for the shared Faberon color-palette skill. Use when creating or reviewing components, design tokens, themes, colors, states, or visual styling in this repository.
+description: Cursor entry point for the shared Faberon color-palette skill. Use when creating or reviewing components, design tokens, themes, colors, exceptional sizes, states, or visual styling in this repository.
 ---
 
 # Minimize Color Palette

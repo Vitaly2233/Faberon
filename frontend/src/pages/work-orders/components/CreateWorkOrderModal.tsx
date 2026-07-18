@@ -5,7 +5,7 @@ import { useWorkOrdersStore } from '../../../store/workOrdersStore'
 import type { WorkOrderType } from '../../../store/workOrderTypes'
 import { Field } from './FormField'
 import { fieldClassName } from './fieldStyles'
-import { Modal } from './Modal'
+import { Modal } from '../../../components/Modal'
 
 type CreateWorkOrderModalProps = {
   onClose: () => void

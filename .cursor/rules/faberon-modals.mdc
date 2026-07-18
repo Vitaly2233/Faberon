@@ -1,0 +1,14 @@
+---
+description: Rules for Faberon global modal store, host, and named modal containers
+globs: frontend/src/modals/**/*.{ts,tsx},frontend/src/store/modals/**/*.{ts,tsx},frontend/src/components/Modal.tsx
+alwaysApply: false
+---
+
+# Faberon modals
+
+- Register each modal in `store/modals/types.ts` with typed `data` and callbacks.
+- Implement the modal container under `src/modals` and switch on it in `ModalsHost`.
+- Open with `useModalsStore().open(name, options)`; close pops the LIFO stack top.
+- Do not mount named modals from pages or keep open state in page-local `useState`.
+- Modal containers receive stack entry options as props; `ModalsHost` decides what to display.
+- Use `components/Modal` for shared shell and backdrop.
