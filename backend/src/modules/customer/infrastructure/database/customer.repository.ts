@@ -1,23 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import type { InferSelectModel } from 'drizzle-orm';
-import { CrudRepository } from '../../../../common/database/crud.repository';
 import { DatabaseService } from '../../../../common/database/database.service';
 import { customers } from '../../../../common/database/schemas/customer.schema';
+import { TenantCrudRepository } from '../../../../common/database/tenant-crud.repository';
 import { Customer } from '../../domain/customer';
 
 @Injectable()
-export class CustomerRepository extends CrudRepository<
+export class CustomerRepository extends TenantCrudRepository<
   typeof customers,
   typeof customers.id,
+  typeof customers.companyId,
   Customer
 > {
   constructor(database: DatabaseService) {
-    super(database, customers, customers.id);
+    super(database, customers, customers.id, customers.companyId);
   }
 
   protected toDomain(row: InferSelectModel<typeof customers>): Customer {
     return new Customer(
       row.id,
+      row.companyId,
       row.name,
       row.type,
       row.legalName,

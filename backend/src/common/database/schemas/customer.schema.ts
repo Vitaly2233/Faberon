@@ -1,5 +1,6 @@
 import { sql } from 'drizzle-orm';
 import { pgEnum, pgTable, text, uuid, varchar } from 'drizzle-orm/pg-core';
+import { companies } from './company.schema';
 
 export const customerTypeEnum = pgEnum('customer_type', [
   'individual',
@@ -11,6 +12,9 @@ export const countryCodeEnum = pgEnum('country_code', ['pl', 'no']);
 
 export const customers = pgTable('customers', {
   id: uuid().primaryKey().default(sql`uuidv7()`),
+  companyId: uuid('company_id')
+    .notNull()
+    .references(() => companies.id, { onDelete: 'cascade' }),
   name: varchar({ length: 120 }).notNull(),
   type: customerTypeEnum().notNull(),
   legalName: varchar('legal_name', { length: 200 }),

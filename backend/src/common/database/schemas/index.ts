@@ -1,5 +1,10 @@
-export { billingInformation } from './billing-information.schema';
 export { companies } from './company.schema';
 export { contacts } from './contact.schema';
 export { customers } from './customer.schema';
+export { extraExpenses } from './extra-expense.schema';
+export { productCategories } from './product-category.schema';
+export { productTypes } from './product-type.schema';
+export { products } from './product.schema';
 export { users } from './user.schema';
+export { workOrderHistoryItems } from './work-order-history-item.schema';
+export { workOrders } from './work-order.schema';

@@ -10,7 +10,13 @@ export class CustomerNotFoundError extends NotFoundError {
 }
 
 export class CustomerDetailsAlreadyExistError extends ConflictError {
-  constructor(details: 'contact' | 'billing information') {
+  constructor(details: 'contact') {
     super(`Customer ${details} already exists.`);
+  }
+}
+
+export class ContactNotFoundError extends NotFoundError {
+  constructor(customerId: string) {
+    super(`Contact for customer ${customerId} was not found.`);
   }
 }

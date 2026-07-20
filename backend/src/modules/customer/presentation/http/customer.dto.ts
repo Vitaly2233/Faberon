@@ -10,7 +10,6 @@ import {
 } from 'class-validator';
 import { NormalizeText } from '../../../../common/validation/normalize-text.decorator';
 import { CountryCode, CustomerType } from '../../domain/customer';
-import { CreateBillingInformationRequest } from './billing-information.dto';
 import { CreateContactRequest } from './contact.dto';
 
 export class CreateCustomerRequest {
@@ -21,9 +20,14 @@ export class CreateCustomerRequest {
   @MaxLength(120)
   name!: string;
 
-  @ApiProperty({ enum: CustomerType, example: CustomerType.Company })
+  @ApiPropertyOptional({
+    enum: CustomerType,
+    example: CustomerType.Company,
+    description: 'Defaults to company when omitted.',
+  })
+  @IsOptional()
   @IsEnum(CustomerType)
-  type!: CustomerType;
+  type?: CustomerType;
 
   @ApiPropertyOptional({
     type: String,
@@ -118,12 +122,109 @@ export class CreateCustomerRequest {
   @ValidateNested()
   @Type(() => CreateContactRequest)
   contact?: CreateContactRequest;
+}
 
-  @ApiPropertyOptional({ type: () => CreateBillingInformationRequest })
+export class UpdateCustomerRequest {
+  @ApiPropertyOptional({ example: 'Acme AS', minLength: 1, maxLength: 120 })
+  @NormalizeText()
   @IsOptional()
-  @ValidateNested()
-  @Type(() => CreateBillingInformationRequest)
-  billingInformation?: CreateBillingInformationRequest;
+  @IsString()
+  @MinLength(1)
+  @MaxLength(120)
+  name?: string;
+
+  @ApiPropertyOptional({ enum: CustomerType, example: CustomerType.Company })
+  @IsOptional()
+  @IsEnum(CustomerType)
+  type?: CustomerType;
+
+  @ApiPropertyOptional({
+    type: String,
+    example: 'Acme AS',
+    maxLength: 200,
+    nullable: true,
+  })
+  @NormalizeText({ emptyToNull: true })
+  @IsOptional()
+  @IsString()
+  @MaxLength(200)
+  legalName?: string | null;
+
+  @ApiPropertyOptional({
+    type: String,
+    example: 'NO999888777',
+    maxLength: 64,
+    nullable: true,
+  })
+  @NormalizeText({ emptyToNull: true })
+  @IsOptional()
+  @IsString()
+  @MaxLength(64)
+  taxNumber?: string | null;
+
+  @ApiPropertyOptional({
+    type: String,
+    example: 'Karl Johans gate 1',
+    maxLength: 240,
+    nullable: true,
+  })
+  @NormalizeText({ emptyToNull: true })
+  @IsOptional()
+  @IsString()
+  @MaxLength(240)
+  address?: string | null;
+
+  @ApiPropertyOptional({
+    type: String,
+    example: 'Oslo',
+    maxLength: 120,
+    nullable: true,
+  })
+  @NormalizeText({ emptyToNull: true })
+  @IsOptional()
+  @IsString()
+  @MaxLength(120)
+  city?: string | null;
+
+  @ApiPropertyOptional({
+    type: String,
+    example: 'Oslo',
+    maxLength: 120,
+    nullable: true,
+  })
+  @NormalizeText({ emptyToNull: true })
+  @IsOptional()
+  @IsString()
+  @MaxLength(120)
+  region?: string | null;
+
+  @ApiPropertyOptional({
+    type: String,
+    example: '0154',
+    maxLength: 32,
+    nullable: true,
+  })
+  @NormalizeText({ emptyToNull: true })
+  @IsOptional()
+  @IsString()
+  @MaxLength(32)
+  postalCode?: string | null;
+
+  @ApiPropertyOptional({ enum: CountryCode, example: CountryCode.Norway, nullable: true })
+  @IsOptional()
+  @IsEnum(CountryCode)
+  country?: CountryCode | null;
+
+  @ApiPropertyOptional({
+    type: String,
+    example: 'Preferred customer',
+    nullable: true,
+  })
+  @NormalizeText({ emptyToNull: true })
+  @IsOptional()
+  @IsString()
+  @MaxLength(4000)
+  notes?: string | null;
 }
 
 export class CustomerResponse {
@@ -132,6 +233,12 @@ export class CustomerResponse {
     example: '019535d9-3df7-79fb-b466-fa907fa17f9e',
   })
   id!: string;
+
+  @ApiProperty({
+    format: 'uuid',
+    example: '019535d9-3df7-79fb-b466-fa907fa17f9e',
+  })
+  companyId!: string;
 
   @ApiProperty({ example: 'Acme AS' })
   name!: string;

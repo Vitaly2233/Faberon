@@ -1,24 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { and, eq, type InferSelectModel } from 'drizzle-orm';
-import { CrudRepository } from '../../../../common/database/crud.repository';
+import type { InferSelectModel } from 'drizzle-orm';
 import { DatabaseService } from '../../../../common/database/database.service';
 import { users } from '../../../../common/database/schemas/user.schema';
+import { TenantCrudRepository } from '../../../../common/database/tenant-crud.repository';
 import { User } from '../../domain/user';
+import { and, eq } from 'drizzle-orm';
 
 @Injectable()
-export class UserRepository extends CrudRepository<
+export class UserRepository extends TenantCrudRepository<
   typeof users,
   typeof users.id,
+  typeof users.companyId,
   User
 > {
   constructor(database: DatabaseService) {
-    super(database, users, users.id);
+    super(database, users, users.id, users.companyId);
   }
 
-  async findByCompanyAndEmail(
-    companyId: string,
-    email: string,
-  ): Promise<User | null> {
+  async findByEmail(companyId: string, email: string): Promise<User | null> {
     const [row] = await this.database.db
       .select()
       .from(users)

@@ -37,6 +37,11 @@ Apply domain-driven design without turning simple behavior into unnecessary fram
 - Declare status codes and concrete schemas with `@ApiCreatedResponse`, `@ApiOkResponse`, and named error responses.
 - Keep a stable global prefix and URI versioning. Do not leak stack traces or database errors.
 - Represent identifiers, timestamps, enums, nullable fields, and examples accurately in OpenAPI.
+- Order controller methods Create → Get → Update → Delete. For nested resources in the same controller, group by verb (all creates, then gets, then updates, then deletes), with parent before child within each group.
+- Prefer full CRUD for mutable resources. Append-only collections (for example work-order history) expose create and get only. Authentication controllers expose only the auth verbs they need.
+- Scope tenant data with `companyId` from `@CurrentUser()`. Pass `companyId` as the first parameter of tenant-scoped service and repository methods; never put "company" in those method names (use `findById(companyId, id)`, not `findByIdForCompany`).
+- Prefer top-level resources for first-class entities (`/products`, `/work-orders`). Put foreign keys such as `customerId` in the request body on create and as an optional query filter on list; do not nest them under `/customers/:customerId/...` unless the screen is literally a customer sub-collection (for example contact).
+- When linking related tenant entities, verify they belong to the same company (and the same customer when required).
 
 ## Verification
 

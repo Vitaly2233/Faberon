@@ -51,3 +51,7 @@ Business state and emitted integration events remain consistent. Use PostgreSQL 
 ## X. API contracts are explicit
 
 Validate inputs at the boundary and expose dedicated request and response models. Every HTTP endpoint documents its success and expected error schemas in OpenAPI. Do not expose persistence models, internal exceptions, secrets, or infrastructure details through public contracts.
+
+In resource controllers, declare handler methods in Create → Get → Update → Delete order. When a controller owns nested resources, keep the same verb grouping: all creates, then all gets, then all updates, then all deletes (parent before child within each group when both appear). Append-only or auth-only surfaces expose only the verbs they support, still in that relative order.
+
+Tenant-scoped application and repository methods take `companyId` as their first parameter and must not include "company" in the method name.

@@ -55,10 +55,7 @@ export class AuthenticationService {
     email: string,
     password: string,
   ): Promise<string> {
-    const user = await this.userRepository.findByCompanyAndEmail(
-      companyId,
-      email,
-    );
+    const user = await this.userRepository.findByEmail(companyId, email);
     if (!user) throw new InvalidCredentialsError();
 
     const passwordIsValid = await this.passwordHasher.verify(

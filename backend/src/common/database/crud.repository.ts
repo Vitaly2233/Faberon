@@ -8,7 +8,7 @@ import {
 import type { AnyPgColumn, AnyPgTable } from 'drizzle-orm/pg-core';
 import type { DatabaseService } from './database.service';
 
-export abstract class CrudRepository<
+export abstract class RepositoryBase<
   TTable extends AnyPgTable,
   TIdColumn extends AnyPgColumn,
   TDomain,
@@ -20,24 +20,6 @@ export abstract class CrudRepository<
   ) {}
 
   protected abstract toDomain(row: InferSelectModel<TTable>): TDomain;
-
-  async findAll(): Promise<TDomain[]> {
-    const rows = (await this.database.db
-      .select()
-      .from(this.table as AnyPgTable)) as unknown as InferSelectModel<TTable>[];
-    return rows.map((row) => this.toDomain(row));
-  }
-
-  async findById(id: GetColumnData<TIdColumn>): Promise<TDomain | null> {
-    const [row] = await this.database.db
-      .select()
-      .from(this.table as AnyPgTable)
-      .where(eq(this.idColumn, id))
-      .limit(1);
-    return row === undefined
-      ? null
-      : this.toDomain(row as InferSelectModel<TTable>);
-  }
 
   async create(input: InferInsertModel<TTable>): Promise<TDomain> {
     const rows = (await this.database.db
@@ -58,6 +40,43 @@ export abstract class CrudRepository<
       .values(inputs)
       .returning()) as unknown as InferSelectModel<TTable>[];
     return rows.map((row) => this.toDomain(row));
+  }
+}
+
+export abstract class CrudRepository<
+  TTable extends AnyPgTable,
+  TIdColumn extends AnyPgColumn,
+  TDomain,
+> extends RepositoryBase<TTable, TIdColumn, TDomain> {
+  async findAll(): Promise<TDomain[]> {
+    const rows = (await this.database.db
+      .select()
+      .from(this.table as AnyPgTable)) as unknown as InferSelectModel<TTable>[];
+    return rows.map((row) => this.toDomain(row));
+  }
+
+  async findById(id: GetColumnData<TIdColumn>): Promise<TDomain | null> {
+    const [row] = await this.database.db
+      .select()
+      .from(this.table as AnyPgTable)
+      .where(eq(this.idColumn, id))
+      .limit(1);
+    return row === undefined
+      ? null
+      : this.toDomain(row as InferSelectModel<TTable>);
+  }
+
+  async updateById(
+    id: GetColumnData<TIdColumn>,
+    patch: Partial<InferInsertModel<TTable>>,
+  ): Promise<TDomain | null> {
+    const rows = (await this.database.db
+      .update(this.table as AnyPgTable)
+      .set(patch)
+      .where(eq(this.idColumn, id))
+      .returning()) as unknown as InferSelectModel<TTable>[];
+    const [row] = rows;
+    return row === undefined ? null : this.toDomain(row);
   }
 
   async deleteById(id: GetColumnData<TIdColumn>): Promise<TDomain | null> {

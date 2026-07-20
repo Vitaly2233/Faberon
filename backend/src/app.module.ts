@@ -6,7 +6,9 @@ import { DatabaseModule } from './common/database/database.module';
 import { GlobalExceptionFilter } from './common/errors/global-exception.filter';
 import { RabbitMqModule } from './common/rabbitmq/rabbitmq.module';
 import { CustomerModule } from './modules/customer/customer.module';
+import { ProductModule } from './modules/product/product.module';
 import { UsersModule } from './modules/users/users.module';
+import { WorkOrderModule } from './modules/work-order/work-order.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { UsersModule } from './modules/users/users.module';
     DatabaseModule,
     UsersModule,
     CustomerModule,
+    ProductModule,
+    WorkOrderModule,
     RabbitMqModule,
   ],
   providers: [{ provide: APP_FILTER, useClass: GlobalExceptionFilter }],

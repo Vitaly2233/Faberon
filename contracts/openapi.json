@@ -82,44 +82,6 @@
       }
     },
     "/api/v1/customers": {
-      "get": {
-        "operationId": "CustomerController_findAll_v1",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CustomerResponse"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "access-token": []
-          }
-        ],
-        "summary": "List customers",
-        "tags": [
-          "customers"
-        ]
-      },
       "post": {
         "operationId": "CustomerController_create_v1",
         "parameters": [],
@@ -167,46 +129,25 @@
         "tags": [
           "customers"
         ]
-      }
-    },
-    "/api/v1/customers/{customerId}": {
+      },
       "get": {
-        "operationId": "CustomerController_findById_v1",
-        "parameters": [
-          {
-            "name": "customerId",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "operationId": "CustomerController_findAll_v1",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CustomerResponse"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CustomerResponse"
+                  }
                 }
               }
             }
-          },
-          "400": {
-            "description": "The customer ID is not a UUIDv7."
           },
           "401": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
             "description": "",
             "content": {
               "application/json": {
@@ -222,7 +163,7 @@
             "access-token": []
           }
         ],
-        "summary": "Get a customer",
+        "summary": "List customers",
         "tags": [
           "customers"
         ]
@@ -301,15 +242,13 @@
             "access-token": []
           }
         ],
-        "summary": "Create the customer contact",
+        "summary": "Create contact",
         "tags": [
           "customers"
         ]
-      }
-    },
-    "/api/v1/customers/{customerId}/billing-information": {
-      "post": {
-        "operationId": "CustomerController_createBillingInformation_v1",
+      },
+      "get": {
+        "operationId": "CustomerController_findContact_v1",
         "parameters": [
           {
             "name": "customerId",
@@ -320,29 +259,16 @@
             }
           }
         ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateBillingInformationRequest"
-              }
-            }
-          }
-        },
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BillingInformationResponse"
+                  "$ref": "#/components/schemas/ContactResponse"
                 }
               }
             }
-          },
-          "400": {
-            "description": "The request or customer ID is invalid."
           },
           "401": {
             "description": "",
@@ -363,8 +289,65 @@
                 }
               }
             }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Get contact",
+        "tags": [
+          "customers"
+        ]
+      },
+      "patch": {
+        "operationId": "CustomerController_updateContact_v1",
+        "parameters": [
+          {
+            "name": "customerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateContactRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactResponse"
+                }
+              }
+            }
           },
-          "409": {
+          "400": {
+            "description": "The request body is invalid."
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
             "description": "",
             "content": {
               "application/json": {
@@ -380,9 +363,1827 @@
             "access-token": []
           }
         ],
-        "summary": "Create the customer billing information",
+        "summary": "Update contact",
         "tags": [
           "customers"
+        ]
+      },
+      "delete": {
+        "operationId": "CustomerController_deleteContact_v1",
+        "parameters": [
+          {
+            "name": "customerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Delete contact",
+        "tags": [
+          "customers"
+        ]
+      }
+    },
+    "/api/v1/customers/{customerId}": {
+      "get": {
+        "operationId": "CustomerController_findById_v1",
+        "parameters": [
+          {
+            "name": "customerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The customer ID is not a UUIDv7."
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Get a customer",
+        "tags": [
+          "customers"
+        ]
+      },
+      "patch": {
+        "operationId": "CustomerController_update_v1",
+        "parameters": [
+          {
+            "name": "customerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomerRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request body is invalid."
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Update a customer",
+        "tags": [
+          "customers"
+        ]
+      },
+      "delete": {
+        "operationId": "CustomerController_delete_v1",
+        "parameters": [
+          {
+            "name": "customerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Delete a customer",
+        "tags": [
+          "customers"
+        ]
+      }
+    },
+    "/api/v1/products": {
+      "post": {
+        "operationId": "ProductController_create_v1",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request body is invalid."
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Create a product",
+        "tags": [
+          "products"
+        ]
+      },
+      "get": {
+        "operationId": "ProductController_findAll_v1",
+        "parameters": [
+          {
+            "name": "customerId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "List products",
+        "tags": [
+          "products"
+        ]
+      }
+    },
+    "/api/v1/products/{productId}": {
+      "get": {
+        "operationId": "ProductController_findById_v1",
+        "parameters": [
+          {
+            "name": "productId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Get a product",
+        "tags": [
+          "products"
+        ]
+      },
+      "patch": {
+        "operationId": "ProductController_update_v1",
+        "parameters": [
+          {
+            "name": "productId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request body is invalid."
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Update a product",
+        "tags": [
+          "products"
+        ]
+      },
+      "delete": {
+        "operationId": "ProductController_delete_v1",
+        "parameters": [
+          {
+            "name": "productId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Delete a product",
+        "tags": [
+          "products"
+        ]
+      }
+    },
+    "/api/v1/product-categories": {
+      "post": {
+        "operationId": "ProductCategoryController_create_v1",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductCategoryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductCategoryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request body is invalid."
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Create a product category",
+        "tags": [
+          "product-categories"
+        ]
+      },
+      "get": {
+        "operationId": "ProductCategoryController_findAll_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductCategoryResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "List product categories",
+        "tags": [
+          "product-categories"
+        ]
+      }
+    },
+    "/api/v1/product-categories/{categoryId}/types": {
+      "post": {
+        "operationId": "ProductCategoryController_createType_v1",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductTypeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductTypeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request body is invalid."
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Create a product type",
+        "tags": [
+          "product-categories"
+        ]
+      },
+      "get": {
+        "operationId": "ProductCategoryController_findTypes_v1",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductTypeResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "List product types",
+        "tags": [
+          "product-categories"
+        ]
+      }
+    },
+    "/api/v1/product-categories/{categoryId}": {
+      "get": {
+        "operationId": "ProductCategoryController_findById_v1",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductCategoryResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Get a product category",
+        "tags": [
+          "product-categories"
+        ]
+      },
+      "patch": {
+        "operationId": "ProductCategoryController_update_v1",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductCategoryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductCategoryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request body is invalid."
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Update a product category",
+        "tags": [
+          "product-categories"
+        ]
+      },
+      "delete": {
+        "operationId": "ProductCategoryController_delete_v1",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Delete a product category",
+        "tags": [
+          "product-categories"
+        ]
+      }
+    },
+    "/api/v1/product-categories/{categoryId}/types/{typeId}": {
+      "get": {
+        "operationId": "ProductCategoryController_findTypeById_v1",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "typeId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductTypeResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Get a product type",
+        "tags": [
+          "product-categories"
+        ]
+      },
+      "patch": {
+        "operationId": "ProductCategoryController_updateType_v1",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "typeId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductTypeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductTypeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request body is invalid."
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Update a product type",
+        "tags": [
+          "product-categories"
+        ]
+      },
+      "delete": {
+        "operationId": "ProductCategoryController_deleteType_v1",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "typeId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Delete a product type",
+        "tags": [
+          "product-categories"
+        ]
+      }
+    },
+    "/api/v1/work-orders": {
+      "post": {
+        "operationId": "WorkOrderController_create_v1",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateWorkOrderRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkOrderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request body is invalid."
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Create a work order",
+        "tags": [
+          "work-orders"
+        ]
+      },
+      "get": {
+        "operationId": "WorkOrderController_findAll_v1",
+        "parameters": [
+          {
+            "name": "customerId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkOrderResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "List work orders",
+        "tags": [
+          "work-orders"
+        ]
+      }
+    },
+    "/api/v1/work-orders/{workOrderId}/extra-expenses": {
+      "post": {
+        "operationId": "WorkOrderController_createExtraExpense_v1",
+        "parameters": [
+          {
+            "name": "workOrderId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateExtraExpenseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExtraExpenseResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request body is invalid."
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Create an extra expense",
+        "tags": [
+          "work-orders"
+        ]
+      },
+      "get": {
+        "operationId": "WorkOrderController_findAllExtraExpenses_v1",
+        "parameters": [
+          {
+            "name": "workOrderId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExtraExpenseResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "List extra expenses",
+        "tags": [
+          "work-orders"
+        ]
+      }
+    },
+    "/api/v1/work-orders/{workOrderId}/history": {
+      "post": {
+        "operationId": "WorkOrderController_createHistory_v1",
+        "parameters": [
+          {
+            "name": "workOrderId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateWorkOrderHistoryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkOrderHistoryItemResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request body is invalid."
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Create a work order history entry",
+        "tags": [
+          "work-orders"
+        ]
+      },
+      "get": {
+        "operationId": "WorkOrderController_findAllHistory_v1",
+        "parameters": [
+          {
+            "name": "workOrderId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WorkOrderHistoryItemResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "List work order history",
+        "tags": [
+          "work-orders"
+        ]
+      }
+    },
+    "/api/v1/work-orders/{workOrderId}": {
+      "get": {
+        "operationId": "WorkOrderController_findById_v1",
+        "parameters": [
+          {
+            "name": "workOrderId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkOrderResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Get a work order",
+        "tags": [
+          "work-orders"
+        ]
+      },
+      "patch": {
+        "operationId": "WorkOrderController_update_v1",
+        "parameters": [
+          {
+            "name": "workOrderId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateWorkOrderRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkOrderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request body is invalid."
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Update a work order",
+        "tags": [
+          "work-orders"
+        ]
+      },
+      "delete": {
+        "operationId": "WorkOrderController_delete_v1",
+        "parameters": [
+          {
+            "name": "workOrderId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Delete a work order",
+        "tags": [
+          "work-orders"
+        ]
+      }
+    },
+    "/api/v1/work-orders/{workOrderId}/extra-expenses/{extraExpenseId}": {
+      "get": {
+        "operationId": "WorkOrderController_findExtraExpenseById_v1",
+        "parameters": [
+          {
+            "name": "workOrderId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "extraExpenseId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExtraExpenseResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Get an extra expense",
+        "tags": [
+          "work-orders"
+        ]
+      },
+      "patch": {
+        "operationId": "WorkOrderController_updateExtraExpense_v1",
+        "parameters": [
+          {
+            "name": "workOrderId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "extraExpenseId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateExtraExpenseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExtraExpenseResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request body is invalid."
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Update an extra expense",
+        "tags": [
+          "work-orders"
+        ]
+      },
+      "delete": {
+        "operationId": "WorkOrderController_deleteExtraExpense_v1",
+        "parameters": [
+          {
+            "name": "workOrderId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "extraExpenseId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "summary": "Delete an extra expense",
+        "tags": [
+          "work-orders"
         ]
       }
     }
@@ -533,10 +2334,123 @@
           "error"
         ]
       },
+      "CreateContactRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Ada Lovelace",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "email": {
+            "type": "string",
+            "example": "ada@example.com",
+            "maxLength": 320,
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "example": "+4798765432",
+            "maxLength": 32,
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "example": "Primary contact",
+            "nullable": true
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "CreateCustomerRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Acme AS",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "individual",
+              "company",
+              "government"
+            ],
+            "example": "company",
+            "description": "Defaults to company when omitted."
+          },
+          "legalName": {
+            "type": "string",
+            "example": "Acme AS",
+            "maxLength": 200,
+            "nullable": true
+          },
+          "taxNumber": {
+            "type": "string",
+            "example": "NO999888777",
+            "maxLength": 64,
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "example": "Karl Johans gate 1",
+            "maxLength": 240,
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "example": "Oslo",
+            "maxLength": 120,
+            "nullable": true
+          },
+          "region": {
+            "type": "string",
+            "example": "Oslo",
+            "maxLength": 120,
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "string",
+            "example": "0154",
+            "maxLength": 32,
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "enum": [
+              "pl",
+              "no"
+            ],
+            "example": "no",
+            "nullable": true
+          },
+          "notes": {
+            "type": "string",
+            "example": "Preferred customer",
+            "nullable": true
+          },
+          "contact": {
+            "$ref": "#/components/schemas/CreateContactRequest"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
       "CustomerResponse": {
         "type": "object",
         "properties": {
           "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "019535d9-3df7-79fb-b466-fa907fa17f9e"
+          },
+          "companyId": {
             "type": "string",
             "format": "uuid",
             "example": "019535d9-3df7-79fb-b466-fa907fa17f9e"
@@ -592,6 +2506,7 @@
         },
         "required": [
           "id",
+          "companyId",
           "name",
           "type",
           "legalName",
@@ -604,99 +2519,45 @@
           "notes"
         ]
       },
-      "CreateContactRequest": {
+      "ContactResponse": {
         "type": "object",
         "properties": {
-          "name": {
+          "id": {
             "type": "string",
-            "example": "Ada Lovelace",
-            "minLength": 1,
-            "maxLength": 120
+            "format": "uuid",
+            "example": "019535d9-3df8-7abc-8def-fa907fa17f9f"
+          },
+          "customerId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "019535d9-3df7-79fb-b466-fa907fa17f9e"
+          },
+          "name": {
+            "type": "string"
           },
           "email": {
             "type": "string",
-            "example": "ada@example.com",
-            "maxLength": 320,
             "nullable": true
           },
           "phone": {
             "type": "string",
-            "example": "+4798765432",
-            "maxLength": 32,
             "nullable": true
           },
           "description": {
             "type": "string",
-            "example": "Primary contact",
             "nullable": true
           }
         },
         "required": [
-          "name"
+          "id",
+          "customerId",
+          "name",
+          "email",
+          "phone",
+          "description"
         ]
       },
-      "CreateBillingInformationRequest": {
-        "type": "object",
-        "properties": {
-          "address": {
-            "type": "string",
-            "example": "Karl Johans gate 1",
-            "minLength": 1,
-            "maxLength": 240
-          },
-          "city": {
-            "type": "string",
-            "example": "Oslo",
-            "minLength": 1,
-            "maxLength": 120
-          },
-          "region": {
-            "type": "string",
-            "example": "Oslo",
-            "maxLength": 120,
-            "nullable": true
-          },
-          "postalCode": {
-            "type": "string",
-            "example": "0154",
-            "minLength": 1,
-            "maxLength": 32
-          },
-          "country": {
-            "type": "string",
-            "enum": [
-              "pl",
-              "no"
-            ],
-            "example": "no"
-          },
-          "dueWithinDays": {
-            "type": "number",
-            "example": 14,
-            "minimum": 0,
-            "maximum": 365
-          },
-          "currency": {
-            "type": "string",
-            "enum": [
-              "usd",
-              "pln",
-              "eur",
-              "nok"
-            ],
-            "example": "nok"
-          }
-        },
-        "required": [
-          "address",
-          "city",
-          "postalCode",
-          "country",
-          "dueWithinDays",
-          "currency"
-        ]
-      },
-      "CreateCustomerRequest": {
+      "UpdateCustomerRequest": {
         "type": "object",
         "properties": {
           "name": {
@@ -763,116 +2624,583 @@
             "type": "string",
             "example": "Preferred customer",
             "nullable": true
-          },
-          "contact": {
-            "$ref": "#/components/schemas/CreateContactRequest"
-          },
-          "billingInformation": {
-            "$ref": "#/components/schemas/CreateBillingInformationRequest"
           }
-        },
-        "required": [
-          "name",
-          "type"
-        ]
+        }
       },
-      "ContactResponse": {
+      "UpdateContactRequest": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "019535d9-3df8-7abc-8def-fa907fa17f9f"
-          },
-          "customerId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "019535d9-3df7-79fb-b466-fa907fa17f9e"
-          },
           "name": {
-            "type": "string"
+            "type": "string",
+            "example": "Ada Lovelace",
+            "minLength": 1,
+            "maxLength": 120
           },
           "email": {
             "type": "string",
+            "example": "ada@example.com",
+            "maxLength": 320,
             "nullable": true
           },
           "phone": {
             "type": "string",
+            "example": "+4798765432",
+            "maxLength": 32,
             "nullable": true
           },
           "description": {
             "type": "string",
+            "example": "Primary contact",
+            "nullable": true
+          }
+        }
+      },
+      "CreateProductRequest": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "typeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "manufacturer": {
+            "type": "string",
+            "example": "HP",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "model": {
+            "type": "string",
+            "example": "LaserJet M607",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "serialNumber": {
+            "type": "string",
+            "example": "SN-HP-88213",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "ownership": {
+            "type": "string",
+            "enum": [
+              "by_client",
+              "rented"
+            ],
+            "example": "by_client"
+          },
+          "address": {
+            "type": "string",
+            "example": "88 Beachline Dr",
+            "maxLength": 240,
+            "nullable": true
+          },
+          "contactName": {
+            "type": "string",
+            "example": "Front desk",
+            "maxLength": 120,
+            "nullable": true
+          },
+          "warrantyDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2027-01-15",
             "nullable": true
           }
         },
         "required": [
-          "id",
           "customerId",
-          "name",
-          "email",
-          "phone",
-          "description"
+          "typeId",
+          "manufacturer",
+          "model",
+          "serialNumber",
+          "ownership"
         ]
       },
-      "BillingInformationResponse": {
+      "ProductResponse": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
-            "format": "uuid",
-            "example": "019535d9-3df8-7abc-8def-fa907fa17f9f"
+            "format": "uuid"
+          },
+          "companyId": {
+            "type": "string",
+            "format": "uuid"
           },
           "customerId": {
             "type": "string",
-            "format": "uuid",
-            "example": "019535d9-3df7-79fb-b466-fa907fa17f9e"
+            "format": "uuid"
+          },
+          "typeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "manufacturer": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "serialNumber": {
+            "type": "string"
           },
           "address": {
-            "type": "string"
-          },
-          "city": {
-            "type": "string"
-          },
-          "region": {
             "type": "string",
             "nullable": true
           },
-          "postalCode": {
-            "type": "string"
+          "contactName": {
+            "type": "string",
+            "nullable": true
           },
-          "country": {
+          "warrantyDate": {
+            "type": "string",
+            "nullable": true,
+            "format": "date"
+          },
+          "ownership": {
             "type": "string",
             "enum": [
-              "pl",
-              "no"
-            ]
-          },
-          "dueWithinDays": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 365
-          },
-          "currency": {
-            "type": "string",
-            "enum": [
-              "usd",
-              "pln",
-              "eur",
-              "nok"
+              "by_client",
+              "rented"
             ]
           }
         },
         "required": [
           "id",
+          "companyId",
           "customerId",
+          "typeId",
+          "manufacturer",
+          "model",
+          "serialNumber",
           "address",
-          "city",
-          "region",
-          "postalCode",
-          "country",
-          "dueWithinDays",
-          "currency"
+          "contactName",
+          "warrantyDate",
+          "ownership"
         ]
+      },
+      "UpdateProductRequest": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "typeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "manufacturer": {
+            "type": "string",
+            "example": "HP",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "model": {
+            "type": "string",
+            "example": "LaserJet M607",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "serialNumber": {
+            "type": "string",
+            "example": "SN-HP-88213",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "ownership": {
+            "type": "string",
+            "enum": [
+              "by_client",
+              "rented"
+            ],
+            "example": "by_client"
+          },
+          "address": {
+            "type": "string",
+            "example": "88 Beachline Dr",
+            "maxLength": 240,
+            "nullable": true
+          },
+          "contactName": {
+            "type": "string",
+            "example": "Front desk",
+            "maxLength": 120,
+            "nullable": true
+          },
+          "warrantyDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2027-01-15",
+            "nullable": true
+          }
+        }
+      },
+      "CreateProductCategoryRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Printers",
+            "minLength": 1,
+            "maxLength": 120
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "ProductCategoryResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "CreateProductTypeRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Laser",
+            "minLength": 1,
+            "maxLength": 120
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "ProductTypeResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "categoryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "categoryId",
+          "name"
+        ]
+      },
+      "UpdateProductCategoryRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Printers",
+            "minLength": 1,
+            "maxLength": 120
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "UpdateProductTypeRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Laser",
+            "minLength": 1,
+            "maxLength": 120
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "CreateWorkOrderRequest": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "description": {
+            "type": "string",
+            "example": "Paper jams repeatedly.",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "productId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "workerId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "estimatedDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2026-07-24",
+            "nullable": true
+          },
+          "showFinalPrice": {
+            "type": "boolean",
+            "example": false
+          }
+        },
+        "required": [
+          "customerId",
+          "description"
+        ]
+      },
+      "WorkOrderResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "companyId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "customerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "productId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "workerId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "number": {
+            "type": "number",
+            "example": 1042
+          },
+          "description": {
+            "type": "string"
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "waiting",
+              "diagnostics",
+              "waiting-parts",
+              "repaired"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "estimatedDate": {
+            "type": "string",
+            "nullable": true,
+            "format": "date"
+          },
+          "showFinalPrice": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "companyId",
+          "customerId",
+          "productId",
+          "workerId",
+          "number",
+          "description",
+          "stage",
+          "createdAt",
+          "estimatedDate",
+          "showFinalPrice"
+        ]
+      },
+      "CreateExtraExpenseRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Fuser assembly",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "price": {
+            "type": "string",
+            "example": "210.00"
+          },
+          "isHidden": {
+            "type": "boolean",
+            "example": false
+          }
+        },
+        "required": [
+          "name",
+          "price"
+        ]
+      },
+      "ExtraExpenseResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workOrderId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string",
+            "example": "210.00"
+          },
+          "isHidden": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "workOrderId",
+          "name",
+          "price",
+          "isHidden"
+        ]
+      },
+      "CreateWorkOrderHistoryRequest": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "example": "Assigned to self.",
+            "minLength": 1,
+            "maxLength": 4000
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "WorkOrderHistoryItemResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workOrderId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "workerId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "text": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "workOrderId",
+          "workerId",
+          "text",
+          "createdAt"
+        ]
+      },
+      "UpdateWorkOrderRequest": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "description": {
+            "type": "string",
+            "example": "Paper jams repeatedly.",
+            "minLength": 1,
+            "maxLength": 4000
+          },
+          "productId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "workerId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "waiting",
+              "diagnostics",
+              "waiting-parts",
+              "repaired"
+            ]
+          },
+          "estimatedDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2026-07-24",
+            "nullable": true
+          },
+          "showFinalPrice": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "UpdateExtraExpenseRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Fuser assembly",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "price": {
+            "type": "string",
+            "example": "210.00"
+          },
+          "isHidden": {
+            "type": "boolean",
+            "example": false
+          }
+        }
       }
     }
   }

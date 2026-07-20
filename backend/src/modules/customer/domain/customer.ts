@@ -11,17 +11,10 @@ export const CountryCode = {
 } as const;
 export type CountryCode = (typeof CountryCode)[keyof typeof CountryCode];
 
-export const CurrencyCode = {
-  UsDollar: 'usd',
-  PolishZloty: 'pln',
-  Euro: 'eur',
-  NorwegianKrone: 'nok',
-} as const;
-export type CurrencyCode = (typeof CurrencyCode)[keyof typeof CurrencyCode];
-
 export class Customer {
   constructor(
     public readonly id: string,
+    public readonly companyId: string,
     public readonly name: string,
     public readonly type: CustomerType,
     public readonly legalName: string | null,
@@ -43,19 +36,5 @@ export class Contact {
     public readonly email: string | null,
     public readonly phone: string | null,
     public readonly description: string | null,
-  ) {}
-}
-
-export class BillingInformation {
-  constructor(
-    public readonly id: string,
-    public readonly customerId: string,
-    public readonly address: string,
-    public readonly city: string,
-    public readonly region: string | null,
-    public readonly postalCode: string,
-    public readonly country: CountryCode,
-    public readonly dueWithinDays: number,
-    public readonly currency: CurrencyCode,
   ) {}
 }
