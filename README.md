@@ -29,6 +29,7 @@ Faberon/
 
 - [Frontend setup](frontend/README.md)
 - [Backend setup](backend/README.md)
+- [Mobile setup](mobile/README_MOBILE.md)
 
 
 Run package-manager, development, test, lint, and build commands from the
