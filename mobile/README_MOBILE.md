@@ -5,7 +5,7 @@ React Native mobile app for Faberon field service workflows.
 ## Install
 
 ```bash
-cd "D:\faberon all\faberon-mobile"
+cd mobile/
 npm install
 ```
 

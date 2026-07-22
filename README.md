@@ -14,10 +14,14 @@ Faberon/
 │       ├── pages/     Feature pages and page-owned components
 │       ├── components/ Shared UI components
 │       └── store/     Zustand stores
+│ 
 ├── backend/           NestJS, Drizzle ORM, PostgreSQL, and RabbitMQ
 │   └── src/
 │       ├── modules/   Business modules and their repositories
-│       └── common/    Database, schemas, relations, and RabbitMQ setup
+│      └── common/    Database, schemas, relations, and RabbitMQ setup
+│ 
+├── mobile/            Expo React Native app (Customer / Technician / Owner)
+│ 
 └── skills/            Project-specific agent workflows
 ```
 
@@ -25,6 +29,7 @@ Faberon/
 
 - [Frontend setup](frontend/README.md)
 - [Backend setup](backend/README.md)
+
 
 Run package-manager, development, test, lint, and build commands from the
 relevant application directory.
