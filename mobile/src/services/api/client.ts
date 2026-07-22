@@ -1,6 +1,7 @@
 import { env } from '@/constants/env';
 import { notifyUnauthorized } from '@/services/api/unauthorized';
 import { ApiRequestError } from '@/services/api/errors';
+import { mapResponseToApiError } from '@/services/api/map-api-error';
 import type { ApiError } from '@/types/api';
 
 interface RequestOptions extends Omit<RequestInit, 'body'> {
@@ -23,14 +24,12 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
   });
 
   if (!response.ok) {
-    let payload: ApiError | undefined;
+    let payload: ApiError;
     try {
-      payload = (await response.json()) as ApiError;
+      const body = await response.json();
+      payload = mapResponseToApiError(response.status, body);
     } catch {
-      payload = {
-        code: response.status === 401 ? 'UNAUTHORIZED' : 'UNKNOWN',
-        message: `Request failed with status ${response.status}`,
-      };
+      payload = mapResponseToApiError(response.status, null);
     }
 
     if (response.status === 401 || payload.code === 'UNAUTHORIZED') {

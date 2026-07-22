@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Feather } from '@expo/vector-icons';
 import { Link, router } from 'expo-router';
+import { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
   Pressable,
@@ -18,27 +19,40 @@ import { useStrings } from '@/hooks/use-i18n';
 import { colors, iconSizes, radii, shadows, spacing, typography } from '@/constants/tokens';
 import { DevRoleSwitcher } from '@/features/auth/DevRoleSwitcher';
 import { getRoleHomePath } from '@/features/auth/auth-redirect';
+import { useDevAuthStore } from '@/features/auth/dev-auth.store';
 import { useLoginMutation } from '@/hooks/use-app-queries';
 import { loginSchema, type LoginFormValues } from '@/schemas/auth.schema';
 
 export default function LoginScreen() {
   const strings = useStrings();
   const loginMutation = useLoginMutation();
+  const devRole = useDevAuthStore((state) => state.devRole);
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: 'j.doe@grandhotel.com',
-      password: 'password',
+      email: env.useMocks ? 'j.doe@grandhotel.com' : '',
+      password: env.useMocks ? 'password' : '',
       rememberMe: true,
+      companyId: env.companyId || undefined,
+      role: devRole,
     },
   });
 
+  useEffect(() => {
+    setValue('role', devRole);
+  }, [devRole, setValue]);
+
   const onSubmit = handleSubmit(async (values) => {
-    const session = await loginMutation.mutateAsync(values);
+    const session = await loginMutation.mutateAsync({
+      ...values,
+      role: values.role ?? devRole,
+      companyId: values.companyId?.trim() || env.companyId || undefined,
+    });
     router.replace(getRoleHomePath(session.user.role));
   });
 
@@ -90,6 +104,24 @@ export default function LoginScreen() {
             )}
           />
 
+          {!env.useMocks ? (
+            <Controller
+              control={control}
+              name="companyId"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <AppInput
+                  label="Company ID"
+                  autoCapitalize="none"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value ?? ''}
+                  error={errors.companyId?.message}
+                  placeholder={env.companyId || '019535d9-3df6-71ec-8f08-fa907fa17f9d'}
+                />
+              )}
+            />
+          ) : null}
+
           <View style={styles.formRow}>
             <Controller
               control={control}
@@ -119,7 +151,7 @@ export default function LoginScreen() {
             onPress={onSubmit}
           />
 
-          {env.devRoleSwitcher ? <DevRoleSwitcher /> : null}
+          {env.devRoleSwitcher || !env.useMocks ? <DevRoleSwitcher /> : null}
         </View>
       </View>
 

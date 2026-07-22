@@ -1,12 +1,43 @@
 import { z } from 'zod';
 
-export const loginSchema = z.object({
+import { env } from '@/constants/env';
+import { USER_ROLES } from '@/constants/roles';
+
+const baseLoginSchema = z.object({
   email: z.string().email('Enter a valid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
+  password: z
+    .string()
+    .min(env.useMocks ? 6 : 8, `Password must be at least ${env.useMocks ? 6 : 8} characters`),
   rememberMe: z.boolean().optional(),
+  companyId: z.string().uuid('Enter a valid company ID').optional(),
+  customerId: z.string().uuid('Enter a valid customer ID').optional(),
+  role: z.enum(USER_ROLES).optional(),
 });
 
-export type LoginFormValues = z.infer<typeof loginSchema>;
+export const loginSchema = baseLoginSchema.superRefine((data, ctx) => {
+  if (env.useMocks) {
+    return;
+  }
+
+  const companyId = data.companyId?.trim() || env.companyId;
+  if (!companyId) {
+    ctx.addIssue({
+      code: 'custom',
+      path: ['companyId'],
+      message: 'Company ID is required for backend sign-in',
+    });
+  }
+
+  if (!data.role) {
+    ctx.addIssue({
+      code: 'custom',
+      path: ['role'],
+      message: 'Select which portal you are signing in to',
+    });
+  }
+});
+
+export type LoginFormValues = z.infer<typeof baseLoginSchema>;
 
 export const createWorkOrderSchema = z.object({
   assetId: z.string().optional(),
