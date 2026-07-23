@@ -1,0 +1,18 @@
+---
+description: Architecture, data-flow, tokens, i18n, and verification rules for Faberon mobile work
+globs: mobile/**/*
+alwaysApply: false
+---
+
+# Faberon mobile
+
+Read `CONSTITUTION.md`, `mobile/AGENTS.md`, and `skills/build-faberon-mobile/SKILL.md` before modifying the mobile app.
+
+- Enter `mobile` before running application, npm, Node, lint, test, or typecheck commands.
+- Keep Expo Router files in `mobile/app` thin; put feature screens and UI under `mobile/src/features`.
+- Treat screens/containers as coordinators of queries, mutations, and navigation; keep children presentational.
+- Call services from TanStack Query hooks in `mobile/src/hooks`, not from presentational components.
+- Keep mock and HTTP adapters behind `mobile/src/services` interfaces.
+- Use tokens from `mobile/src/constants/tokens.ts` and typed i18n catalogs under `mobile/src/constants/i18n`.
+- Prefer typed helpers in `mobile/src/constants/routes.ts` over hard-coded paths.
+- Use Node 26 and npm. Run `npm run lint`, `npm run typecheck`, and `npm test -- --runInBand` from `mobile` before handoff.
