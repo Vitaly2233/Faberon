@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Faberon mobile
 
-Read `CONSTITUTION.md`, `mobile/AGENTS.md`, and `skills/build-faberon-mobile/SKILL.md` before modifying the mobile app.
+Read `CONSTITUTION.md` and `skills/build-faberon-mobile/SKILL.md` before modifying the mobile app.
 
 - Enter `mobile` before running application, npm, Node, lint, test, or typecheck commands.
 - Keep Expo Router files in `mobile/app` thin; put feature screens and UI under `mobile/src/features`.

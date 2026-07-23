@@ -5,7 +5,7 @@ description: Builds or extends the Faberon Expo/React Native mobile app. Use for
 
 # Build Faberon Mobile
 
-Follow `AGENTS.md` and `CONSTITUTION.md`, then inspect the affected route, feature, hook, and service before editing. Read the Expo SDK docs version noted in `mobile/AGENTS.md` when using Expo APIs.
+Follow `AGENTS.md` and `CONSTITUTION.md`, then inspect the affected route, feature, hook, and service before editing. When using Expo APIs, read the Expo SDK docs version noted in `AGENTS.md`.
 
 ## Workflow
 

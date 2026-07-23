@@ -2,7 +2,7 @@
 
 Expo Router app for Faberon field-service workflows. Three role-based portals share UI primitives, domain types, and a service layer that can run against mocks or HTTP.
 
-Canonical engineering rules: repository root `CONSTITUTION.md` (mobile section). Agent workflow: root `AGENTS.md`, `mobile/AGENTS.md`, and `skills/build-faberon-mobile`.
+Canonical engineering rules: repository root `CONSTITUTION.md` (mobile section). Agent workflow: root `AGENTS.md` and `skills/build-faberon-mobile`.
 
 ## Stack
 

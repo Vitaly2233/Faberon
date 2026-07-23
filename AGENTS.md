@@ -35,5 +35,5 @@ Use all matching skills. Skills under `skills/` are canonical and shared by ever
 
 ## Mobile-specific agent notes
 
-- Expo SDK and React Native APIs change across versions. Before writing mobile code, read the versioned Expo docs for the SDK this app uses (see `mobile/package.json` / `mobile/AGENTS.md`).
+- Expo SDK and React Native APIs change across versions. This app targets **Expo SDK 57** (see `mobile/package.json`). Before writing mobile code, read https://docs.expo.dev/versions/v57.0.0/
 - Prefer the app's existing mock/HTTP service seam over embedding fetch logic in screens.
