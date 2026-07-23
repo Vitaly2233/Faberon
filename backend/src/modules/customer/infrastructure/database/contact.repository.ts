@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {
   eq,
+  inArray,
   type InferInsertModel,
   type InferSelectModel,
 } from 'drizzle-orm';
@@ -28,6 +29,19 @@ export class ContactRepository extends CrudRepository<
       .where(eq(contacts.customerId, customerId))
       .limit(1);
     return row === undefined ? null : this.toDomain(row);
+  }
+
+  async findByCustomerIds(customerIds: string[]): Promise<Contact[]> {
+    if (customerIds.length === 0) {
+      return [];
+    }
+
+    const rows = await this.database.db
+      .select()
+      .from(contacts)
+      .where(inArray(contacts.customerId, customerIds));
+
+    return rows.map((row) => this.toDomain(row));
   }
 
   override async create(

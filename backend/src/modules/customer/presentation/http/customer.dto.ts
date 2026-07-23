@@ -8,9 +8,25 @@ import {
   MinLength,
   ValidateNested,
 } from 'class-validator';
+import { IsPopulate } from '../../../../common/validation/is-populate.decorator';
 import { NormalizeText } from '../../../../common/validation/normalize-text.decorator';
 import { CountryCode, CustomerType } from '../../domain/customer';
-import { CreateContactRequest } from './contact.dto';
+import {
+  CUSTOMER_LIST_POPULATE,
+  type CustomerListPopulate,
+} from '../../infrastructure/database/customer.repository';
+import { ContactResponse, CreateContactRequest } from './contact.dto';
+
+export class ListCustomersQuery {
+  @ApiPropertyOptional({
+    description: `Comma-separated relations to include. Allowed: ${CUSTOMER_LIST_POPULATE.join(', ')}.`,
+    example: 'contact',
+    type: String,
+  })
+  @IsOptional()
+  @IsPopulate(CUSTOMER_LIST_POPULATE)
+  populate?: CustomerListPopulate[];
+}
 
 export class CreateCustomerRequest {
   @ApiProperty({ example: 'Acme AS', minLength: 1, maxLength: 120 })
@@ -269,4 +285,11 @@ export class CustomerResponse {
 
   @ApiProperty({ nullable: true, type: String })
   notes!: string | null;
+
+  @ApiPropertyOptional({
+    type: () => ContactResponse,
+    nullable: true,
+    description: 'Present when the list request uses populate=contact.',
+  })
+  contact?: ContactResponse | null;
 }

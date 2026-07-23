@@ -21,8 +21,8 @@ services:
       RABBITMQ_DEFAULT_USER: faberon
       RABBITMQ_DEFAULT_PASS: faberon
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "5673:5672"
+      - "15673:15672"
     volumes:
       - faberon-rabbitmq-data:/var/lib/rabbitmq
     healthcheck:

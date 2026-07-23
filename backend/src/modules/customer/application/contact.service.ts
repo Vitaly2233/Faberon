@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import type { Contact } from '../domain/customer';
 import {
   ContactNotFoundError,
@@ -14,6 +14,7 @@ import { CustomerService } from './customer.service';
 @Injectable()
 export class ContactService {
   constructor(
+    @Inject(forwardRef(() => CustomerService))
     private readonly customerService: CustomerService,
     private readonly contactRepository: ContactRepository,
   ) {}
@@ -39,6 +40,10 @@ export class ContactService {
     const contact = await this.contactRepository.findByCustomerId(customerId);
     if (!contact) throw new ContactNotFoundError(customerId);
     return contact;
+  }
+
+  findByCustomerIds(customerIds: string[]): Promise<Contact[]> {
+    return this.contactRepository.findByCustomerIds(customerIds);
   }
 
   async update(

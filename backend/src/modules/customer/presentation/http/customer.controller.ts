@@ -8,6 +8,7 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -36,6 +37,7 @@ import {
 import {
   CreateCustomerRequest,
   CustomerResponse,
+  ListCustomersQuery,
   UpdateCustomerRequest,
 } from './customer.dto';
 
@@ -81,8 +83,9 @@ export class CustomerController {
   @ApiOkResponse({ type: CustomerResponse, isArray: true })
   findAll(
     @CurrentUser() user: AccessTokenClaims,
+    @Query() query: ListCustomersQuery,
   ): Promise<CustomerResponse[]> {
-    return this.customerService.findAll(user.companyId);
+    return this.customerService.findAll(user.companyId, query.populate ?? []);
   }
 
   @Get(':customerId')

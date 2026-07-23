@@ -56,6 +56,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/customers/{customerId}/contact": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get contact */
+        get: operations["CustomerController_findContact_v1"];
+        put?: never;
+        /** Create contact */
+        post: operations["CustomerController_createContact_v1"];
+        /** Delete contact */
+        delete: operations["CustomerController_deleteContact_v1"];
+        options?: never;
+        head?: never;
+        /** Update contact */
+        patch: operations["CustomerController_updateContact_v1"];
+        trace?: never;
+    };
     "/api/v1/customers/{customerId}": {
         parameters: {
             query?: never;
@@ -67,44 +87,215 @@ export interface paths {
         get: operations["CustomerController_findById_v1"];
         put?: never;
         post?: never;
-        delete?: never;
+        /** Delete a customer */
+        delete: operations["CustomerController_delete_v1"];
         options?: never;
         head?: never;
-        patch?: never;
+        /** Update a customer */
+        patch: operations["CustomerController_update_v1"];
         trace?: never;
     };
-    "/api/v1/customers/{customerId}/contact": {
+    "/api/v1/products": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /** List products */
+        get: operations["ProductController_findAll_v1"];
         put?: never;
-        /** Create the customer contact */
-        post: operations["CustomerController_createContact_v1"];
+        /** Create a product */
+        post: operations["ProductController_create_v1"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/v1/customers/{customerId}/billing-information": {
+    "/api/v1/products/{productId}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /** Get a product */
+        get: operations["ProductController_findById_v1"];
         put?: never;
-        /** Create the customer billing information */
-        post: operations["CustomerController_createBillingInformation_v1"];
+        post?: never;
+        /** Delete a product */
+        delete: operations["ProductController_delete_v1"];
+        options?: never;
+        head?: never;
+        /** Update a product */
+        patch: operations["ProductController_update_v1"];
+        trace?: never;
+    };
+    "/api/v1/product-categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List product categories */
+        get: operations["ProductCategoryController_findAll_v1"];
+        put?: never;
+        /** Create a product category */
+        post: operations["ProductCategoryController_create_v1"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/api/v1/product-categories/{categoryId}/types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List product types */
+        get: operations["ProductCategoryController_findTypes_v1"];
+        put?: never;
+        /** Create a product type */
+        post: operations["ProductCategoryController_createType_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/product-categories/{categoryId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a product category */
+        get: operations["ProductCategoryController_findById_v1"];
+        put?: never;
+        post?: never;
+        /** Delete a product category */
+        delete: operations["ProductCategoryController_delete_v1"];
+        options?: never;
+        head?: never;
+        /** Update a product category */
+        patch: operations["ProductCategoryController_update_v1"];
+        trace?: never;
+    };
+    "/api/v1/product-categories/{categoryId}/types/{typeId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a product type */
+        get: operations["ProductCategoryController_findTypeById_v1"];
+        put?: never;
+        post?: never;
+        /** Delete a product type */
+        delete: operations["ProductCategoryController_deleteType_v1"];
+        options?: never;
+        head?: never;
+        /** Update a product type */
+        patch: operations["ProductCategoryController_updateType_v1"];
+        trace?: never;
+    };
+    "/api/v1/work-orders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List work orders */
+        get: operations["WorkOrderController_findAll_v1"];
+        put?: never;
+        /** Create a work order */
+        post: operations["WorkOrderController_create_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/work-orders/{workOrderId}/extra-expenses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List extra expenses */
+        get: operations["WorkOrderController_findAllExtraExpenses_v1"];
+        put?: never;
+        /** Create an extra expense */
+        post: operations["WorkOrderController_createExtraExpense_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/work-orders/{workOrderId}/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List work order history */
+        get: operations["WorkOrderController_findAllHistory_v1"];
+        put?: never;
+        /** Create a work order history entry */
+        post: operations["WorkOrderController_createHistory_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/work-orders/{workOrderId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a work order */
+        get: operations["WorkOrderController_findById_v1"];
+        put?: never;
+        post?: never;
+        /** Delete a work order */
+        delete: operations["WorkOrderController_delete_v1"];
+        options?: never;
+        head?: never;
+        /** Update a work order */
+        patch: operations["WorkOrderController_update_v1"];
+        trace?: never;
+    };
+    "/api/v1/work-orders/{workOrderId}/extra-expenses/{extraExpenseId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get an extra expense */
+        get: operations["WorkOrderController_findExtraExpenseById_v1"];
+        put?: never;
+        post?: never;
+        /** Delete an extra expense */
+        delete: operations["WorkOrderController_deleteExtraExpense_v1"];
+        options?: never;
+        head?: never;
+        /** Update an extra expense */
+        patch: operations["WorkOrderController_updateExtraExpense_v1"];
         trace?: never;
     };
 }
@@ -162,26 +353,6 @@ export interface components {
             /** @example Not Found */
             error: string;
         };
-        CustomerResponse: {
-            /**
-             * Format: uuid
-             * @example 019535d9-3df7-79fb-b466-fa907fa17f9e
-             */
-            id: string;
-            /** @example Acme AS */
-            name: string;
-            /** @enum {string} */
-            type: "individual" | "company" | "government";
-            legalName: string | null;
-            taxNumber: string | null;
-            address: string | null;
-            city: string | null;
-            region: string | null;
-            postalCode: string | null;
-            /** @enum {string|null} */
-            country: "pl" | "no" | null;
-            notes: string | null;
-        };
         CreateContactRequest: {
             /** @example Ada Lovelace */
             name: string;
@@ -192,36 +363,15 @@ export interface components {
             /** @example Primary contact */
             description?: string | null;
         };
-        CreateBillingInformationRequest: {
-            /** @example Karl Johans gate 1 */
-            address: string;
-            /** @example Oslo */
-            city: string;
-            /** @example Oslo */
-            region?: string | null;
-            /** @example 0154 */
-            postalCode: string;
-            /**
-             * @example no
-             * @enum {string}
-             */
-            country: "pl" | "no";
-            /** @example 14 */
-            dueWithinDays: number;
-            /**
-             * @example nok
-             * @enum {string}
-             */
-            currency: "usd" | "pln" | "eur" | "nok";
-        };
         CreateCustomerRequest: {
             /** @example Acme AS */
             name: string;
             /**
+             * @description Defaults to company when omitted.
              * @example company
              * @enum {string}
              */
-            type: "individual" | "company" | "government";
+            type?: "individual" | "company" | "government";
             /** @example Acme AS */
             legalName?: string | null;
             /** @example NO999888777 */
@@ -242,7 +392,6 @@ export interface components {
             /** @example Preferred customer */
             notes?: string | null;
             contact?: components["schemas"]["CreateContactRequest"];
-            billingInformation?: components["schemas"]["CreateBillingInformationRequest"];
         };
         ContactResponse: {
             /**
@@ -260,26 +409,268 @@ export interface components {
             phone: string | null;
             description: string | null;
         };
-        BillingInformationResponse: {
+        CustomerResponse: {
             /**
              * Format: uuid
-             * @example 019535d9-3df8-7abc-8def-fa907fa17f9f
+             * @example 019535d9-3df7-79fb-b466-fa907fa17f9e
              */
             id: string;
             /**
              * Format: uuid
              * @example 019535d9-3df7-79fb-b466-fa907fa17f9e
              */
-            customerId: string;
-            address: string;
-            city: string;
+            companyId: string;
+            /** @example Acme AS */
+            name: string;
+            /** @enum {string} */
+            type: "individual" | "company" | "government";
+            legalName: string | null;
+            taxNumber: string | null;
+            address: string | null;
+            city: string | null;
             region: string | null;
-            postalCode: string;
+            postalCode: string | null;
+            /** @enum {string|null} */
+            country: "pl" | "no" | null;
+            notes: string | null;
+            /** @description Present when the list request uses populate=contact. */
+            contact?: components["schemas"]["ContactResponse"] | null;
+        };
+        UpdateCustomerRequest: {
+            /** @example Acme AS */
+            name?: string;
+            /**
+             * @example company
+             * @enum {string}
+             */
+            type?: "individual" | "company" | "government";
+            /** @example Acme AS */
+            legalName?: string | null;
+            /** @example NO999888777 */
+            taxNumber?: string | null;
+            /** @example Karl Johans gate 1 */
+            address?: string | null;
+            /** @example Oslo */
+            city?: string | null;
+            /** @example Oslo */
+            region?: string | null;
+            /** @example 0154 */
+            postalCode?: string | null;
+            /**
+             * @example no
+             * @enum {string|null}
+             */
+            country?: "pl" | "no" | null;
+            /** @example Preferred customer */
+            notes?: string | null;
+        };
+        UpdateContactRequest: {
+            /** @example Ada Lovelace */
+            name?: string;
+            /** @example ada@example.com */
+            email?: string | null;
+            /** @example +4798765432 */
+            phone?: string | null;
+            /** @example Primary contact */
+            description?: string | null;
+        };
+        CreateProductRequest: {
+            /** Format: uuid */
+            customerId: string;
+            /** Format: uuid */
+            typeId: string;
+            /** @example HP */
+            manufacturer: string;
+            /** @example LaserJet M607 */
+            model: string;
+            /** @example SN-HP-88213 */
+            serialNumber: string;
+            /**
+             * @example by_client
+             * @enum {string}
+             */
+            ownership: "by_client" | "rented";
+            /** @example 88 Beachline Dr */
+            address?: string | null;
+            /** @example Front desk */
+            contactName?: string | null;
+            /**
+             * Format: date
+             * @example 2027-01-15
+             */
+            warrantyDate?: string | null;
+        };
+        ProductResponse: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            companyId: string;
+            /** Format: uuid */
+            customerId: string;
+            /** Format: uuid */
+            typeId: string;
+            manufacturer: string;
+            model: string;
+            serialNumber: string;
+            address: string | null;
+            contactName: string | null;
+            /** Format: date */
+            warrantyDate: string | null;
             /** @enum {string} */
-            country: "pl" | "no";
-            dueWithinDays: number;
+            ownership: "by_client" | "rented";
+        };
+        UpdateProductRequest: {
+            /** Format: uuid */
+            customerId?: string;
+            /** Format: uuid */
+            typeId?: string;
+            /** @example HP */
+            manufacturer?: string;
+            /** @example LaserJet M607 */
+            model?: string;
+            /** @example SN-HP-88213 */
+            serialNumber?: string;
+            /**
+             * @example by_client
+             * @enum {string}
+             */
+            ownership?: "by_client" | "rented";
+            /** @example 88 Beachline Dr */
+            address?: string | null;
+            /** @example Front desk */
+            contactName?: string | null;
+            /**
+             * Format: date
+             * @example 2027-01-15
+             */
+            warrantyDate?: string | null;
+        };
+        CreateProductCategoryRequest: {
+            /** @example Printers */
+            name: string;
+        };
+        ProductCategoryResponse: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+        };
+        CreateProductTypeRequest: {
+            /** @example Laser */
+            name: string;
+        };
+        ProductTypeResponse: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            categoryId: string;
+            name: string;
+        };
+        UpdateProductCategoryRequest: {
+            /** @example Printers */
+            name: string;
+        };
+        UpdateProductTypeRequest: {
+            /** @example Laser */
+            name: string;
+        };
+        CreateWorkOrderRequest: {
+            /** Format: uuid */
+            customerId: string;
+            /** @example Paper jams repeatedly. */
+            description: string;
+            /** Format: uuid */
+            productId?: string | null;
+            /** Format: uuid */
+            workerId?: string | null;
+            /**
+             * Format: date
+             * @example 2026-07-24
+             */
+            estimatedDate?: string | null;
+            /** @example false */
+            showFinalPrice?: boolean;
+        };
+        WorkOrderResponse: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            companyId: string;
+            /** Format: uuid */
+            customerId: string;
+            /** Format: uuid */
+            productId: string | null;
+            /** Format: uuid */
+            workerId: string | null;
+            /** @example 1042 */
+            number: number;
+            description: string;
             /** @enum {string} */
-            currency: "usd" | "pln" | "eur" | "nok";
+            stage: "waiting" | "diagnostics" | "waiting-parts" | "repaired";
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date */
+            estimatedDate: string | null;
+            showFinalPrice: boolean;
+        };
+        CreateExtraExpenseRequest: {
+            /** @example Fuser assembly */
+            name: string;
+            /** @example 210.00 */
+            price: string;
+            /** @example false */
+            isHidden?: boolean;
+        };
+        ExtraExpenseResponse: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            workOrderId: string;
+            name: string;
+            /** @example 210.00 */
+            price: string;
+            isHidden: boolean;
+        };
+        CreateWorkOrderHistoryRequest: {
+            /** @example Assigned to self. */
+            text: string;
+        };
+        WorkOrderHistoryItemResponse: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            workOrderId: string;
+            /** Format: uuid */
+            workerId: string | null;
+            text: string;
+            /** Format: date-time */
+            createdAt: string;
+        };
+        UpdateWorkOrderRequest: {
+            /** Format: uuid */
+            customerId?: string;
+            /** @example Paper jams repeatedly. */
+            description?: string;
+            /** Format: uuid */
+            productId?: string | null;
+            /** Format: uuid */
+            workerId?: string | null;
+            /** @enum {string} */
+            stage?: "waiting" | "diagnostics" | "waiting-parts" | "repaired";
+            /**
+             * Format: date
+             * @example 2026-07-24
+             */
+            estimatedDate?: string | null;
+            /** @example false */
+            showFinalPrice?: boolean;
+        };
+        UpdateExtraExpenseRequest: {
+            /** @example Fuser assembly */
+            name?: string;
+            /** @example 210.00 */
+            price?: string;
+            /** @example false */
+            isHidden?: boolean;
         };
     };
     responses: never;
@@ -360,7 +751,10 @@ export interface operations {
     };
     CustomerController_findAll_v1: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Comma-separated relations to include. Allowed: contact. */
+                populate?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -423,7 +817,7 @@ export interface operations {
             };
         };
     };
-    CustomerController_findById_v1: {
+    CustomerController_findContact_v1: {
         parameters: {
             query?: never;
             header?: never;
@@ -439,15 +833,8 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["CustomerResponse"];
+                    "application/json": components["schemas"]["ContactResponse"];
                 };
-            };
-            /** @description The customer ID is not a UUIDv7. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
             401: {
                 headers: {
@@ -523,7 +910,42 @@ export interface operations {
             };
         };
     };
-    CustomerController_createBillingInformation_v1: {
+    CustomerController_deleteContact_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                customerId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    CustomerController_updateContact_v1: {
         parameters: {
             query?: never;
             header?: never;
@@ -534,19 +956,19 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateBillingInformationRequest"];
+                "application/json": components["schemas"]["UpdateContactRequest"];
             };
         };
         responses: {
-            201: {
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["BillingInformationResponse"];
+                    "application/json": components["schemas"]["ContactResponse"];
                 };
             };
-            /** @description The request or customer ID is invalid. */
+            /** @description The request body is invalid. */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -569,7 +991,1218 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponse"];
                 };
             };
-            409: {
+        };
+    };
+    CustomerController_findById_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                customerId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CustomerResponse"];
+                };
+            };
+            /** @description The customer ID is not a UUIDv7. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    CustomerController_delete_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                customerId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    CustomerController_update_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                customerId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateCustomerRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CustomerResponse"];
+                };
+            };
+            /** @description The request body is invalid. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    ProductController_findAll_v1: {
+        parameters: {
+            query: {
+                customerId: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductResponse"][];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    ProductController_create_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateProductRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductResponse"];
+                };
+            };
+            /** @description The request body is invalid. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    ProductController_findById_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                productId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductResponse"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    ProductController_delete_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                productId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    ProductController_update_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                productId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateProductRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductResponse"];
+                };
+            };
+            /** @description The request body is invalid. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    ProductCategoryController_findAll_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductCategoryResponse"][];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    ProductCategoryController_create_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateProductCategoryRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductCategoryResponse"];
+                };
+            };
+            /** @description The request body is invalid. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    ProductCategoryController_findTypes_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                categoryId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductTypeResponse"][];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    ProductCategoryController_createType_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                categoryId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateProductTypeRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductTypeResponse"];
+                };
+            };
+            /** @description The request body is invalid. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    ProductCategoryController_findById_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                categoryId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductCategoryResponse"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    ProductCategoryController_delete_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                categoryId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    ProductCategoryController_update_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                categoryId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateProductCategoryRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductCategoryResponse"];
+                };
+            };
+            /** @description The request body is invalid. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    ProductCategoryController_findTypeById_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                categoryId: string;
+                typeId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductTypeResponse"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    ProductCategoryController_deleteType_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                categoryId: string;
+                typeId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    ProductCategoryController_updateType_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                categoryId: string;
+                typeId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateProductTypeRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductTypeResponse"];
+                };
+            };
+            /** @description The request body is invalid. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    WorkOrderController_findAll_v1: {
+        parameters: {
+            query: {
+                customerId: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkOrderResponse"][];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    WorkOrderController_create_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateWorkOrderRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkOrderResponse"];
+                };
+            };
+            /** @description The request body is invalid. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    WorkOrderController_findAllExtraExpenses_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workOrderId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExtraExpenseResponse"][];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    WorkOrderController_createExtraExpense_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workOrderId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateExtraExpenseRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExtraExpenseResponse"];
+                };
+            };
+            /** @description The request body is invalid. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    WorkOrderController_findAllHistory_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workOrderId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkOrderHistoryItemResponse"][];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    WorkOrderController_createHistory_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workOrderId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateWorkOrderHistoryRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkOrderHistoryItemResponse"];
+                };
+            };
+            /** @description The request body is invalid. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    WorkOrderController_findById_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workOrderId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkOrderResponse"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    WorkOrderController_delete_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workOrderId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    WorkOrderController_update_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workOrderId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateWorkOrderRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkOrderResponse"];
+                };
+            };
+            /** @description The request body is invalid. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    WorkOrderController_findExtraExpenseById_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workOrderId: string;
+                extraExpenseId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExtraExpenseResponse"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    WorkOrderController_deleteExtraExpense_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workOrderId: string;
+                extraExpenseId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    WorkOrderController_updateExtraExpense_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                workOrderId: string;
+                extraExpenseId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateExtraExpenseRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExtraExpenseResponse"];
+                };
+            };
+            /** @description The request body is invalid. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

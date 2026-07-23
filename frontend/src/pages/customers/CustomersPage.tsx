@@ -1,14 +1,14 @@
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import { useNavigate } from 'react-router-dom'
-import { useCustomersStore } from '../../store/customersStore'
 import { useModalsStore } from '../../store/modals'
 import { usePrintersStore } from '../../store/printersStore'
 import { useWorkOrdersStore } from '../../store/workOrdersStore'
 import { CustomersTable } from './components/CustomersTable'
+import { useCustomers } from './hooks/useCustomers'
 
 export function CustomersPage() {
   const navigate = useNavigate()
-  const customers = useCustomersStore((state) => state.customers)
+  const { customers, loading, error } = useCustomers()
   const printers = usePrintersStore((state) => state.printers)
   const workOrders = useWorkOrdersStore((state) => state.workOrders)
   const openModal = useModalsStore((state) => state.open)
@@ -32,19 +32,27 @@ export function CustomersPage() {
         </button>
       </header>
 
-      <CustomersTable
-        customers={customers}
-        printerCount={(customerId) =>
-          printers.filter((printer) => printer.customerId === customerId).length
-        }
-        openWorkOrderCount={(customerId) =>
-          workOrders.filter(
-            (order) =>
-              order.customerId === customerId && order.stage !== 'Confirmed by client',
-          ).length
-        }
-        onCustomerOpen={(customerId) => navigate(`/customers/${customerId}`)}
-      />
+      {loading ? (
+        <p className="text-sm text-copy">Loading customers…</p>
+      ) : error ? (
+        <p className="text-sm text-danger" role="alert">
+          {error}
+        </p>
+      ) : (
+        <CustomersTable
+          customers={customers}
+          printerCount={(customerId) =>
+            printers.filter((printer) => printer.customerId === customerId).length
+          }
+          openWorkOrderCount={(customerId) =>
+            workOrders.filter(
+              (order) =>
+                order.customerId === customerId && order.stage !== 'Confirmed by client',
+            ).length
+          }
+          onCustomerOpen={(customerId) => navigate(`/customers/${customerId}`)}
+        />
+      )}
     </div>
   )
 }

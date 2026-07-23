@@ -1,9 +1,9 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "a8a6e410-f5bc-405e-86c5-7baabdd4d2b8",
+  "id": "309cae29-ec5b-4f43-a73b-db1cfcd5a56e",
   "prevIds": [
-    "fe65dd64-79fa-4083-a7a9-847b258b0035"
+    "00000000-0000-0000-0000-000000000000"
   ],
   "ddl": [
     {
@@ -967,6 +967,34 @@
       "entityType": "indexes",
       "schema": "public",
       "table": "users"
+    },
+    {
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "company_id",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        },
+        {
+          "value": "number",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": true,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "name": "work_orders_company_id_number_unique",
+      "entityType": "indexes",
+      "schema": "public",
+      "table": "work_orders"
     },
     {
       "nameExplicit": false,

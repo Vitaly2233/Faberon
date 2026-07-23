@@ -132,7 +132,18 @@
       },
       "get": {
         "operationId": "CustomerController_findAll_v1",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "populate",
+            "required": false,
+            "in": "query",
+            "description": "Comma-separated relations to include. Allowed: contact.",
+            "schema": {
+              "example": "contact",
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -2442,6 +2453,44 @@
           "name"
         ]
       },
+      "ContactResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "019535d9-3df8-7abc-8def-fa907fa17f9f"
+          },
+          "customerId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "019535d9-3df7-79fb-b466-fa907fa17f9e"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "customerId",
+          "name",
+          "email",
+          "phone",
+          "description"
+        ]
+      },
       "CustomerResponse": {
         "type": "object",
         "properties": {
@@ -2502,6 +2551,16 @@
           "notes": {
             "type": "string",
             "nullable": true
+          },
+          "contact": {
+            "nullable": true,
+            "description": "Present when the list request uses populate=contact.",
+            "type": "object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ContactResponse"
+              }
+            ]
           }
         },
         "required": [
@@ -2517,44 +2576,6 @@
           "postalCode",
           "country",
           "notes"
-        ]
-      },
-      "ContactResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "example": "019535d9-3df8-7abc-8def-fa907fa17f9f"
-          },
-          "customerId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "019535d9-3df7-79fb-b466-fa907fa17f9e"
-          },
-          "name": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "phone": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "required": [
-          "id",
-          "customerId",
-          "name",
-          "email",
-          "phone",
-          "description"
         ]
       },
       "UpdateCustomerRequest": {

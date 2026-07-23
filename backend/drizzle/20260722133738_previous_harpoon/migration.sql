@@ -1,8 +1,34 @@
+CREATE TYPE "country_code" AS ENUM('pl', 'no');--> statement-breakpoint
+CREATE TYPE "customer_type" AS ENUM('individual', 'company', 'government');--> statement-breakpoint
 CREATE TYPE "product_ownership" AS ENUM('by_client', 'rented');--> statement-breakpoint
 CREATE TYPE "work_order_stage" AS ENUM('waiting', 'diagnostics', 'waiting-parts', 'repaired');--> statement-breakpoint
 CREATE TABLE "companies" (
 	"id" uuid PRIMARY KEY DEFAULT uuidv7(),
 	"name" varchar(120) NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "contacts" (
+	"id" uuid PRIMARY KEY DEFAULT uuidv7(),
+	"customer_id" uuid NOT NULL,
+	"name" varchar(120) NOT NULL,
+	"email" varchar(320),
+	"phone" varchar(32),
+	"description" text
+);
+--> statement-breakpoint
+CREATE TABLE "customers" (
+	"id" uuid PRIMARY KEY DEFAULT uuidv7(),
+	"company_id" uuid NOT NULL,
+	"name" varchar(120) NOT NULL,
+	"type" "customer_type" NOT NULL,
+	"legal_name" varchar(200),
+	"tax_number" varchar(64),
+	"address" varchar(240),
+	"city" varchar(120),
+	"region" varchar(120),
+	"postal_code" varchar(32),
+	"country" "country_code",
+	"notes" text
 );
 --> statement-breakpoint
 CREATE TABLE "extra_expenses" (
@@ -67,10 +93,11 @@ CREATE TABLE "work_orders" (
 	"show_final_price" boolean DEFAULT false NOT NULL
 );
 --> statement-breakpoint
-DROP TABLE "billing_info";--> statement-breakpoint
-ALTER TABLE "customers" ADD COLUMN "company_id" uuid NOT NULL;--> statement-breakpoint
 CREATE UNIQUE INDEX "companies_name_unique" ON "companies" ("name");--> statement-breakpoint
+CREATE UNIQUE INDEX "contacts_customer_id_unique" ON "contacts" ("customer_id");--> statement-breakpoint
 CREATE UNIQUE INDEX "users_company_id_email_unique" ON "users" ("company_id","email");--> statement-breakpoint
+CREATE UNIQUE INDEX "work_orders_company_id_number_unique" ON "work_orders" ("company_id","number");--> statement-breakpoint
+ALTER TABLE "contacts" ADD CONSTRAINT "contacts_customer_id_customers_id_fkey" FOREIGN KEY ("customer_id") REFERENCES "customers"("id") ON DELETE CASCADE;--> statement-breakpoint
 ALTER TABLE "customers" ADD CONSTRAINT "customers_company_id_companies_id_fkey" FOREIGN KEY ("company_id") REFERENCES "companies"("id") ON DELETE CASCADE;--> statement-breakpoint
 ALTER TABLE "extra_expenses" ADD CONSTRAINT "extra_expenses_work_order_id_work_orders_id_fkey" FOREIGN KEY ("work_order_id") REFERENCES "work_orders"("id") ON DELETE CASCADE;--> statement-breakpoint
 ALTER TABLE "product_types" ADD CONSTRAINT "product_types_category_id_product_categories_id_fkey" FOREIGN KEY ("category_id") REFERENCES "product_categories"("id") ON DELETE CASCADE;--> statement-breakpoint
@@ -83,5 +110,4 @@ ALTER TABLE "work_order_history_items" ADD CONSTRAINT "work_order_history_items_
 ALTER TABLE "work_orders" ADD CONSTRAINT "work_orders_company_id_companies_id_fkey" FOREIGN KEY ("company_id") REFERENCES "companies"("id") ON DELETE CASCADE;--> statement-breakpoint
 ALTER TABLE "work_orders" ADD CONSTRAINT "work_orders_customer_id_customers_id_fkey" FOREIGN KEY ("customer_id") REFERENCES "customers"("id") ON DELETE CASCADE;--> statement-breakpoint
 ALTER TABLE "work_orders" ADD CONSTRAINT "work_orders_product_id_products_id_fkey" FOREIGN KEY ("product_id") REFERENCES "products"("id") ON DELETE SET NULL;--> statement-breakpoint
-ALTER TABLE "work_orders" ADD CONSTRAINT "work_orders_worker_id_users_id_fkey" FOREIGN KEY ("worker_id") REFERENCES "users"("id") ON DELETE SET NULL;--> statement-breakpoint
-DROP TYPE "currency_code";
+ALTER TABLE "work_orders" ADD CONSTRAINT "work_orders_worker_id_users_id_fkey" FOREIGN KEY ("worker_id") REFERENCES "users"("id") ON DELETE SET NULL;
