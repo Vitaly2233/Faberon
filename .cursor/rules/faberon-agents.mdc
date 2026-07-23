@@ -1,0 +1,14 @@
+---
+description: Global Faberon agent entry — read shared constitution, AGENTS.md, and matching skills
+alwaysApply: true
+---
+
+# Faberon agents
+
+Before changing code in this repository:
+
+1. Read `AGENTS.md` and `CONSTITUTION.md` at the repository root.
+2. Read the complete `SKILL.md` for every applicable skill listed in `AGENTS.md`.
+3. Run package-manager, lint, test, and build commands only from the affected app directory (`frontend`, `backend`, or `mobile`).
+
+Skills under `skills/` are canonical. Entries under `.cursor/skills/` only point to them.

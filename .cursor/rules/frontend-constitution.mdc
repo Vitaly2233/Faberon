@@ -1,21 +1,18 @@
 ---
-description: Core architecture, design-system, and verification rules for Faberon frontend work
-alwaysApply: true
+description: Architecture, design-system, and verification rules for Faberon frontend work
+globs: frontend/**/*
+alwaysApply: false
 ---
 
-# Faberon frontend constitution
+# Faberon frontend
 
-Read `CONSTITUTION.md` from the repository root before modifying the frontend.
+Read `CONSTITUTION.md` and `skills/build-faberon-frontend/SKILL.md` before modifying the frontend. For color/token work also follow `skills/minimize-color-palette`. For reviews follow `skills/review-faberon-frontend`.
 
-- Enter `frontend` before running application, pnpm, Node, lint, test, or build commands. Never run package-manager commands from the repository root.
-- Treat pages and named modals as containers: they may read Zustand, use router hooks, and coordinate state transitions.
-- Keep every Zustand store in `frontend/src/store` (domain folders such as `store/modals/` are allowed); never place stores inside a page or modal folder.
-- Keep child components presentational. Pass typed values and callbacks; children render props and emit actions only.
-- Keep components small and split them by visual responsibility.
-- Put global dialogs in `frontend/src/modals`. Register names in `store/modals/types.ts`, open them through the modals store (LIFO), and render them from `ModalsHost` only.
+- Enter `frontend` before running application, pnpm, Node, lint, test, or build commands.
+- Treat pages and named modals as containers; keep child components presentational (typed props and callbacks only).
+- Keep every Zustand store in `frontend/src/store` (domain folders allowed); never inside a page or modal folder.
+- Put global dialogs in `frontend/src/modals`, register names in `store/modals/types.ts`, open via the modals store (LIFO), render from `ModalsHost` only.
 - Define product colors, fonts, shadows, layout sizes, and exceptional visual values in `frontend/src/styles/index.css`.
-- Use semantic Tailwind tokens and Tailwind's standard spacing, radius, and font-size utilities in JSX.
-- Use MUI selectively for accessible primitives or icons; do not create a competing MUI visual theme.
-- Do not add authentication, persistence, API calls, or speculative business logic to visual prototypes.
+- Use semantic Tailwind tokens and standard spacing/radius/font-size utilities; use MUI selectively without a competing theme.
 - Preserve semantic HTML, labels, keyboard access, focus visibility, contrast, and responsive behavior.
 - Use Node 26 and pnpm. Run `pnpm lint` and `pnpm build` from `frontend` before handoff.
