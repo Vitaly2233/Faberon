@@ -11,14 +11,12 @@ import {
   Query,
 } from '@nestjs/common';
 import {
-  ApiBadRequestResponse,
   ApiBearerAuth,
   ApiConflictResponse,
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
-  ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -36,6 +34,7 @@ import {
 } from './contact.dto';
 import {
   CreateCustomerRequest,
+  CustomerPopulateQuery,
   CustomerResponse,
   ListCustomersQuery,
   UpdateCustomerRequest,
@@ -53,9 +52,7 @@ export class CustomerController {
   ) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create a customer' })
   @ApiCreatedResponse({ type: CustomerResponse })
-  @ApiBadRequestResponse({ description: 'The request body is invalid.' })
   create(
     @CurrentUser() user: AccessTokenClaims,
     @Body() request: CreateCustomerRequest,
@@ -64,9 +61,7 @@ export class CustomerController {
   }
 
   @Post(':customerId/contact')
-  @ApiOperation({ summary: 'Create contact' })
   @ApiCreatedResponse({ type: ContactResponse })
-  @ApiBadRequestResponse({ description: 'The request or customer ID is invalid.' })
   @ApiNotFoundResponse({ type: ErrorResponse })
   @ApiConflictResponse({ type: ErrorResponse })
   createContact(
@@ -79,7 +74,6 @@ export class CustomerController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'List customers' })
   @ApiOkResponse({ type: CustomerResponse, isArray: true })
   findAll(
     @CurrentUser() user: AccessTokenClaims,
@@ -89,25 +83,24 @@ export class CustomerController {
   }
 
   @Get(':customerId')
-  @ApiOperation({ summary: 'Get a customer' })
   @ApiOkResponse({ type: CustomerResponse })
-  @ApiBadRequestResponse({ description: 'The customer ID is not a UUIDv7.' })
   @ApiNotFoundResponse({ type: ErrorResponse })
   async findById(
     @CurrentUser() user: AccessTokenClaims,
     @Param('customerId', new ParseUUIDPipe({ version: '7' }))
     customerId: string,
+    @Query() query: CustomerPopulateQuery,
   ): Promise<CustomerResponse> {
-    const customer = await this.customerService.findById(
+    const customer = await this.customerService.findByIdResponse(
       user.companyId,
       customerId,
+      query.populate ?? [],
     );
     if (!customer) throw new CustomerNotFoundError(customerId);
     return customer;
   }
 
   @Get(':customerId/contact')
-  @ApiOperation({ summary: 'Get contact' })
   @ApiOkResponse({ type: ContactResponse })
   @ApiNotFoundResponse({ type: ErrorResponse })
   findContact(
@@ -119,9 +112,7 @@ export class CustomerController {
   }
 
   @Patch(':customerId')
-  @ApiOperation({ summary: 'Update a customer' })
   @ApiOkResponse({ type: CustomerResponse })
-  @ApiBadRequestResponse({ description: 'The request body is invalid.' })
   @ApiNotFoundResponse({ type: ErrorResponse })
   update(
     @CurrentUser() user: AccessTokenClaims,
@@ -133,9 +124,7 @@ export class CustomerController {
   }
 
   @Patch(':customerId/contact')
-  @ApiOperation({ summary: 'Update contact' })
   @ApiOkResponse({ type: ContactResponse })
-  @ApiBadRequestResponse({ description: 'The request body is invalid.' })
   @ApiNotFoundResponse({ type: ErrorResponse })
   updateContact(
     @CurrentUser() user: AccessTokenClaims,
@@ -148,7 +137,6 @@ export class CustomerController {
 
   @Delete(':customerId')
   @HttpCode(204)
-  @ApiOperation({ summary: 'Delete a customer' })
   @ApiNoContentResponse()
   @ApiNotFoundResponse({ type: ErrorResponse })
   async delete(
@@ -161,7 +149,6 @@ export class CustomerController {
 
   @Delete(':customerId/contact')
   @HttpCode(204)
-  @ApiOperation({ summary: 'Delete contact' })
   @ApiNoContentResponse()
   @ApiNotFoundResponse({ type: ErrorResponse })
   async deleteContact(

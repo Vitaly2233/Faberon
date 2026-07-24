@@ -1,9 +1,10 @@
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { Brand } from '../../components/Brand'
 import { useLoginStore } from '../../store/loginStore'
 import { HeroPanel } from './components/HeroPanel'
 import { LoginForm } from './components/LoginForm'
 import { PageFooter } from './components/PageFooter'
+import { useLogin, useMe } from './hooks/useAuth'
 
 export function LoginPage() {
   const navigate = useNavigate()
@@ -15,6 +16,19 @@ export function LoginPage() {
   const setPassword = useLoginStore((state) => state.setPassword)
   const setRememberMe = useLoginStore((state) => state.setRememberMe)
   const togglePasswordVisibility = useLoginStore((state) => state.togglePasswordVisibility)
+  const login = useLogin()
+  const me = useMe()
+
+  if (me.isSuccess) {
+    return <Navigate to="/customers" replace />
+  }
+
+  const errorMessage =
+    login.error instanceof Error
+      ? login.error.message
+      : login.error
+        ? 'Failed to sign in.'
+        : null
 
   return (
     <main className="auth-theme grid min-h-screen bg-canvas lg:grid-cols-[30rem_1fr]">
@@ -28,17 +42,27 @@ export function LoginPage() {
             </p>
           </div>
           <div className="mt-6">
+            {errorMessage ? (
+              <p className="mb-4 text-sm text-danger" role="alert">
+                {errorMessage}
+              </p>
+            ) : null}
             <LoginForm
               email={email}
               password={password}
               rememberMe={rememberMe}
               isPasswordVisible={isPasswordVisible}
+              isSubmitting={login.isPending}
               onEmailChange={setEmail}
               onPasswordChange={setPassword}
               onRememberMeChange={setRememberMe}
               onPasswordVisibilityToggle={togglePasswordVisibility}
               onForgotPassword={() => undefined}
-              onSubmit={() => navigate('/customers')}
+              onSubmit={() => {
+                void login.mutateAsync({ email, password }).then(() => {
+                  void navigate('/customers')
+                })
+              }}
             />
           </div>
         </div>

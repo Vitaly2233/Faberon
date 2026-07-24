@@ -26,6 +26,32 @@ export class Customer {
     public readonly country: CountryCode | null,
     public readonly notes: string | null,
   ) {}
+
+  toResponse(options?: { contact: Contact | null }) {
+    const response = {
+      id: this.id,
+      companyId: this.companyId,
+      name: this.name,
+      type: this.type,
+      legalName: this.legalName,
+      taxNumber: this.taxNumber,
+      address: this.address,
+      city: this.city,
+      region: this.region,
+      postalCode: this.postalCode,
+      country: this.country,
+      notes: this.notes,
+    };
+
+    if (!options) {
+      return response;
+    }
+
+    return {
+      ...response,
+      contact: options.contact ? options.contact.toResponse() : null,
+    };
+  }
 }
 
 export class Contact {
@@ -37,4 +63,15 @@ export class Contact {
     public readonly phone: string | null,
     public readonly description: string | null,
   ) {}
+
+  toResponse() {
+    return {
+      id: this.id,
+      customerId: this.customerId,
+      name: this.name,
+      email: this.email,
+      phone: this.phone,
+      description: this.description,
+    };
+  }
 }

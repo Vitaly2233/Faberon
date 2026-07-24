@@ -11,13 +11,11 @@ import {
   Query,
 } from '@nestjs/common';
 import {
-  ApiBadRequestResponse,
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
-  ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -39,9 +37,7 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create a product' })
   @ApiCreatedResponse({ type: ProductResponse })
-  @ApiBadRequestResponse({ description: 'The request body is invalid.' })
   @ApiNotFoundResponse({ type: ErrorResponse })
   create(
     @CurrentUser() user: AccessTokenClaims,
@@ -51,7 +47,6 @@ export class ProductController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'List products' })
   @ApiOkResponse({ type: ProductResponse, isArray: true })
   @ApiNotFoundResponse({ type: ErrorResponse })
   findAll(
@@ -63,7 +58,6 @@ export class ProductController {
   }
 
   @Get(':productId')
-  @ApiOperation({ summary: 'Get a product' })
   @ApiOkResponse({ type: ProductResponse })
   @ApiNotFoundResponse({ type: ErrorResponse })
   findById(
@@ -75,9 +69,7 @@ export class ProductController {
   }
 
   @Patch(':productId')
-  @ApiOperation({ summary: 'Update a product' })
   @ApiOkResponse({ type: ProductResponse })
-  @ApiBadRequestResponse({ description: 'The request body is invalid.' })
   @ApiNotFoundResponse({ type: ErrorResponse })
   update(
     @CurrentUser() user: AccessTokenClaims,
@@ -90,7 +82,6 @@ export class ProductController {
 
   @Delete(':productId')
   @HttpCode(204)
-  @ApiOperation({ summary: 'Delete a product' })
   @ApiNoContentResponse()
   @ApiNotFoundResponse({ type: ErrorResponse })
   async delete(

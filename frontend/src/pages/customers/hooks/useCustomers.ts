@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { listCustomers } from '../../../api/customers'
 import type { Customer } from '../types'
 import { toCustomerListItem } from '../types'
+import { customersListQueryKey } from './customerQueryKeys'
 
 type UseCustomersResult = {
   customers: Customer[]
@@ -12,7 +13,7 @@ type UseCustomersResult = {
 
 export function useCustomers(): UseCustomersResult {
   const query = useQuery({
-    queryKey: ['customers', 'list'],
+    queryKey: customersListQueryKey,
     queryFn: async () => {
       const rows = await listCustomers()
       return rows.map(toCustomerListItem)

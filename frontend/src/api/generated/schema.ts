@@ -13,7 +13,6 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Register a company and its first user */
         post: operations["AuthController_register_v1"];
         delete?: never;
         options?: never;
@@ -30,8 +29,23 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Log in to a company */
         post: operations["AuthController_login_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["AuthController_me_v1"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -45,10 +59,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List customers */
         get: operations["CustomerController_findAll_v1"];
         put?: never;
-        /** Create a customer */
         post: operations["CustomerController_create_v1"];
         delete?: never;
         options?: never;
@@ -63,16 +75,12 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get contact */
         get: operations["CustomerController_findContact_v1"];
         put?: never;
-        /** Create contact */
         post: operations["CustomerController_createContact_v1"];
-        /** Delete contact */
         delete: operations["CustomerController_deleteContact_v1"];
         options?: never;
         head?: never;
-        /** Update contact */
         patch: operations["CustomerController_updateContact_v1"];
         trace?: never;
     };
@@ -83,15 +91,12 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get a customer */
         get: operations["CustomerController_findById_v1"];
         put?: never;
         post?: never;
-        /** Delete a customer */
         delete: operations["CustomerController_delete_v1"];
         options?: never;
         head?: never;
-        /** Update a customer */
         patch: operations["CustomerController_update_v1"];
         trace?: never;
     };
@@ -102,10 +107,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List products */
         get: operations["ProductController_findAll_v1"];
         put?: never;
-        /** Create a product */
         post: operations["ProductController_create_v1"];
         delete?: never;
         options?: never;
@@ -120,15 +123,12 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get a product */
         get: operations["ProductController_findById_v1"];
         put?: never;
         post?: never;
-        /** Delete a product */
         delete: operations["ProductController_delete_v1"];
         options?: never;
         head?: never;
-        /** Update a product */
         patch: operations["ProductController_update_v1"];
         trace?: never;
     };
@@ -139,10 +139,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List product categories */
         get: operations["ProductCategoryController_findAll_v1"];
         put?: never;
-        /** Create a product category */
         post: operations["ProductCategoryController_create_v1"];
         delete?: never;
         options?: never;
@@ -157,10 +155,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List product types */
         get: operations["ProductCategoryController_findTypes_v1"];
         put?: never;
-        /** Create a product type */
         post: operations["ProductCategoryController_createType_v1"];
         delete?: never;
         options?: never;
@@ -175,15 +171,12 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get a product category */
         get: operations["ProductCategoryController_findById_v1"];
         put?: never;
         post?: never;
-        /** Delete a product category */
         delete: operations["ProductCategoryController_delete_v1"];
         options?: never;
         head?: never;
-        /** Update a product category */
         patch: operations["ProductCategoryController_update_v1"];
         trace?: never;
     };
@@ -194,15 +187,12 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get a product type */
         get: operations["ProductCategoryController_findTypeById_v1"];
         put?: never;
         post?: never;
-        /** Delete a product type */
         delete: operations["ProductCategoryController_deleteType_v1"];
         options?: never;
         head?: never;
-        /** Update a product type */
         patch: operations["ProductCategoryController_updateType_v1"];
         trace?: never;
     };
@@ -213,10 +203,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List work orders */
         get: operations["WorkOrderController_findAll_v1"];
         put?: never;
-        /** Create a work order */
         post: operations["WorkOrderController_create_v1"];
         delete?: never;
         options?: never;
@@ -231,10 +219,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List extra expenses */
         get: operations["WorkOrderController_findAllExtraExpenses_v1"];
         put?: never;
-        /** Create an extra expense */
         post: operations["WorkOrderController_createExtraExpense_v1"];
         delete?: never;
         options?: never;
@@ -249,10 +235,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List work order history */
         get: operations["WorkOrderController_findAllHistory_v1"];
         put?: never;
-        /** Create a work order history entry */
         post: operations["WorkOrderController_createHistory_v1"];
         delete?: never;
         options?: never;
@@ -267,15 +251,12 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get a work order */
         get: operations["WorkOrderController_findById_v1"];
         put?: never;
         post?: never;
-        /** Delete a work order */
         delete: operations["WorkOrderController_delete_v1"];
         options?: never;
         head?: never;
-        /** Update a work order */
         patch: operations["WorkOrderController_update_v1"];
         trace?: never;
     };
@@ -286,15 +267,12 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get an extra expense */
         get: operations["WorkOrderController_findExtraExpenseById_v1"];
         put?: never;
         post?: never;
-        /** Delete an extra expense */
         delete: operations["WorkOrderController_deleteExtraExpense_v1"];
         options?: never;
         head?: never;
-        /** Update an extra expense */
         patch: operations["WorkOrderController_updateExtraExpense_v1"];
         trace?: never;
     };
@@ -328,11 +306,6 @@ export interface components {
             expiresIn: number;
         };
         LoginRequest: {
-            /**
-             * Format: uuid
-             * @example 019535d9-3df6-71ec-8f08-fa907fa17f9d
-             */
-            companyId: string;
             /** @example ada@example.com */
             email: string;
             /** Format: password */
@@ -352,6 +325,20 @@ export interface components {
             message: string;
             /** @example Not Found */
             error: string;
+        };
+        UserResponse: {
+            /**
+             * Format: uuid
+             * @example 019535d9-3df7-79fb-b466-fa907fa17f9e
+             */
+            id: string;
+            /**
+             * Format: uuid
+             * @example 019535d9-3df6-71ec-8f08-fa907fa17f9d
+             */
+            companyId: string;
+            /** @example ada@example.com */
+            email: string;
         };
         CreateContactRequest: {
             /** @example Ada Lovelace */
@@ -433,7 +420,7 @@ export interface components {
             /** @enum {string|null} */
             country: "pl" | "no" | null;
             notes: string | null;
-            /** @description Present when the list request uses populate=contact. */
+            /** @description Present when the request uses populate=contact. */
             contact?: components["schemas"]["ContactResponse"] | null;
         };
         UpdateCustomerRequest: {
@@ -702,13 +689,6 @@ export interface operations {
                     "application/json": components["schemas"]["RegisterResponse"];
                 };
             };
-            /** @description The registration request is invalid. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
         };
     };
     AuthController_login_v1: {
@@ -732,12 +712,32 @@ export interface operations {
                     "application/json": components["schemas"]["LoginResponse"];
                 };
             };
-            /** @description The login request is invalid. */
-            400: {
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ErrorResponse"];
+                };
+            };
+        };
+    };
+    AuthController_me_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserResponse"];
+                };
             };
             401: {
                 headers: {
@@ -799,13 +799,6 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["CustomerResponse"];
                 };
-            };
-            /** @description The request body is invalid. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
             401: {
                 headers: {
@@ -876,13 +869,6 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ContactResponse"];
                 };
-            };
-            /** @description The request or customer ID is invalid. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
             401: {
                 headers: {
@@ -968,13 +954,6 @@ export interface operations {
                     "application/json": components["schemas"]["ContactResponse"];
                 };
             };
-            /** @description The request body is invalid. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
             401: {
                 headers: {
                     [name: string]: unknown;
@@ -995,7 +974,10 @@ export interface operations {
     };
     CustomerController_findById_v1: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Comma-separated relations to include. Allowed: contact. */
+                populate?: string;
+            };
             header?: never;
             path: {
                 customerId: string;
@@ -1011,13 +993,6 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["CustomerResponse"];
                 };
-            };
-            /** @description The customer ID is not a UUIDv7. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
             401: {
                 headers: {
@@ -1095,13 +1070,6 @@ export interface operations {
                     "application/json": components["schemas"]["CustomerResponse"];
                 };
             };
-            /** @description The request body is invalid. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
             401: {
                 headers: {
                     [name: string]: unknown;
@@ -1177,13 +1145,6 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ProductResponse"];
                 };
-            };
-            /** @description The request body is invalid. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
             401: {
                 headers: {
@@ -1298,13 +1259,6 @@ export interface operations {
                     "application/json": components["schemas"]["ProductResponse"];
                 };
             };
-            /** @description The request body is invalid. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
             401: {
                 headers: {
                     [name: string]: unknown;
@@ -1370,13 +1324,6 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ProductCategoryResponse"];
                 };
-            };
-            /** @description The request body is invalid. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
             401: {
                 headers: {
@@ -1447,13 +1394,6 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ProductTypeResponse"];
                 };
-            };
-            /** @description The request body is invalid. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
             401: {
                 headers: {
@@ -1567,13 +1507,6 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ProductCategoryResponse"];
                 };
-            };
-            /** @description The request body is invalid. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
             401: {
                 headers: {
@@ -1691,13 +1624,6 @@ export interface operations {
                     "application/json": components["schemas"]["ProductTypeResponse"];
                 };
             };
-            /** @description The request body is invalid. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
             401: {
                 headers: {
                     [name: string]: unknown;
@@ -1773,13 +1699,6 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["WorkOrderResponse"];
                 };
-            };
-            /** @description The request body is invalid. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
             401: {
                 headers: {
@@ -1859,13 +1778,6 @@ export interface operations {
                     "application/json": components["schemas"]["ExtraExpenseResponse"];
                 };
             };
-            /** @description The request body is invalid. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
             401: {
                 headers: {
                     [name: string]: unknown;
@@ -1943,13 +1855,6 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["WorkOrderHistoryItemResponse"];
                 };
-            };
-            /** @description The request body is invalid. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
             401: {
                 headers: {
@@ -2063,13 +1968,6 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["WorkOrderResponse"];
                 };
-            };
-            /** @description The request body is invalid. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
             401: {
                 headers: {
@@ -2186,13 +2084,6 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ExtraExpenseResponse"];
                 };
-            };
-            /** @description The request body is invalid. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
             401: {
                 headers: {

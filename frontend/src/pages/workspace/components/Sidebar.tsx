@@ -73,10 +73,6 @@ export function Sidebar() {
             icon={TuneOutlinedIcon}
           />
         </div>
-        <p className="mt-auto rounded-lg border border-sidebar-line bg-sidebar-active p-3 text-caption leading-relaxed text-sidebar-muted">
-          Signed in as <strong className="text-sidebar-ink">Owner</strong>. Clients access their
-          portal from mobile only.
-        </p>
       </nav>
     </aside>
   )

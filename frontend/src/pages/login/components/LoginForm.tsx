@@ -7,6 +7,7 @@ import type { LoginFormValues } from '../types'
 import { RememberMe } from './RememberMe'
 
 interface LoginFormProps extends LoginFormValues {
+  isSubmitting?: boolean
   onEmailChange: (email: string) => void
   onPasswordChange: (password: string) => void
   onRememberMeChange: (rememberMe: boolean) => void
@@ -20,6 +21,7 @@ export function LoginForm({
   password,
   rememberMe,
   isPasswordVisible,
+  isSubmitting = false,
   onEmailChange,
   onPasswordChange,
   onRememberMeChange,
@@ -32,7 +34,9 @@ export function LoginForm({
       className="space-y-5"
       onSubmit={(event) => {
         event.preventDefault()
-        onSubmit()
+        if (!isSubmitting) {
+          onSubmit()
+        }
       }}
     >
       <TextField
@@ -76,9 +80,10 @@ export function LoginForm({
       </div>
       <button
         type="submit"
-        className="h-11 w-full cursor-pointer rounded-lg bg-brand text-sm font-semibold text-surface shadow-button transition hover:bg-brand-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand active:translate-y-px"
+        disabled={isSubmitting}
+        className="h-11 w-full cursor-pointer rounded-lg bg-brand text-sm font-semibold text-surface shadow-button transition hover:bg-brand-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60"
       >
-        Sign In
+        {isSubmitting ? 'Signing in…' : 'Sign In'}
       </button>
     </form>
   )

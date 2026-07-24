@@ -1,21 +1,25 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import {
-  ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
-  ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { CurrentUser } from '../../../../common/auth/current-user.decorator';
 import { Public } from '../../../../common/auth/public.decorator';
 import { ErrorResponse } from '../../../../common/errors/error-response.dto';
 import { AuthenticationService } from '../../application/authentication.service';
-import { accessTokenExpiresInSeconds } from '../../infrastructure/security/jwt-access-token.service';
+import {
+  accessTokenExpiresInSeconds,
+  type AccessTokenClaims,
+} from '../../infrastructure/security/jwt-access-token.service';
 import {
   LoginRequest,
   LoginResponse,
   RegisterRequest,
   RegisterResponse,
+  UserResponse,
 } from './auth.dto';
 
 @ApiTags('authentication')
@@ -25,9 +29,7 @@ export class AuthController {
 
   @Public()
   @Post('register')
-  @ApiOperation({ summary: 'Register a company and its first user' })
   @ApiCreatedResponse({ type: RegisterResponse })
-  @ApiBadRequestResponse({ description: 'The registration request is invalid.' })
   async register(@Body() request: RegisterRequest): Promise<RegisterResponse> {
     const result = await this.authentication.register(
       request.companyName,
@@ -47,13 +49,10 @@ export class AuthController {
   @Public()
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Log in to a company' })
   @ApiOkResponse({ type: LoginResponse })
-  @ApiBadRequestResponse({ description: 'The login request is invalid.' })
   @ApiUnauthorizedResponse({ type: ErrorResponse })
   async login(@Body() request: LoginRequest): Promise<LoginResponse> {
     const accessToken = await this.authentication.login(
-      request.companyId,
       request.email,
       request.password,
     );
@@ -63,5 +62,13 @@ export class AuthController {
       tokenType: 'Bearer',
       expiresIn: accessTokenExpiresInSeconds,
     };
+  }
+
+  @Get('me')
+  @ApiBearerAuth('access-token')
+  @ApiOkResponse({ type: UserResponse })
+  @ApiUnauthorizedResponse({ type: ErrorResponse })
+  me(@CurrentUser() user: AccessTokenClaims): Promise<UserResponse> {
+    return this.authentication.me(user);
   }
 }

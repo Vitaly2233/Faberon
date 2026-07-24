@@ -16,7 +16,7 @@ type PrinterForm = {
   manufacturer: string
   model: string
   serial: string
-  customerId: string
+  customerId: string | null
   ownership: PrinterOwnership
   address: string
   contact: string
@@ -35,14 +35,16 @@ export function NewPrinterModal({ options }: NewPrinterModalProps) {
     manufacturer: '',
     model: '',
     serial: '',
-    customerId: options.data?.customerId ?? customers[0]?.id ?? '',
+    customerId: options.data?.customerId ?? customers[0]?.id ?? null,
     ownership: 'owned',
     address: '',
     contact: '',
     warranty: '',
   })
 
-  const ready = Boolean(form.manufacturer.trim() && form.model.trim())
+  const ready = Boolean(
+    form.manufacturer.trim() && form.model.trim() && form.customerId,
+  )
 
   const updateField = <Key extends keyof PrinterForm>(key: Key, value: PrinterForm[Key]) => {
     setForm((current) => ({ ...current, [key]: value }))
@@ -53,7 +55,7 @@ export function NewPrinterModal({ options }: NewPrinterModalProps) {
   }
 
   const handleSave = () => {
-    if (!ready) return
+    if (!ready || !form.customerId) return
 
     try {
       const printerId = addPrinter({
@@ -150,10 +152,15 @@ export function NewPrinterModal({ options }: NewPrinterModalProps) {
             </button>
           </div>
           <select
-            value={form.customerId}
-            onChange={(event) => updateField('customerId', event.target.value)}
+            value={form.customerId ?? ''}
+            onChange={(event) =>
+              updateField('customerId', event.target.value || null)
+            }
             className="field-control"
           >
+            <option value="" disabled>
+              Select customer
+            </option>
             {customers.map((customer) => (
               <option key={customer.id} value={customer.id}>
                 {customer.name}

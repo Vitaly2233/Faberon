@@ -4,46 +4,51 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
 import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined'
 import PrintOutlinedIcon from '@mui/icons-material/PrintOutlined'
-import { getCustomerPrinters, getCustomerWorkOrders } from '../../data/customerMockExtras'
-import type { CustomerDetail } from '../../types'
+import type { CustomerDetail, CustomerPrinter, CustomerWorkOrder } from '../../types'
+import { formatWorkOrderStage } from '../../types'
 
 type CustomerOverviewProps = {
   customer: CustomerDetail
+  printers: CustomerPrinter[]
+  workOrders: CustomerWorkOrder[]
   onBack: () => void
 }
 
-function StageBadge({ stage }: { stage: string }) {
+function StageBadge({ stage }: { stage: CustomerWorkOrder['stage'] }) {
   const tone =
-    stage === 'Confirmed by client'
+    stage === 'repaired'
       ? 'bg-success-soft text-success'
-      : stage === 'Repaired'
+      : stage === 'diagnostics'
         ? 'bg-info-soft text-info'
-        : stage === 'Waiting'
+        : stage === 'waiting'
           ? 'bg-inactive-soft text-inactive'
           : 'bg-warning-soft text-warning'
 
   return (
     <span className={`inline-flex rounded-md px-2 py-0.5 text-caption font-extrabold uppercase ${tone}`}>
-      {stage}
+      {formatWorkOrderStage(stage)}
     </span>
   )
 }
 
-function OwnershipBadge({ ownership }: { ownership: 'owned' | 'rented' }) {
+function OwnershipBadge({ ownership }: { ownership: CustomerPrinter['ownership'] }) {
   const tone =
     ownership === 'rented' ? 'bg-info-soft text-info' : 'bg-inactive-soft text-inactive'
+  const label = ownership === 'rented' ? 'rented' : 'owned'
 
   return (
     <span className={`inline-flex rounded-md px-2 py-0.5 text-caption font-extrabold uppercase ${tone}`}>
-      {ownership}
+      {label}
     </span>
   )
 }
 
-export function CustomerOverview({ customer, onBack }: CustomerOverviewProps) {
-  const printers = getCustomerPrinters(customer)
-  const workOrders = getCustomerWorkOrders(customer)
-
+export function CustomerOverview({
+  customer,
+  printers,
+  workOrders,
+  onBack,
+}: CustomerOverviewProps) {
   return (
     <main>
       <button
@@ -101,7 +106,7 @@ export function CustomerOverview({ customer, onBack }: CustomerOverviewProps) {
                 </thead>
                 <tbody className="divide-y divide-line">
                   {printers.map((printer) => (
-                    <tr key={printer.serial}>
+                    <tr key={printer.id}>
                       <td className="py-2.5 pl-4 font-semibold text-ink">{printer.model}</td>
                       <td className="py-2.5 font-mono text-copy">{printer.serial}</td>
                       <td className="py-2.5">
@@ -141,7 +146,9 @@ export function CustomerOverview({ customer, onBack }: CustomerOverviewProps) {
                 <tbody className="divide-y divide-line">
                   {workOrders.map((workOrder) => (
                     <tr key={workOrder.id}>
-                      <td className="py-2.5 pl-4 font-mono font-bold text-ink">#{workOrder.id}</td>
+                      <td className="py-2.5 pl-4 font-mono font-bold text-ink">
+                        #{workOrder.number}
+                      </td>
                       <td className="max-w-60 truncate py-2.5 text-copy">{workOrder.problem}</td>
                       <td className="py-2.5">
                         <StageBadge stage={workOrder.stage} />
