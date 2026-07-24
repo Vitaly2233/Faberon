@@ -18,17 +18,28 @@ export function NewWorkOrderModal({ options }: NewWorkOrderModalProps) {
   const createWorkOrder = useWorkOrdersStore((state) => state.createWorkOrder)
   const company = useCompanyStore((state) => state.company)
 
-  const [form, setForm] = useState({
-    type: 'company' as WorkOrderType,
-    customerId: options.data?.customerId ?? customers[0]?.id ?? '',
-    printerId: '',
+  const [form, setForm] = useState<{
+    type: WorkOrderType
+    customerId: string | null
+    printerId: string | null
+    address: string
+    contact: string
+    problem: string
+  }>({
+    type: 'company',
+    customerId: options.data?.customerId ?? customers[0]?.id ?? null,
+    printerId: null,
     address: '',
     contact: '',
     problem: '',
   })
 
-  const customer = customers.find((entry) => entry.id === form.customerId)
-  const customerPrinters = printers.filter((printer) => printer.customerId === form.customerId)
+  const customer = form.customerId
+    ? customers.find((entry) => entry.id === form.customerId)
+    : undefined
+  const customerPrinters = form.customerId
+    ? printers.filter((printer) => printer.customerId === form.customerId)
+    : []
   const ready = Boolean(form.customerId && form.problem.trim())
 
   const updateField = <Key extends keyof typeof form>(key: Key, value: (typeof form)[Key]) => {
@@ -40,17 +51,25 @@ export function NewWorkOrderModal({ options }: NewWorkOrderModalProps) {
   }
 
   const handleCreate = () => {
-    if (!ready) return
+    if (!ready || !form.customerId) return
 
     try {
+      const selectedCustomer = customers.find((entry) => entry.id === form.customerId)
+      if (!selectedCustomer) {
+        throw new Error('Selected customer was not found.')
+      }
+
+      const defaultContact = [selectedCustomer.contactName, selectedCustomer.phone]
+        .filter((part) => Boolean(part))
+        .join(' · ')
+
       const workOrderId = createWorkOrder({
         type: form.type,
         customerId: form.customerId,
-        printerId: form.printerId || null,
-        address: form.address || customer?.billingAddress || company.address,
-        contact:
-          form.contact ||
-          `${customer?.contactName ?? ''} · ${customer?.phone ?? ''}`.replace(/^ · | · $/g, ''),
+        printerId: form.printerId,
+        address:
+          form.address.trim() || selectedCustomer.billingAddress || company.address,
+        contact: form.contact.trim() || defaultContact,
         problem: form.problem.trim(),
         invoiceFinalOnly: false,
       })
@@ -89,13 +108,16 @@ export function NewWorkOrderModal({ options }: NewWorkOrderModalProps) {
         <label className="block">
           <span className="mb-1.5 block text-xs font-semibold text-ink">Customer</span>
           <select
-            value={form.customerId}
+            value={form.customerId ?? ''}
             onChange={(event) => {
-              updateField('customerId', event.target.value)
-              updateField('printerId', '')
+              updateField('customerId', event.target.value || null)
+              updateField('printerId', null)
             }}
             className="field-control"
           >
+            <option value="" disabled>
+              Select customer
+            </option>
             {customers.map((entry) => (
               <option key={entry.id} value={entry.id}>
                 {entry.name}
@@ -106,8 +128,8 @@ export function NewWorkOrderModal({ options }: NewWorkOrderModalProps) {
         <label className="block">
           <span className="mb-1.5 block text-xs font-semibold text-ink">Printer (optional)</span>
           <select
-            value={form.printerId}
-            onChange={(event) => updateField('printerId', event.target.value)}
+            value={form.printerId ?? ''}
+            onChange={(event) => updateField('printerId', event.target.value || null)}
             className="field-control"
           >
             <option value="">No printer</option>
