@@ -9,7 +9,6 @@ import type {
   CustomerResponse,
   UpdateCustomerRequest,
 } from '../presentation/http/customer.dto';
-import { toCustomerResponse } from '../presentation/http/customer-response.mapper';
 import { ContactService } from './contact.service';
 import type { CreateCustomerInput } from './create-customer.input';
 
@@ -36,7 +35,7 @@ export class CustomerService {
     const customers = await this.customerRepository.findAll(companyId);
 
     if (!populate.includes('contact')) {
-      return customers.map((customer) => toCustomerResponse(customer));
+      return customers.map((customer) => customer.toResponse());
     }
 
     const contacts = await this.contactService.findByCustomerIds(
@@ -47,7 +46,7 @@ export class CustomerService {
     );
 
     return customers.map((customer) =>
-      toCustomerResponse(customer, {
+      customer.toResponse({
         contact: contactByCustomerId.get(customer.id) ?? null,
       }),
     );
