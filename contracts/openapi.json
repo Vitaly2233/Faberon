@@ -25,12 +25,8 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "The registration request is invalid."
           }
         },
-        "summary": "Register a company and its first user",
         "tags": [
           "authentication"
         ]
@@ -61,9 +57,6 @@
               }
             }
           },
-          "400": {
-            "description": "The login request is invalid."
-          },
           "401": {
             "description": "",
             "content": {
@@ -75,7 +68,6 @@
             }
           }
         },
-        "summary": "Log in to a company",
         "tags": [
           "authentication"
         ]
@@ -106,9 +98,6 @@
               }
             }
           },
-          "400": {
-            "description": "The request body is invalid."
-          },
           "401": {
             "description": "",
             "content": {
@@ -125,7 +114,6 @@
             "access-token": []
           }
         ],
-        "summary": "Create a customer",
         "tags": [
           "customers"
         ]
@@ -174,7 +162,6 @@
             "access-token": []
           }
         ],
-        "summary": "List customers",
         "tags": [
           "customers"
         ]
@@ -214,9 +201,6 @@
               }
             }
           },
-          "400": {
-            "description": "The request or customer ID is invalid."
-          },
           "401": {
             "description": "",
             "content": {
@@ -253,7 +237,6 @@
             "access-token": []
           }
         ],
-        "summary": "Create contact",
         "tags": [
           "customers"
         ]
@@ -307,7 +290,6 @@
             "access-token": []
           }
         ],
-        "summary": "Get contact",
         "tags": [
           "customers"
         ]
@@ -345,9 +327,6 @@
               }
             }
           },
-          "400": {
-            "description": "The request body is invalid."
-          },
           "401": {
             "description": "",
             "content": {
@@ -374,7 +353,6 @@
             "access-token": []
           }
         ],
-        "summary": "Update contact",
         "tags": [
           "customers"
         ]
@@ -421,7 +399,6 @@
             "access-token": []
           }
         ],
-        "summary": "Delete contact",
         "tags": [
           "customers"
         ]
@@ -451,9 +428,6 @@
               }
             }
           },
-          "400": {
-            "description": "The customer ID is not a UUIDv7."
-          },
           "401": {
             "description": "",
             "content": {
@@ -480,7 +454,6 @@
             "access-token": []
           }
         ],
-        "summary": "Get a customer",
         "tags": [
           "customers"
         ]
@@ -518,9 +491,6 @@
               }
             }
           },
-          "400": {
-            "description": "The request body is invalid."
-          },
           "401": {
             "description": "",
             "content": {
@@ -547,7 +517,6 @@
             "access-token": []
           }
         ],
-        "summary": "Update a customer",
         "tags": [
           "customers"
         ]
@@ -594,7 +563,6 @@
             "access-token": []
           }
         ],
-        "summary": "Delete a customer",
         "tags": [
           "customers"
         ]
@@ -625,9 +593,6 @@
               }
             }
           },
-          "400": {
-            "description": "The request body is invalid."
-          },
           "401": {
             "description": "",
             "content": {
@@ -654,7 +619,6 @@
             "access-token": []
           }
         ],
-        "summary": "Create a product",
         "tags": [
           "products"
         ]
@@ -711,7 +675,6 @@
             "access-token": []
           }
         ],
-        "summary": "List products",
         "tags": [
           "products"
         ]
@@ -767,7 +730,6 @@
             "access-token": []
           }
         ],
-        "summary": "Get a product",
         "tags": [
           "products"
         ]
@@ -805,9 +767,6 @@
               }
             }
           },
-          "400": {
-            "description": "The request body is invalid."
-          },
           "401": {
             "description": "",
             "content": {
@@ -834,7 +793,6 @@
             "access-token": []
           }
         ],
-        "summary": "Update a product",
         "tags": [
           "products"
         ]
@@ -881,7 +839,6 @@
             "access-token": []
           }
         ],
-        "summary": "Delete a product",
         "tags": [
           "products"
         ]
@@ -912,9 +869,6 @@
               }
             }
           },
-          "400": {
-            "description": "The request body is invalid."
-          },
           "401": {
             "description": "",
             "content": {
@@ -931,7 +885,6 @@
             "access-token": []
           }
         ],
-        "summary": "Create a product category",
         "tags": [
           "product-categories"
         ]
@@ -969,7 +922,6 @@
             "access-token": []
           }
         ],
-        "summary": "List product categories",
         "tags": [
           "product-categories"
         ]
@@ -1009,9 +961,6 @@
               }
             }
           },
-          "400": {
-            "description": "The request body is invalid."
-          },
           "401": {
             "description": "",
             "content": {
@@ -1038,7 +987,6 @@
             "access-token": []
           }
         ],
-        "summary": "Create a product type",
         "tags": [
           "product-categories"
         ]
@@ -1095,7 +1043,6 @@
             "access-token": []
           }
         ],
-        "summary": "List product types",
         "tags": [
           "product-categories"
         ]
@@ -1151,7 +1098,6 @@
             "access-token": []
           }
         ],
-        "summary": "Get a product category",
         "tags": [
           "product-categories"
         ]
@@ -1189,9 +1135,6 @@
               }
             }
           },
-          "400": {
-            "description": "The request body is invalid."
-          },
           "401": {
             "description": "",
             "content": {
@@ -1218,7 +1161,6 @@
             "access-token": []
           }
         ],
-        "summary": "Update a product category",
         "tags": [
           "product-categories"
         ]
@@ -1265,7 +1207,6 @@
             "access-token": []
           }
         ],
-        "summary": "Delete a product category",
         "tags": [
           "product-categories"
         ]
@@ -1329,7 +1270,6 @@
             "access-token": []
           }
         ],
-        "summary": "Get a product type",
         "tags": [
           "product-categories"
         ]
@@ -1375,9 +1315,6 @@
               }
             }
           },
-          "400": {
-            "description": "The request body is invalid."
-          },
           "401": {
             "description": "",
             "content": {
@@ -1404,7 +1341,6 @@
             "access-token": []
           }
         ],
-        "summary": "Update a product type",
         "tags": [
           "product-categories"
         ]
@@ -1459,7 +1395,6 @@
             "access-token": []
           }
         ],
-        "summary": "Delete a product type",
         "tags": [
           "product-categories"
         ]
@@ -1490,9 +1425,6 @@
               }
             }
           },
-          "400": {
-            "description": "The request body is invalid."
-          },
           "401": {
             "description": "",
             "content": {
@@ -1519,7 +1451,6 @@
             "access-token": []
           }
         ],
-        "summary": "Create a work order",
         "tags": [
           "work-orders"
         ]
@@ -1576,7 +1507,6 @@
             "access-token": []
           }
         ],
-        "summary": "List work orders",
         "tags": [
           "work-orders"
         ]
@@ -1616,9 +1546,6 @@
               }
             }
           },
-          "400": {
-            "description": "The request body is invalid."
-          },
           "401": {
             "description": "",
             "content": {
@@ -1645,7 +1572,6 @@
             "access-token": []
           }
         ],
-        "summary": "Create an extra expense",
         "tags": [
           "work-orders"
         ]
@@ -1702,7 +1628,6 @@
             "access-token": []
           }
         ],
-        "summary": "List extra expenses",
         "tags": [
           "work-orders"
         ]
@@ -1742,9 +1667,6 @@
               }
             }
           },
-          "400": {
-            "description": "The request body is invalid."
-          },
           "401": {
             "description": "",
             "content": {
@@ -1771,7 +1693,6 @@
             "access-token": []
           }
         ],
-        "summary": "Create a work order history entry",
         "tags": [
           "work-orders"
         ]
@@ -1828,7 +1749,6 @@
             "access-token": []
           }
         ],
-        "summary": "List work order history",
         "tags": [
           "work-orders"
         ]
@@ -1884,7 +1804,6 @@
             "access-token": []
           }
         ],
-        "summary": "Get a work order",
         "tags": [
           "work-orders"
         ]
@@ -1922,9 +1841,6 @@
               }
             }
           },
-          "400": {
-            "description": "The request body is invalid."
-          },
           "401": {
             "description": "",
             "content": {
@@ -1951,7 +1867,6 @@
             "access-token": []
           }
         ],
-        "summary": "Update a work order",
         "tags": [
           "work-orders"
         ]
@@ -1998,7 +1913,6 @@
             "access-token": []
           }
         ],
-        "summary": "Delete a work order",
         "tags": [
           "work-orders"
         ]
@@ -2062,7 +1976,6 @@
             "access-token": []
           }
         ],
-        "summary": "Get an extra expense",
         "tags": [
           "work-orders"
         ]
@@ -2108,9 +2021,6 @@
               }
             }
           },
-          "400": {
-            "description": "The request body is invalid."
-          },
           "401": {
             "description": "",
             "content": {
@@ -2137,7 +2047,6 @@
             "access-token": []
           }
         ],
-        "summary": "Update an extra expense",
         "tags": [
           "work-orders"
         ]
@@ -2192,7 +2101,6 @@
             "access-token": []
           }
         ],
-        "summary": "Delete an extra expense",
         "tags": [
           "work-orders"
         ]

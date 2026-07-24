@@ -11,13 +11,11 @@ import {
   Query,
 } from '@nestjs/common';
 import {
-  ApiBadRequestResponse,
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
-  ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -44,9 +42,7 @@ export class WorkOrderController {
   constructor(private readonly workOrderService: WorkOrderService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create a work order' })
   @ApiCreatedResponse({ type: WorkOrderResponse })
-  @ApiBadRequestResponse({ description: 'The request body is invalid.' })
   @ApiNotFoundResponse({ type: ErrorResponse })
   create(
     @CurrentUser() user: AccessTokenClaims,
@@ -56,9 +52,7 @@ export class WorkOrderController {
   }
 
   @Post(':workOrderId/extra-expenses')
-  @ApiOperation({ summary: 'Create an extra expense' })
   @ApiCreatedResponse({ type: ExtraExpenseResponse })
-  @ApiBadRequestResponse({ description: 'The request body is invalid.' })
   @ApiNotFoundResponse({ type: ErrorResponse })
   createExtraExpense(
     @CurrentUser() user: AccessTokenClaims,
@@ -74,9 +68,7 @@ export class WorkOrderController {
   }
 
   @Post(':workOrderId/history')
-  @ApiOperation({ summary: 'Create a work order history entry' })
   @ApiCreatedResponse({ type: WorkOrderHistoryItemResponse })
-  @ApiBadRequestResponse({ description: 'The request body is invalid.' })
   @ApiNotFoundResponse({ type: ErrorResponse })
   createHistory(
     @CurrentUser() user: AccessTokenClaims,
@@ -93,7 +85,6 @@ export class WorkOrderController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'List work orders' })
   @ApiOkResponse({ type: WorkOrderResponse, isArray: true })
   @ApiNotFoundResponse({ type: ErrorResponse })
   findAll(
@@ -105,7 +96,6 @@ export class WorkOrderController {
   }
 
   @Get(':workOrderId')
-  @ApiOperation({ summary: 'Get a work order' })
   @ApiOkResponse({ type: WorkOrderResponse })
   @ApiNotFoundResponse({ type: ErrorResponse })
   findById(
@@ -117,7 +107,6 @@ export class WorkOrderController {
   }
 
   @Get(':workOrderId/extra-expenses')
-  @ApiOperation({ summary: 'List extra expenses' })
   @ApiOkResponse({ type: ExtraExpenseResponse, isArray: true })
   @ApiNotFoundResponse({ type: ErrorResponse })
   findAllExtraExpenses(
@@ -132,7 +121,6 @@ export class WorkOrderController {
   }
 
   @Get(':workOrderId/extra-expenses/:extraExpenseId')
-  @ApiOperation({ summary: 'Get an extra expense' })
   @ApiOkResponse({ type: ExtraExpenseResponse })
   @ApiNotFoundResponse({ type: ErrorResponse })
   findExtraExpenseById(
@@ -150,7 +138,6 @@ export class WorkOrderController {
   }
 
   @Get(':workOrderId/history')
-  @ApiOperation({ summary: 'List work order history' })
   @ApiOkResponse({ type: WorkOrderHistoryItemResponse, isArray: true })
   @ApiNotFoundResponse({ type: ErrorResponse })
   findAllHistory(
@@ -162,9 +149,7 @@ export class WorkOrderController {
   }
 
   @Patch(':workOrderId')
-  @ApiOperation({ summary: 'Update a work order' })
   @ApiOkResponse({ type: WorkOrderResponse })
-  @ApiBadRequestResponse({ description: 'The request body is invalid.' })
   @ApiNotFoundResponse({ type: ErrorResponse })
   update(
     @CurrentUser() user: AccessTokenClaims,
@@ -180,9 +165,7 @@ export class WorkOrderController {
   }
 
   @Patch(':workOrderId/extra-expenses/:extraExpenseId')
-  @ApiOperation({ summary: 'Update an extra expense' })
   @ApiOkResponse({ type: ExtraExpenseResponse })
-  @ApiBadRequestResponse({ description: 'The request body is invalid.' })
   @ApiNotFoundResponse({ type: ErrorResponse })
   updateExtraExpense(
     @CurrentUser() user: AccessTokenClaims,
@@ -202,7 +185,6 @@ export class WorkOrderController {
 
   @Delete(':workOrderId')
   @HttpCode(204)
-  @ApiOperation({ summary: 'Delete a work order' })
   @ApiNoContentResponse()
   @ApiNotFoundResponse({ type: ErrorResponse })
   async delete(
@@ -215,7 +197,6 @@ export class WorkOrderController {
 
   @Delete(':workOrderId/extra-expenses/:extraExpenseId')
   @HttpCode(204)
-  @ApiOperation({ summary: 'Delete an extra expense' })
   @ApiNoContentResponse()
   @ApiNotFoundResponse({ type: ErrorResponse })
   async deleteExtraExpense(

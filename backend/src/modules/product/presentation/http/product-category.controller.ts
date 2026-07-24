@@ -10,13 +10,11 @@ import {
   Post,
 } from '@nestjs/common';
 import {
-  ApiBadRequestResponse,
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
-  ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -41,9 +39,7 @@ export class ProductCategoryController {
   ) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create a product category' })
   @ApiCreatedResponse({ type: ProductCategoryResponse })
-  @ApiBadRequestResponse({ description: 'The request body is invalid.' })
   create(
     @Body() request: CreateProductCategoryRequest,
   ): Promise<ProductCategoryResponse> {
@@ -51,9 +47,7 @@ export class ProductCategoryController {
   }
 
   @Post(':categoryId/types')
-  @ApiOperation({ summary: 'Create a product type' })
   @ApiCreatedResponse({ type: ProductTypeResponse })
-  @ApiBadRequestResponse({ description: 'The request body is invalid.' })
   @ApiNotFoundResponse({ type: ErrorResponse })
   createType(
     @Param('categoryId', new ParseUUIDPipe({ version: '7' }))
@@ -64,14 +58,12 @@ export class ProductCategoryController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'List product categories' })
   @ApiOkResponse({ type: ProductCategoryResponse, isArray: true })
   findAll(): Promise<ProductCategoryResponse[]> {
     return this.productCategoryService.findAll();
   }
 
   @Get(':categoryId')
-  @ApiOperation({ summary: 'Get a product category' })
   @ApiOkResponse({ type: ProductCategoryResponse })
   @ApiNotFoundResponse({ type: ErrorResponse })
   findById(
@@ -82,7 +74,6 @@ export class ProductCategoryController {
   }
 
   @Get(':categoryId/types')
-  @ApiOperation({ summary: 'List product types' })
   @ApiOkResponse({ type: ProductTypeResponse, isArray: true })
   @ApiNotFoundResponse({ type: ErrorResponse })
   findTypes(
@@ -93,7 +84,6 @@ export class ProductCategoryController {
   }
 
   @Get(':categoryId/types/:typeId')
-  @ApiOperation({ summary: 'Get a product type' })
   @ApiOkResponse({ type: ProductTypeResponse })
   @ApiNotFoundResponse({ type: ErrorResponse })
   findTypeById(
@@ -106,9 +96,7 @@ export class ProductCategoryController {
   }
 
   @Patch(':categoryId')
-  @ApiOperation({ summary: 'Update a product category' })
   @ApiOkResponse({ type: ProductCategoryResponse })
-  @ApiBadRequestResponse({ description: 'The request body is invalid.' })
   @ApiNotFoundResponse({ type: ErrorResponse })
   update(
     @Param('categoryId', new ParseUUIDPipe({ version: '7' }))
@@ -119,9 +107,7 @@ export class ProductCategoryController {
   }
 
   @Patch(':categoryId/types/:typeId')
-  @ApiOperation({ summary: 'Update a product type' })
   @ApiOkResponse({ type: ProductTypeResponse })
-  @ApiBadRequestResponse({ description: 'The request body is invalid.' })
   @ApiNotFoundResponse({ type: ErrorResponse })
   updateType(
     @Param('categoryId', new ParseUUIDPipe({ version: '7' }))
@@ -139,7 +125,6 @@ export class ProductCategoryController {
 
   @Delete(':categoryId')
   @HttpCode(204)
-  @ApiOperation({ summary: 'Delete a product category' })
   @ApiNoContentResponse()
   @ApiNotFoundResponse({ type: ErrorResponse })
   async delete(
@@ -151,7 +136,6 @@ export class ProductCategoryController {
 
   @Delete(':categoryId/types/:typeId')
   @HttpCode(204)
-  @ApiOperation({ summary: 'Delete a product type' })
   @ApiNoContentResponse()
   @ApiNotFoundResponse({ type: ErrorResponse })
   async deleteType(
