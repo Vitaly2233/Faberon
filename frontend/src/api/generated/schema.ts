@@ -420,7 +420,7 @@ export interface components {
             /** @enum {string|null} */
             country: "pl" | "no" | null;
             notes: string | null;
-            /** @description Present when the list request uses populate=contact. */
+            /** @description Present when the request uses populate=contact. */
             contact?: components["schemas"]["ContactResponse"] | null;
         };
         UpdateCustomerRequest: {
@@ -974,7 +974,10 @@ export interface operations {
     };
     CustomerController_findById_v1: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Comma-separated relations to include. Allowed: contact. */
+                populate?: string;
+            };
             header?: never;
             path: {
                 customerId: string;

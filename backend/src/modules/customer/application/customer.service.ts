@@ -3,7 +3,7 @@ import { CustomerType, type Customer } from '../domain/customer';
 import { CustomerNotFoundError } from '../domain/customer.errors';
 import {
   CustomerRepository,
-  type CustomerListPopulate,
+  type CustomerPopulate,
 } from '../infrastructure/database/customer.repository';
 import type {
   CustomerResponse,
@@ -30,7 +30,7 @@ export class CustomerService {
 
   async findAll(
     companyId: string,
-    populate: readonly CustomerListPopulate[] = [],
+    populate: readonly CustomerPopulate[] = [],
   ): Promise<CustomerResponse[]> {
     const customers = await this.customerRepository.findAll(companyId);
 
@@ -54,6 +54,24 @@ export class CustomerService {
 
   findById(companyId: string, id: string): Promise<Customer | null> {
     return this.customerRepository.findById(companyId, id);
+  }
+
+  async findByIdResponse(
+    companyId: string,
+    id: string,
+    populate: readonly CustomerPopulate[] = [],
+  ): Promise<CustomerResponse | null> {
+    const customer = await this.findById(companyId, id);
+    if (!customer) return null;
+
+    if (!populate.includes('contact')) {
+      return customer.toResponse();
+    }
+
+    const contacts = await this.contactService.findByCustomerIds([id]);
+    return customer.toResponse({
+      contact: contacts[0] ?? null,
+    });
   }
 
   async requireById(companyId: string, id: string): Promise<Customer> {

@@ -451,6 +451,16 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "populate",
+            "required": false,
+            "in": "query",
+            "description": "Comma-separated relations to include. Allowed: contact.",
+            "schema": {
+              "example": "contact",
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -2516,7 +2526,7 @@
           },
           "contact": {
             "nullable": true,
-            "description": "Present when the list request uses populate=contact.",
+            "description": "Present when the request uses populate=contact.",
             "type": "object",
             "allOf": [
               {

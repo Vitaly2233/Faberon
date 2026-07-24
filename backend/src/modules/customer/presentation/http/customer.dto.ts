@@ -12,21 +12,23 @@ import { IsPopulate } from '../../../../common/validation/is-populate.decorator'
 import { NormalizeText } from '../../../../common/validation/normalize-text.decorator';
 import { CountryCode, CustomerType } from '../../domain/customer';
 import {
-  CUSTOMER_LIST_POPULATE,
-  type CustomerListPopulate,
+  CUSTOMER_POPULATE,
+  type CustomerPopulate,
 } from '../../infrastructure/database/customer.repository';
 import { ContactResponse, CreateContactRequest } from './contact.dto';
 
-export class ListCustomersQuery {
+export class CustomerPopulateQuery {
   @ApiPropertyOptional({
-    description: `Comma-separated relations to include. Allowed: ${CUSTOMER_LIST_POPULATE.join(', ')}.`,
+    description: `Comma-separated relations to include. Allowed: ${CUSTOMER_POPULATE.join(', ')}.`,
     example: 'contact',
     type: String,
   })
   @IsOptional()
-  @IsPopulate(CUSTOMER_LIST_POPULATE)
-  populate?: CustomerListPopulate[];
+  @IsPopulate(CUSTOMER_POPULATE)
+  populate?: CustomerPopulate[];
 }
+
+export class ListCustomersQuery extends CustomerPopulateQuery {}
 
 export class CreateCustomerRequest {
   @ApiProperty({ example: 'Acme AS', minLength: 1, maxLength: 120 })
@@ -289,7 +291,7 @@ export class CustomerResponse {
   @ApiPropertyOptional({
     type: () => ContactResponse,
     nullable: true,
-    description: 'Present when the list request uses populate=contact.',
+    description: 'Present when the request uses populate=contact.',
   })
   contact?: ContactResponse | null;
 }

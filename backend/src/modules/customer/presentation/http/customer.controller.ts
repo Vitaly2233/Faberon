@@ -34,6 +34,7 @@ import {
 } from './contact.dto';
 import {
   CreateCustomerRequest,
+  CustomerPopulateQuery,
   CustomerResponse,
   ListCustomersQuery,
   UpdateCustomerRequest,
@@ -88,10 +89,12 @@ export class CustomerController {
     @CurrentUser() user: AccessTokenClaims,
     @Param('customerId', new ParseUUIDPipe({ version: '7' }))
     customerId: string,
+    @Query() query: CustomerPopulateQuery,
   ): Promise<CustomerResponse> {
-    const customer = await this.customerService.findById(
+    const customer = await this.customerService.findByIdResponse(
       user.companyId,
       customerId,
+      query.populate ?? [],
     );
     if (!customer) throw new CustomerNotFoundError(customerId);
     return customer;
