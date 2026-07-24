@@ -2,12 +2,15 @@ import { useQuery } from '@tanstack/react-query'
 import { getCustomer } from '../../../api/customers'
 import { listProductsByCustomer } from '../../../api/products'
 import { listWorkOrdersByCustomer } from '../../../api/work-orders'
+import { productsByCustomerQueryKey } from '../../printers/hooks/productQueryKeys'
+import { workOrdersByCustomerQueryKey } from '../../work-orders/hooks/workOrderQueryKeys'
 import type { CustomerDetail, CustomerPrinter, CustomerWorkOrder } from '../types'
 import {
   toCustomerDetail,
   toCustomerPrinter,
   toCustomerWorkOrder,
 } from '../types'
+import { customerDetailQueryKey } from './customerQueryKeys'
 
 type UseCustomerDetailResult = {
   customer: CustomerDetail | null
@@ -18,46 +21,42 @@ type UseCustomerDetailResult = {
   notFound: boolean
 }
 
-export function useCustomerDetail(customerId: string | undefined): UseCustomerDetailResult {
+export function useCustomerDetail(customerId: string): UseCustomerDetailResult {
   const customerQuery = useQuery({
-    queryKey: ['customers', customerId],
+    queryKey: customerDetailQueryKey(customerId),
     queryFn: async () => {
-      const customer = await getCustomer(customerId!)
+      const customer = await getCustomer(customerId)
       return toCustomerDetail(customer)
     },
-    enabled: Boolean(customerId),
     retry: false,
   })
 
   const productsQuery = useQuery({
-    queryKey: ['products', { customerId }],
+    queryKey: productsByCustomerQueryKey(customerId),
     queryFn: async () => {
-      const products = await listProductsByCustomer(customerId!)
+      const products = await listProductsByCustomer(customerId)
       return products.map(toCustomerPrinter)
     },
-    enabled: Boolean(customerId),
   })
 
   const workOrdersQuery = useQuery({
-    queryKey: ['work-orders', { customerId }],
+    queryKey: workOrdersByCustomerQueryKey(customerId),
     queryFn: async () => {
-      const workOrders = await listWorkOrdersByCustomer(customerId!)
+      const workOrders = await listWorkOrdersByCustomer(customerId)
       return workOrders.map(toCustomerWorkOrder)
     },
-    enabled: Boolean(customerId),
   })
 
   const notFound =
-    !customerId ||
-    (customerQuery.isError &&
-      customerQuery.error instanceof Error &&
-      customerQuery.error.message === 'Customer not found.')
+    customerQuery.isError &&
+    customerQuery.error instanceof Error &&
+    customerQuery.error.message === 'Customer not found.'
 
   return {
     customer: customerQuery.data ?? null,
     printers: productsQuery.data ?? [],
     workOrders: workOrdersQuery.data ?? [],
-    loading: Boolean(customerId) && customerQuery.isPending,
+    loading: customerQuery.isPending,
     error:
       notFound
         ? null

@@ -3,8 +3,17 @@ import { CustomerOverview } from './components/details/CustomerOverview'
 import { useCustomerDetail } from './hooks/useCustomerDetail'
 
 export function CustomerDetailsPage() {
-  const navigate = useNavigate()
   const { customerId } = useParams()
+
+  if (!customerId) {
+    return <Navigate to="/customers" replace />
+  }
+
+  return <CustomerDetailsContent customerId={customerId} />
+}
+
+function CustomerDetailsContent({ customerId }: { customerId: string }) {
+  const navigate = useNavigate()
   const { customer, printers, workOrders, loading, error, notFound } =
     useCustomerDetail(customerId)
 

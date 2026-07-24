@@ -17,5 +17,6 @@ Read `CONSTITUTION.md` from the repository root before modifying the frontend.
 - Use semantic Tailwind tokens and Tailwind's standard spacing, radius, and font-size utilities in JSX.
 - Use MUI selectively for accessible primitives or icons; do not create a competing MUI visual theme.
 - Do not add authentication, persistence, API calls, or speculative business logic to visual prototypes.
+- Prefer fail-fast over sentinel values: do not substitute empty strings, `0`, or placeholder ids for missing required inputs—require them in types and branch at the call site before hooks that need them (see `CONSTITUTION.md` XI). Do not add redundant runtime checks for already-required typed parameters.
 - Preserve semantic HTML, labels, keyboard access, focus visibility, contrast, and responsive behavior.
 - Use Node 26 and pnpm. Run `pnpm lint` and `pnpm build` from `frontend` before handoff.
