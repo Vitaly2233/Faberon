@@ -10,6 +10,8 @@ import { UserRepository } from '../infrastructure/database/user.repository';
 import { JwtAccessTokenService } from '../infrastructure/security/jwt-access-token.service';
 import { ScryptPasswordHasher } from '../infrastructure/security/scrypt-password-hasher';
 import { InvalidCredentialsError } from '../domain/user.errors';
+import type { UserResponse } from '../presentation/http/auth.dto';
+import type { AccessTokenClaims } from '../infrastructure/security/jwt-access-token.service';
 
 export interface RegistrationResult {
   company: Company;
@@ -50,20 +52,30 @@ export class AuthenticationService {
     });
   }
 
-  async login(
-    companyId: string,
-    email: string,
-    password: string,
-  ): Promise<string> {
-    const user = await this.userRepository.findByEmail(companyId, email);
+  async login(email: string, password: string): Promise<string> {
+    const [company] = await this.companyRepository.findAll();
+    if (!company) throw new InvalidCredentialsError();
+
+    const user = await this.userRepository.findByEmail(company.id, email);
     if (!user) throw new InvalidCredentialsError();
 
     const passwordIsValid = await this.passwordHasher.verify(
       password,
-      user?.passwordHash,
+      user.passwordHash,
     );
     if (!passwordIsValid) throw new InvalidCredentialsError();
 
     return this.accessTokenService.issue(user);
+  }
+
+  async me(claims: AccessTokenClaims): Promise<UserResponse> {
+    const user = await this.userRepository.findById(claims.companyId, claims.sub);
+    if (!user) throw new InvalidCredentialsError();
+
+    return {
+      id: user.id,
+      companyId: user.companyId,
+      email: user.email,
+    };
   }
 }

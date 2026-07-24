@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString, IsUUID, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
 import { NormalizeText } from '../../../../common/validation/normalize-text.decorator';
 import { accessTokenExpiresInSeconds } from '../../infrastructure/security/jwt-access-token.service';
 
@@ -48,13 +48,6 @@ export class RegisterResponse {
 }
 
 export class LoginRequest {
-  @ApiProperty({
-    format: 'uuid',
-    example: '019535d9-3df6-71ec-8f08-fa907fa17f9d',
-  })
-  @IsUUID()
-  companyId!: string;
-
   @ApiProperty({ example: 'ada@example.com', maxLength: 320 })
   @NormalizeText({ lowercase: true })
   @IsEmail()
@@ -77,4 +70,21 @@ export class LoginResponse {
 
   @ApiProperty({ example: accessTokenExpiresInSeconds })
   expiresIn!: number;
+}
+
+export class UserResponse {
+  @ApiProperty({
+    format: 'uuid',
+    example: '019535d9-3df7-79fb-b466-fa907fa17f9e',
+  })
+  id!: string;
+
+  @ApiProperty({
+    format: 'uuid',
+    example: '019535d9-3df6-71ec-8f08-fa907fa17f9d',
+  })
+  companyId!: string;
+
+  @ApiProperty({ example: 'ada@example.com' })
+  email!: string;
 }

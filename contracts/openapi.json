@@ -73,6 +73,42 @@
         ]
       }
     },
+    "/api/v1/auth/me": {
+      "get": {
+        "operationId": "AuthController_me_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
+        "tags": [
+          "authentication"
+        ]
+      }
+    },
     "/api/v1/customers": {
       "post": {
         "operationId": "CustomerController_create_v1",
@@ -2187,11 +2223,6 @@
       "LoginRequest": {
         "type": "object",
         "properties": {
-          "companyId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "019535d9-3df6-71ec-8f08-fa907fa17f9d"
-          },
           "email": {
             "type": "string",
             "example": "ada@example.com",
@@ -2205,7 +2236,6 @@
           }
         },
         "required": [
-          "companyId",
           "email",
           "password"
         ]
@@ -2251,6 +2281,30 @@
           "statusCode",
           "message",
           "error"
+        ]
+      },
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "019535d9-3df7-79fb-b466-fa907fa17f9e"
+          },
+          "companyId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "019535d9-3df6-71ec-8f08-fa907fa17f9d"
+          },
+          "email": {
+            "type": "string",
+            "example": "ada@example.com"
+          }
+        },
+        "required": [
+          "id",
+          "companyId",
+          "email"
         ]
       },
       "CreateContactRequest": {

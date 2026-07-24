@@ -1,19 +1,25 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import {
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { CurrentUser } from '../../../../common/auth/current-user.decorator';
 import { Public } from '../../../../common/auth/public.decorator';
 import { ErrorResponse } from '../../../../common/errors/error-response.dto';
 import { AuthenticationService } from '../../application/authentication.service';
-import { accessTokenExpiresInSeconds } from '../../infrastructure/security/jwt-access-token.service';
+import {
+  accessTokenExpiresInSeconds,
+  type AccessTokenClaims,
+} from '../../infrastructure/security/jwt-access-token.service';
 import {
   LoginRequest,
   LoginResponse,
   RegisterRequest,
   RegisterResponse,
+  UserResponse,
 } from './auth.dto';
 
 @ApiTags('authentication')
@@ -47,7 +53,6 @@ export class AuthController {
   @ApiUnauthorizedResponse({ type: ErrorResponse })
   async login(@Body() request: LoginRequest): Promise<LoginResponse> {
     const accessToken = await this.authentication.login(
-      request.companyId,
       request.email,
       request.password,
     );
@@ -57,5 +62,13 @@ export class AuthController {
       tokenType: 'Bearer',
       expiresIn: accessTokenExpiresInSeconds,
     };
+  }
+
+  @Get('me')
+  @ApiBearerAuth('access-token')
+  @ApiOkResponse({ type: UserResponse })
+  @ApiUnauthorizedResponse({ type: ErrorResponse })
+  me(@CurrentUser() user: AccessTokenClaims): Promise<UserResponse> {
+    return this.authentication.me(user);
   }
 }
