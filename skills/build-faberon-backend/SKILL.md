@@ -25,6 +25,7 @@ Apply domain-driven design without turning simple behavior into unnecessary fram
 - Keep domain entities, value objects, domain services, events, and repository interfaces free of NestJS and Drizzle imports.
 - Put orchestration and transaction boundaries in application use cases. Depend on ports represented by explicit injection tokens.
 - Keep controllers thin: validate and map DTOs, dispatch the use case, and map the result to a documented response.
+- Annotate every controller handler with an explicit response DTO return type (`Promise<CustomerResponse>`, `Promise<void>`, …). Do not leave handler return types inferred.
 - Keep Drizzle schemas, repositories, and mappers in infrastructure. Do not expose persistence models from HTTP endpoints.
 - Publish integration events through a transactional outbox when state changes and messages must remain consistent.
 - Make consumers idempotent. Treat message delivery as at least once and define retry/dead-letter behavior deliberately.
@@ -34,6 +35,7 @@ Apply domain-driven design without turning simple behavior into unnecessary fram
 
 - Enable global validation with unknown fields rejected and transformed values enabled.
 - Use dedicated request and response DTOs with `@ApiProperty` or `@ApiPropertyOptional` on every field.
+- Annotate every controller handler with an explicit response DTO return type (`Promise<CustomerResponse>`, `Promise<void>`, …). Do not leave handler return types inferred.
 - Declare status codes and concrete schemas with `@ApiCreatedResponse`, `@ApiOkResponse`, and named error responses.
 - Keep a stable global prefix and URI versioning. Do not leak stack traces or database errors.
 - Represent identifiers, timestamps, enums, nullable fields, and examples accurately in OpenAPI.

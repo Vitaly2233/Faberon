@@ -15,6 +15,7 @@ Read `CONSTITUTION.md` and `skills/build-faberon-backend/SKILL.md` from the repo
 - Use explicit PostgreSQL migrations and keep TypeORM schema synchronization disabled.
 - Use a transactional outbox for RabbitMQ messages coupled to state changes; design consumers for at-least-once delivery.
 - Use dedicated HTTP request and response DTOs and document all success and expected error schemas in Swagger.
+- Controller handlers must declare an explicit return type with the concrete response DTO (`Promise<CustomerResponse>`, `Promise<void>`, …); do not rely on inference.
 - Order controller methods Create → Get → Update → Delete; group nested resources by verb the same way.
 - Prefer full CRUD for mutable resources; keep append-only and auth surfaces limited to the verbs they support.
 - Scope tenant reads and writes with `companyId` from `@CurrentUser()` as the first method parameter; do not put "company" in method names.
